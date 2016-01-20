@@ -93,8 +93,7 @@ public class ActivityAddSession extends DatabaseActivity {
 	private EditText mCustomTextInput;
 	private Button mCustomTextSubmitButton;
 	private View mInputCustomTextUpdateView;
-	
-	
+
 	private DialogFragment datePickerFragment;
 	private DialogFragment timePickerFragment;
 	private DialogFragment durationPickerFragment;
@@ -102,8 +101,7 @@ public class ActivityAddSession extends DatabaseActivity {
 	private LinearLayout platformCustomRow;
 	private LinearLayout regAndTailCustomRow;
 	private LinearLayout locationCustomRow;
-	
-	
+
 	public List<String> platform_li;
 	public List<String> location_li;
 	
@@ -679,11 +677,9 @@ public class ActivityAddSession extends DatabaseActivity {
 
 
 					loc_icao_et.setThreshold(1);
-					//loc_icao_et.setAdapter(location_icao_autocomplete_adp);
 					loc_icao_et.setAdapter(aerodromes_icao_adp);
 
 					loc_name_et.setThreshold(1);
-					//loc_name_et.setAdapter(location_name_autocomplete_adp);
 					loc_name_et.setAdapter(aerodromes_name_adp);
 
 					remarks_et.setThreshold(1);
@@ -831,15 +827,11 @@ public class ActivityAddSession extends DatabaseActivity {
 			showProgress(false,thisActivity);
 		}
 	}
-		
-	
-		
+
 	public void customTextInputSubmit(View view){
 			mInputCustomTextWindow.setVisibility(View.GONE);
 		}
 	
-		
-		
 	// TimePickerDialog Class
 	public static class TimePickerFragment extends DialogFragment
 							implements TimePickerDialog.OnTimeSetListener {
@@ -909,8 +901,7 @@ public class ActivityAddSession extends DatabaseActivity {
 			this.dismiss();
 		}
 	}
-		
-		
+
     public static class DatePickerFragment extends DialogFragment
                                 implements DatePickerDialog.OnDateSetListener {
 			private ActivityAddSession appState;
