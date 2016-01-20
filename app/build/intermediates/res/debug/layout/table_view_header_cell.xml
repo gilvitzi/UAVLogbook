@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"      
+       		android:tag="date"
+       		android:layout_weight="1"
+           	android:layout_width="wrap_content"
+           	android:layout_height="wrap_content"
+           	style="@style/table_view_header_cell"
+           />
+      
+<!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/src/main/res/layout/table_view_header_cell.xml -->

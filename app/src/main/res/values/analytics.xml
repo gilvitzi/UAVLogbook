@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="analytics_event_action_export_csv_successful">Export Table To CSV Successful</string>
+    <string name="analytics_event_action_export_csv_failed">Export Table To CSV Failed</string>
+    <string name="analytics_event_category_export">Export</string>
+    <string name="analytics_event_action_export_html_failed">HTML Export Failed</string>
+</resources>

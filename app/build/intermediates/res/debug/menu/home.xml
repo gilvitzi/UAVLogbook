@@ -1,0 +1,32 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <item
+        android:id="@+id/action_import"
+        android:title="@string/action_import"
+        android:orderInCategory="29"
+        app:showAsAction="ifRoom" >
+
+    </item>
+    <item
+        android:id="@+id/action_export"
+        android:title="@string/action_export"
+        android:orderInCategory="30"
+        app:showAsAction="ifRoom">
+
+    </item>
+    <!--<item android:id="@+id/action_google_drive_sync" android:title="@string/action_google_drive_sync" android:orderInCategory="31" android:showAsAction="collapseActionView"></item>-->
+    <item
+        android:id="@+id/about"
+        android:title="@string/about"
+        android:orderInCategory="50"
+        app:showAsAction="collapseActionView">
+
+    </item>
+    <!-- 
+    <item android:id="@+id/action_sync" android:title="@string/action_sync" android:showAsAction="never" android:orderInCategory="31"></item>
+     -->   
+
+</menu>
+<!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/src/main/res/menu/home.xml -->

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/src/main/res/values-sw720dp/dimens.xml -->
+    <eat-comment/>
+    <dimen name="add_session_layout_max_width">450dp</dimen>
+    <dimen name="form_row_frame_width">600dp</dimen>
+</resources>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:background="@drawable/gradient_dark_red"
+       style="table_row_header" >
+       
+       <TextView
+       		android:tag="date"
+       		android:layout_weight="1"
+           	android:layout_width="wrap_content"
+           	android:layout_height="wrap_content"
+            style="@style/table_cell_header"
+            android:text="@string/tbl_hdr_date"
+           />
+       <TextView
+       		android:tag="duration"
+       		android:layout_weight="1"
+           	android:layout_width="wrap_content"
+           	android:layout_height="wrap_content"
+           	style="@style/table_cell_header"
+           	android:text="@string/tbl_hdr_duration"
+           />
+       <TextView
+       		android:tag="platform"
+       		android:layout_weight="1"
+           	android:layout_width="wrap_content"
+           	android:layout_height="wrap_content"
+           	style="@style/table_cell_header"
+           	android:text="@string/tbl_hdr_platform"
+           />
+       <TextView
+       		android:tag="reg_no"
+       		android:layout_weight="1"
+           	android:layout_width="wrap_content"
+           	android:layout_height="wrap_content"
+           	style="@style/table_cell_header"
+           	android:text="@string/tbl_hdr_reg"
+           />
+       <TextView
+       		android:tag="icao"
+       		android:layout_weight="1"
+           	android:layout_width="wrap_content"
+           	android:layout_height="wrap_content"
+           	style="@style/table_cell_header"
+           	android:text="@string/tbl_hdr_icao"
+           />
+       <CheckBox
+       		android:tag="check"
+       		android:layout_weight="1"
+       		android:layout_width="wrap_content"
+       		android:layout_height="wrap_content"
+       		/>
+   </TableRow>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout    xmlns:android="http://schemas.android.com/apk/res/android"
+   	android:id="@+id/tag1"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:background="@drawable/gradient_light_blue" >
+    <TextView
+    	android:id="@+id/tag_value"
+    	android:layout_height="wrap_content"
+	    android:layout_width="wrap_content"
+		android:paddingRight="15dip"
+		android:gravity="center_vertical"
+    />
+    <Button
+       	android:id="@+id/custom_text_submit_button"
+       	android:layout_width="15dip"
+       	android:layout_height="15dip"
+       	android:text=""
+       	android:background="@drawable/action_delete_tag"
+       	android:onClick="customTextInputSubmit"
+       	android:layout_toRightOf="@+id/tag_value" />
+</RelativeLayout>
+
+<!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/src/main/res/layout/tag.xml -->

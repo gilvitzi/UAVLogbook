@@ -1,0 +1,592 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="20dp"
+    tools:context=".AddSessionActivity" >  
+    
+    <!--  Form Control Inputs  -->
+    <ScrollView
+        android:id="@+id/input_form"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible" >
+		
+        <LinearLayout
+            style="@style/formContainer"
+            android:id="@+id/form_layout" >
+	            
+		        <TableLayout 
+		        	style="@style/formRowFrame"
+		            android:id="@+id/date_duration_frame"
+		            android:layout_width="fill_parent"
+		            android:layout_height="wrap_content"
+		            android:orientation="vertical" >
+					<TableRow
+					    android:id="@+id/date_frame"
+					    android:layout_width="match_parent"
+		            	android:layout_height="wrap_content"
+		            	android:weightSum="5" >
+						<TextView
+						    android:id="@+id/lbl_date"
+						    android:layout_width="wrap_content"
+						    android:layout_height="wrap_content"
+						    android:text="@string/input_date" 
+						    android:layout_weight="2"
+							android:focusable="true"
+							android:focusableInTouchMode="true"
+							/>
+			
+		            	<EditText
+		            	    android:id="@+id/field_date"
+		            	    android:layout_height="wrap_content"
+		            	    android:layout_width="wrap_content"
+		            	    android:layout_weight="3"
+		            	    android:gravity="center"
+		            	    android:inputType="date"
+		            	    android:nextFocusDown="@+id/field_duration"
+							android:imeOptions="actionNext"
+		            	    android:hint="@string/hint_date" />
+					</TableRow>
+					<TableRow
+					    android:id="@+id/duration_frame"
+					    android:layout_width="match_parent"
+		            	android:layout_height="wrap_content"
+		            	android:weightSum="5" >
+						<TextView
+						    android:id="@+id/lbl_duration"
+						    android:layout_width="wrap_content"
+						    android:layout_height="wrap_content"
+						    android:layout_weight="2"
+						    android:text="@string/input_duration" />
+			
+			            <EditText
+			                android:id="@+id/field_duration"
+			                android:layout_width="wrap_content"
+			                android:layout_height="wrap_content"
+			                android:layout_weight="3"
+			                android:gravity="center"
+			                android:nextFocusDown="@+id/field_day_night"
+							android:imeOptions="actionNext"
+			                android:hint="@string/hint_duration_time_format" />
+					</TableRow>
+				</TableLayout>
+        <LinearLayout
+            style="@style/formRowFrame"
+           	android:layout_height="wrap_content"
+           	android:layout_width="fill_parent"
+           	android:orientation="horizontal"
+           	android:weightSum="2">
+        	<RadioGroup
+			    android:id="@+id/field_day_night"
+			    android:layout_weight="1"
+			    android:layout_width="0dip"
+			    android:layout_height="match_parent"
+			    android:orientation="vertical"
+			    android:nextFocusDown="@+id/field_sim_actual"
+				android:imeOptions="actionNext"
+			    android:weightSum="2" >
+			    
+			    <RadioButton android:id="@+id/radio_day"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_weight="1"
+			        android:text="@string/field_day" />
+			    <RadioButton
+			        android:id="@+id/radio_night"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_weight="1"
+			        android:text="@string/field_night" />
+	
+			</RadioGroup>
+	        <RadioGroup
+			    android:id="@+id/field_sim_actual"
+			    android:layout_weight="1"
+			    android:layout_width="0dip"
+			    android:layout_height="wrap_content"
+			    android:orientation="vertical"
+			    android:nextFocusDown="@+id/field_platform"
+				android:imeOptions="actionNext"
+			    android:weightSum="2" >
+			    <RadioButton android:id="@+id/radio_sim"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_weight="1"
+			        android:text="@string/field_simulator" />
+			    <RadioButton
+			        android:id="@+id/radio_actual"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_weight="1"
+			        android:text="@string/field_actual_flight" />
+			</RadioGroup>
+		</LinearLayout>
+			<LinearLayout 
+				style="@style/formRowFrame"
+	            android:id="@+id/platform_frame"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="vertical" >
+				<TextView
+				    android:layout_width="wrap_content"
+	            	android:layout_height="wrap_content"
+	                android:id="@+id/lbl_platform"
+	                android:text="@string/input_platform"/>
+
+			    <Spinner
+		    		android:id="@+id/field_platform"
+		    		style="@style/inline_spinner"
+		    		android:nextFocusDown="@+id/field_reg_n_tail"
+					android:imeOptions="actionNext"
+		    		 />
+ 
+				<LinearLayout 
+			    	android:id="@+id/platform_custom_row"
+			    	android:visibility="gone"
+			        android:layout_height="wrap_content"
+			        android:layout_width="match_parent"
+			        android:orientation="horizontal"
+			        android:weightSum="2" >
+
+				    <EditText 
+				        android:id="@+id/field_plat_type"
+				        android:layout_height="wrap_content"
+				        android:layout_width="0dp"
+				        android:layout_weight="1"
+				        android:gravity="center"
+				        android:inputType="textCapWords"
+				        android:hint="@string/hint_platform_type"
+				        android:nextFocusDown="@+id/field_plat_variation"
+						android:imeOptions="actionNext"
+				        android:ellipsize="end" />
+				    <EditText 
+				        android:id="@+id/field_plat_variation"
+				        android:layout_height="wrap_content"
+				        android:layout_width="0dp"
+				        android:layout_weight="1"
+				        android:gravity="center"
+				        android:hint="@string/hint_platform_variation"
+				        android:ellipsize="end" />
+			    </LinearLayout>
+
+				<TextView
+				    android:layout_width="wrap_content"
+	            	android:layout_height="wrap_content"
+	                android:id="@+id/lbl_reg_n_tail"
+	                android:text="@string/input_reg_n_tail"/>
+				<Spinner
+			    		android:id="@+id/field_reg_n_tail"
+				        style="@style/inline_spinner"
+				        android:nextFocusDown="@+id/field_location"
+						android:imeOptions="actionNext"
+				        />    
+				    
+			    <LinearLayout 
+			    	android:id="@+id/reg_n_tail_custom_row"
+			    	android:visibility="gone"
+			        android:layout_height="wrap_content"
+			        android:layout_width="match_parent"
+			        android:orientation="horizontal"
+			        android:weightSum="2"
+			        android:layout_marginTop="5dp" >
+
+				    <EditText 
+				        android:id="@+id/field_reg_no"
+				        android:layout_height="wrap_content"
+				        android:layout_width="0dp"
+				        android:layout_weight="1"
+				        android:gravity="center"
+				        android:inputType="textCapCharacters"
+				        android:hint="@string/hint_registration_number"
+   				        android:nextFocusDown="@+id/field_tail_no"
+						android:imeOptions="actionNext"
+				        android:ellipsize="end" />
+				    <EditText 
+				        android:id="@+id/field_tail_no"
+				        android:layout_height="wrap_content"
+				        android:layout_width="0dp"
+				        android:layout_weight="1"
+				        android:gravity="center"
+				        android:hint="@string/hint_tail_number"
+				        android:ellipsize="end" />
+			    </LinearLayout>
+	        </LinearLayout>
+			<LinearLayout 
+				style="@style/formRowFrame"
+	            android:id="@+id/location_frame"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="vertical" >
+				<TextView
+				    android:layout_width="wrap_content"
+	            	android:layout_height="wrap_content"
+	                android:id="@+id/lbl_location"
+	                android:text="@string/input_location"/>
+
+	        	<RelativeLayout style="@style/inline_relative_layout" >
+				    <Spinner
+			    		android:id="@+id/field_location"
+			    		style="@style/inline_spinner"
+			    		android:nextFocusDown="@+id/field_command"
+						android:imeOptions="actionNext" >
+				    </Spinner>
+			    </RelativeLayout>
+	        
+	        	<LinearLayout 
+	            	android:id="@+id/location_custom_row"
+	            	android:visibility="gone"
+			        android:layout_height="wrap_content"
+			        android:layout_width="match_parent"
+			        android:orientation="horizontal"
+			        android:weightSum="4" >
+				    <AutoCompleteTextView
+				        android:id="@+id/field_icao"
+				        android:layout_height="wrap_content"
+				        android:layout_width="0dp"
+				        android:layout_weight="1"
+				        android:gravity="center"
+				        android:textColor="@color/black"
+				        android:inputType="textCapCharacters"
+				        android:hint="@string/hint_icao"
+				        android:ellipsize="end"
+				        android:dropDownWidth="fill_parent"
+				        android:nextFocusDown="@+id/field_location_name"
+						android:imeOptions="actionNext"
+				        android:dropDownHorizontalOffset="-30dp" />
+				    <AutoCompleteTextView
+				        android:id="@+id/field_location_name"
+				        android:layout_height="wrap_content"
+				        android:layout_width="0dp"
+				        android:layout_weight="3"
+				        android:gravity="center"
+				        android:textColor="@color/black"
+				        android:inputType="textCapWords"
+				        android:hint="@string/hint_aerodrome_name"
+				        android:ellipsize="end"
+				        android:dropDownWidth="fill_parent"
+				        android:dropDownHorizontalOffset="-200dp" /> <!-- Can Set DropDownWidth="wrap_content" and remove dropDownHorizontalOffset  -->
+			    </LinearLayout>
+			</LinearLayout>
+			    
+	        <!-- Just a Seperator -->
+		    <View 
+		        android:layout_height="10dip"
+		        android:layout_width="fill_parent"
+		        />
+		    
+	<!--       TABLE LAYOUT     -->		    
+	        <TableLayout
+	            style="@style/formRowFrame"
+			    android:id="@+id/tableLayout1"
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent" >
+			 
+			    <!-- 2 columns -->
+			    <TableRow
+			        android:id="@+id/tableRow1"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:padding="5dip"
+			        android:weightSum="6" >
+			        <TextView
+			            android:id="@+id/lbl_command"
+		                android:layout_weight="1"
+					    android:layout_width="wrap_content"
+		            	android:layout_height="wrap_content"
+		                android:text="@string/input_command"/>
+		            <Spinner
+		                android:layout_weight="5"
+					    android:id="@+id/field_command"
+					    android:nextFocusDown="@+id/field_seat"
+						android:imeOptions="actionNext"
+					    style="@style/inline_spinner" />
+			    </TableRow>
+			 
+			    <!-- edittext span 2 column -->
+			    <TableRow
+			        android:id="@+id/tableRow2"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:padding="5dip" >
+			        <TextView
+			            android:id="@+id/lbl_seat"
+						android:layout_weight="1"
+		            	android:layout_height="wrap_content"
+		                android:text="@string/input_seat"/>
+			        <Spinner
+					    android:id="@+id/field_seat"
+					    android:layout_weight="5"
+					    android:nextFocusDown="@+id/field_flight_type"
+						android:imeOptions="actionNext"
+					    style="@style/inline_spinner" />
+			    </TableRow>
+			    
+			    <TableRow
+			        android:id="@+id/tableRow3"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:padding="5dip" >
+			        <TextView
+						android:layout_weight="1"
+		            	android:layout_height="wrap_content"
+		                android:id="@+id/lbl_flight_type"
+		                android:text="@string/input_flight_type"/>
+		            <Spinner
+					    android:id="@+id/field_flight_type"
+					    android:layout_weight="5"
+					    android:nextFocusDown="@+id/field_tags"
+						android:imeOptions="actionNext"
+					    style="@style/inline_spinner" />
+			    </TableRow>
+			</TableLayout>
+			<LinearLayout 
+				style="@style/formRowFrame"
+	            android:id="@+id/tags_frame"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="vertical" >
+				<TextView
+				    android:layout_width="wrap_content"
+	            	android:layout_height="wrap_content"
+	                android:id="@+id/lbl_tags"
+	                android:layout_marginBottom="5dip"
+	                android:text="@string/input_tags"/>
+				<com.gilvitzi.uavlogbookpro.util.TagsContainer
+	    	        xmlns:android="http://schemas.android.com/apk/res/android"
+	    	        android:id="@+id/field_tags"
+	    	        android:layout_width="match_parent"
+	    	        android:layout_height="wrap_content"
+	    	         />
+    	    	
+			</LinearLayout>
+	        <LinearLayout
+	            style="@style/formRowFrame"
+   	            android:layout_height="wrap_content"
+	            android:layout_width="match_parent"
+	            android:orientation="vertical">
+	            <TextView
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:orientation="vertical"
+	                android:text="@string/lbl_counted_activities"
+	                />
+	            <LinearLayout
+	                android:id="@+id/counted_activities_labels"
+		            android:layout_height="wrap_content"
+		            android:layout_width="match_parent"
+		            android:orientation="horizontal"
+		            android:weightSum="3" >
+		            
+		            <TextView
+		                android:layout_height="wrap_content"
+		                android:layout_width="0dp"
+		                android:layout_weight="1"
+		                android:id="@+id/label_takeoffs"
+		                android:gravity="center"
+		                android:text="@string/field_takeoff"
+		                android:ellipsize="end"
+		                 />
+		            <TextView
+		                android:layout_height="wrap_content"
+		                android:layout_width="0dp"
+		                android:layout_weight="1"
+		                android:id="@+id/label_landings"
+		                android:gravity="center"
+		                android:text="@string/field_landing"
+		                android:ellipsize="end"
+		                 />
+		            <TextView
+		                android:layout_height="wrap_content"
+		                android:layout_width="0dp"
+		                android:layout_weight="1"
+		                android:id="@+id/label_go_arounds"
+		                android:gravity="center"
+		                android:text="@string/field_go_around"
+		                android:ellipsize="end"
+		                 />
+		        </LinearLayout>
+		        <LinearLayout
+		            android:layout_height="wrap_content"
+		            android:layout_width="match_parent"
+		            android:orientation="horizontal"
+		            android:weightSum="3" >
+		            
+		            <EditText
+		                android:layout_height="wrap_content"
+		                android:layout_width="0dp"
+		                android:layout_weight="1"
+		                android:id="@+id/field_takeoffs"
+		                android:inputType="number"
+		                android:gravity="center"
+		                android:hint="@string/hint_takeoff"
+		                android:ellipsize="end"
+		                android:nextFocusDown="@+id/field_landings"
+						android:imeOptions="actionNext"
+		                 />
+		            <EditText
+		                android:layout_height="wrap_content"
+		                android:layout_width="0dp"
+		                android:layout_weight="1"
+		                android:id="@+id/field_landings"
+		                android:inputType="number"
+		                android:gravity="center"
+		                android:hint="@string/hint_landing"
+		                android:ellipsize="end"
+		                android:nextFocusDown="@+id/field_go_arounds"
+						android:imeOptions="actionNext"
+		                 />
+		            <EditText
+		                android:layout_height="wrap_content"
+		                android:layout_width="0dp"
+		                android:layout_weight="1"
+		                android:id="@+id/field_go_arounds"
+		                android:inputType="number"
+		                android:gravity="center"
+		                android:hint="@string/hint_go_around"
+		                android:ellipsize="end"
+		                android:nextFocusDown="@+id/field_remarks"
+						android:imeOptions="actionNext"
+		                 />
+		        </LinearLayout>
+	        </LinearLayout>
+			<LinearLayout
+	        	style="@style/formRowFrame" 
+	            android:id="@+id/remarks_frame"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="vertical" >
+				<TextView
+				    android:layout_width="wrap_content"
+	            	android:layout_height="wrap_content"
+	                android:id="@+id/lbl_remarks"
+	                android:text="@string/input_remarks"/>
+	            <AutoCompleteTextView
+				    android:id="@+id/field_remarks"
+				    android:layout_height="wrap_content"
+	                android:layout_width="match_parent"
+	                android:inputType="textCapSentences|textMultiLine"
+	                android:maxLength="2000"
+	                android:maxLines="10"
+	                android:gravity="left"
+	                android:textColor="@color/black"
+	                android:hint="@string/hint_remarks"
+	                android:ellipsize="end"
+	                android:nextFocusDown="@+id/add_session_button"
+					android:imeOptions="actionGo"
+				     />
+
+	        </LinearLayout>
+			<LinearLayout 
+			            android:id="@+id/submit_button_frame"
+			            android:layout_width="match_parent"
+			            android:layout_height="wrap_content"
+			            android:orientation="horizontal" >
+				<Button
+			                android:id="@+id/add_session_button"
+			                android:layout_width="fill_parent"
+			                android:layout_height="wrap_content"
+			                android:layout_gravity="center"
+			                android:layout_marginTop="25dp"
+			                android:layout_marginBottom="20dp"
+			                android:paddingLeft="32dp"
+			                android:paddingRight="32dp"
+			                android:background="@drawable/button_green"
+			                android:text="@string/action_add_session"
+			                android:onClick="formSubmit"
+			                 />
+			</LinearLayout>
+		</LinearLayout>
+    </ScrollView>
+    
+    
+    
+   <!--  ___________________ pop-up windows _____________________ -->
+    
+    
+    <LinearLayout
+        android:id="@+id/view_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/status_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/please_wait_progress"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+    </LinearLayout>
+    
+    
+    <LinearLayout
+        android:id="@+id/date_picker_window"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone" >
+        
+   	    <DatePicker
+	        android:id="@+id/date_picker"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:endYear="2100"
+	        android:startYear="1900" />
+    </LinearLayout>
+  
+    <LinearLayout
+        android:id="@+id/time_picker_window"
+        style="@style/popup_window" >
+        
+    	<TimePicker
+	        android:id="@+id/time_picker"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" />
+    </LinearLayout>
+        
+        
+    <LinearLayout
+        android:id="@+id/custom_text_window"
+        style="@style/popup_window" >
+
+        <TextView
+            android:id="@+id/custom_text_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/custom_input"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        <EditText
+        	android:id="@+id/custom_text_input_field"
+        	android:layout_width="200dip"
+        	android:layout_height="wrap_content"
+        	android:layout_gravity="center"
+        	android:hint=""
+        />
+        <Button
+        	android:id="@+id/custom_text_submit_button"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+			android:background="@drawable/button_black"
+			android:textColor="@color/white"
+			android:padding="5dp"
+        	android:text="@string/custom_input_button_caption"
+        	android:onClick="customTextInputSubmit" />
+    </LinearLayout>
+    
+</merge>

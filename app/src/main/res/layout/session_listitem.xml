@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+          android:layout_width="match_parent"
+          android:layout_height="?android:attr/listPreferredItemHeight"
+          android:orientation="vertical"
+          android:paddingBottom="2dip"
+          android:paddingTop="2dip"
+          android:paddingRight="6dip"
+          android:paddingLeft="6dip"
+          android:background="@drawable/session_listitem"
+    >
+
+    <!-- Item Date -->
+    <TextView
+        android:id="@+id/session_list_item_date"
+        android:layout_alignParentLeft="true"
+        android:layout_width="wrap_content"
+        android:layout_height="22dip"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:ellipsize="marquee"
+        android:text="dd/mm/yyyy"
+        />
+
+    <!-- Item Duration -->
+    <TextView
+        android:id="@+id/session_list_item_Duration"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/aerodrome_dropdown_name_text_size"
+        android:singleLine="true"
+        android:textStyle="bold"
+        android:ellipsize="marquee"
+        android:text="Duration: hh:mm"
+        />
+
+    <TextView
+        android:id="@+id/session_list_item_platform_type_and_variation"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="22dip"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:ellipsize="marquee"
+        android:text="PlatformType &amp; Variation"
+        />
+
+    <TextView
+        android:id="@+id/session_list_item_icao"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="22dip"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:ellipsize="marquee"
+        android:text="ICAO"
+        />
+</RelativeLayout>

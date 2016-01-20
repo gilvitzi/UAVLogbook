@@ -1,0 +1,94 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.gilvitzi.uavlogbookpro.activity.ActivityGoogleDriveSync" >
+
+    <TextView
+        android:id="@+id/google_drive_feature_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_sync_with_google_drive"
+        android:textColor="#0FABFF"
+        android:textSize="22sp" />
+
+  
+    <TextView
+	        android:id="@+id/google_drive_feature_description"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/google_drive_feature_title"
+	        android:layout_below="@+id/google_drive_feature_title"
+	        android:layout_marginTop="23dp"
+	        android:text="@string/description_sync_with_google_drive"
+	        android:textColor="#000" />
+	
+	
+	
+		<LinearLayout
+		    android:id="@+id/bullets_container"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignLeft="@+id/google_drive_feature_description"
+		    android:layout_below="@+id/google_drive_feature_description"
+		    android:orientation="vertical" >
+	
+		    <TextView
+		        android:id="@+id/google_drive_sync_bullet_1"
+		        style="@style/bullet"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/sync_with_google_drive_bullet1" />
+	
+		    <TextView
+		        android:id="@+id/google_drive_sync_bullet_2"
+		        style="@style/bullet"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/sync_with_google_drive_bullet2" />
+	
+		    <TextView
+		        android:id="@+id/google_drive_sync_bullet_3"
+		        style="@style/bullet"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/sync_with_google_drive_bullet3" />
+	
+		    <TextView
+		        android:id="@+id/google_drive_sync_bullet_4"
+		        style="@style/bullet"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/sync_with_google_drive_bullet4" />
+		</LinearLayout>
+	
+
+		
+    
+    <!-- Google Drive Sync Switch (Changes between Version) -->
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/google_drive_sync_switch"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="29dp"
+        android:src="@drawable/drive_app_badge"
+        android:contentDescription="@string/google_drive_badge_desc" />
+
+    <Switch
+        android:id="@+id/google_drive_sync_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bullets_container"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="64dp"
+        android:onClick="onToggleClicked"
+        android:text="@string/action_google_drive_sync" />
+
+</RelativeLayout>

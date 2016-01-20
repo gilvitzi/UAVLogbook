@@ -1,0 +1,5 @@
+<resources>
+
+	<dimen name="form_row_frame_width">600dp</dimen>
+	<dimen name="add_session_layout_max_width">450dp</dimen>
+</resources>

@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.gilvitzi.uavlogbookpro.activity.ActivityGoogleDriveSync" >
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never"/>
+
+</menu>
+<!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/src/main/res/menu/activity_google_drive_sync.xml -->

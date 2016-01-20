@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/src/main/res/values-w820dp/dimens.xml -->
+    <eat-comment/>
+    <dimen name="activity_horizontal_margin">64dp</dimen>
+    <dimen name="form_row_frame_width">600dp</dimen>
+    <!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/src/main/res/values-w820dp/styles.xml -->
+    <eat-comment/>
+    <style name="formRowFrame">
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:layout_width">@dimen/form_row_frame_width</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:maxWidth">@dimen/form_row_frame_max_width</item>
+    </style>
+</resources>

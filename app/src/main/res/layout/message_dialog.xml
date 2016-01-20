@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="40dip"
+    android:padding="15dip"
+    style="@style/message_dialog" >
+    <TextView
+        android:id="@+id/message_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text ="Title"
+        />
+    <TextView
+        android:id="@+id/message_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="15dip"
+        android:text ="Body"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+    	android:orientation="horizontal"
+    	android:weightSum="2"
+        >
+        
+        <TextView 
+		    android:id="@+id/message_btn_cancel"
+		    android:layout_width="fill_parent"
+		    android:layout_weight="1"
+	        android:layout_height="wrap_content"
+	        android:padding="5dip"
+	        android:gravity="center"
+		    android:text ="@string/cancel" />
+        
+       	<TextView 
+       	    android:id="@+id/message_btn_ok"
+	        android:layout_width="fill_parent"
+	        android:layout_weight="1"
+	        android:layout_height="wrap_content"
+	        android:padding="5dip"
+	        android:gravity="center"
+	        android:text ="@string/ok" />
+		 
+        
+    </LinearLayout>
+    
+</LinearLayout>

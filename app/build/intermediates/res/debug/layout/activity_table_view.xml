@@ -1,0 +1,46 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.gilvitzi.uavlogbookpro.activity.ActivityTableView"
+    tools:ignore="MergeRootFrame" >
+    
+    
+    
+    <ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		 >	
+		
+		<HorizontalScrollView 
+	    	  	android:id="@+id/HorizontalScrollView01"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="true" >
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TableLayout
+                    android:id="@+id/tbl_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:stretchColumns="*" >
+                </TableLayout>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dip" />
+            </LinearLayout>
+		</HorizontalScrollView>
+	</ScrollView>
+	
+ 	<include layout="@layout/ads_banner" />
+	
+
+</RelativeLayout>
+
+<!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/src/main/res/layout/activity_table_view.xml -->

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="field_command_items">
+        <item >@string/command_pic</item>
+        <item >@string/command_sic</item>
+        <item >@string/command_trainee</item>
+        <item >@string/command_ep</item>
+        <item >@string/command_other</item>
+    </string-array>
+    
+    <string-array name="field_seat_items">
+        <item >@string/seat_avo</item>
+        <item >@string/seat_po</item>
+        <item >@string/seat_mc</item>
+        <item >@string/seat_instructor</item>
+        <item >@string/seat_instructor_trainer</item>
+        <item >@string/seat_ep</item>
+    </string-array>
+    <string-array name="field_sim_actual_items">
+        <item >@string/field_simulator</item>
+        <item >@string/field_actual_flight</item>
+    </string-array>
+    <string-array name="field_flight_type_items">
+        <item >@string/flight_type_lesson</item>
+		<item >@string/flight_type_training</item>
+		<item >@string/flight_type_operational</item>
+		<item >@string/flight_type_technical</item>
+		<item >@string/flight_type_demonstration</item>
+		<item >@string/flight_type_test_flight</item>
+    </string-array>
+    <string-array name="field_day_night_items">
+        <item >@string/field_day</item>
+        <item >@string/field_night</item>
+    </string-array>
+    
+</resources>

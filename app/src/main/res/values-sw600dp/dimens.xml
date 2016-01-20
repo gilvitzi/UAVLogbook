@@ -1,0 +1,9 @@
+<resources>
+    <!-- 
+    ** 7inch **
+    This File Includes Values Specific for 7inch Tablets
+     -->
+    
+	<dimen name="form_row_frame_width2">600dp</dimen>
+	<dimen name="add_session_layout_width">300dp</dimen>
+</resources>

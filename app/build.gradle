@@ -1,0 +1,39 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    compileOptions {
+        encoding "UTF-8"
+    }
+
+    defaultConfig {
+        applicationId "com.gilvitzi.uavlogbookpro"
+        minSdkVersion 10
+        targetSdkVersion 22
+        versionCode 15
+        versionName "2.0.7"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+dependencies {
+    compile files('libs/opencsv-1.7.jar')
+    compile files('libs/poi-3.8-20120326.jar')
+    compile 'com.android.support:appcompat-v7:22.0+'
+    compile 'com.google.android.gms:play-services:7.5.0'
+    compile files('libs/gdata-spreadsheet-1.0.jar')
+    compile files('libs/gdata-photos-1.0.jar')
+    compile files('libs/gdata-codesearch-1.0.jar')
+    compile files('libs/gdata-client-1.0.jar')
+    compile files('libs/gdata-calendar-1.0.jar')
+    compile files('libs/gdata-base-1.0.jar')
+    compile files('libs/gdata-appsforyourdomain-1.0.jar')
+}

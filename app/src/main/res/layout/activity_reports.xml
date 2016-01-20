@@ -1,0 +1,125 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/commonlayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    style="@style/appBackground"
+    android:orientation="vertical"
+    android:weightSum="1"
+    tools:context=".layout_mode" >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="15dip"
+        android:orientation="vertical"
+        style="@style/appBackground"
+         >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal" >
+        
+	<Button
+	    android:id="@+id/btn_all_sessions"
+	    style="@style/reports_page_button"
+	    android:text="@string/report_all_sessions"
+	    android:onClick="goToShowAllSessions" />
+	
+	<Button
+	    android:id="@+id/btn_sessions_this_year"
+	    style="@style/reports_page_button"
+	    android:text="@string/report_sessions_this_year"
+	    android:onClick="goToSessionsThisYear" />
+	
+	 <Button
+	    android:id="@+id/btn_hours_per_year"
+	    style="@style/reports_page_button"
+	    android:text="@string/report_hours_per_year"
+	    android:textColor="@color/white"
+	    android:onClick="goToHoursPerYear" />
+	 
+	<Button
+	    android:id="@+id/btn_last_sessions_per_platform"
+	    style="@style/reports_page_button"
+	    android:text="@string/report_last_session_date"
+	    android:onClick="goToLastSessionDatePerPlatform" />
+	
+	<Button
+	    android:id="@+id/btn_hours_per_platform"
+		style="@style/reports_page_button"
+	    android:text="@string/report_hours_per_platform"
+	    android:onClick="goToHoursPerPlatform" />
+	
+	<Button
+	    android:id="@+id/btn_hours_per_location"
+	    style="@style/reports_page_button"
+	    android:text="@string/report_hours_per_location"
+	    android:onClick="goToHoursPerLocation" />
+
+	<!--
+	<Button
+	    android:id="@+id/btn_counted_activities"
+	    style="@style/formButton"
+	    android:background="@drawable/button_black"
+	    android:text="@strings/report_counted_activities"
+	    android:textColor="@color/white"
+	    android:onClick="goToSessionsCountedActivities" />
+	 -->
+	<Button
+	    android:id="@+id/btn_caa_report"
+	    style="@style/reports_page_button"
+	    android:text="@string/report_caa_report"
+	    android:onClick="goToCAAReport" />
+	
+	<Button
+	    android:id="@+id/btn_search_by_tag"
+	    style="@style/reports_page_button"
+	    android:text="@string/report_search_by_tag"
+	    android:onClick="goToSearchByTag" />
+	
+	</LinearLayout>
+	</ScrollView>
+	<!-- CUSTOM TEXT WINDOW -->
+    <LinearLayout
+        android:id="@+id/custom_text_window"
+        style="@style/popup_window" >
+
+        <TextView
+            android:id="@+id/custom_text_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="sans-serif-light"
+            android:text="Select a Tag"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        <AutoCompleteTextView
+        	android:id="@+id/custom_text_input_field"
+        	android:layout_width="200dip"
+        	android:layout_height="wrap_content"
+        	android:layout_gravity="center"
+        	android:textColor="@color/black"
+        	
+        	android:hint="@string/hint_tag_name"
+        />
+        <Button
+        	android:id="@+id/custom_text_submit_button"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:background="@drawable/button_black"
+        	android:textColor="@color/white"
+        	android:text="@string/custom_input_button_go"
+        	android:onClick="customTextInputSubmit" />
+    </LinearLayout>
+    
+	<!-- Footer -->
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/footer" />
+    
+    
+</LinearLayout>

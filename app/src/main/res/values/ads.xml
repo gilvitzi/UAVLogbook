@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ads_unit_id">ca-app-pub-5309694254788217/5249584504</string>
+    
+    <string name="test_device_id_galaxy_ace">90A9A55C6F9A37170417A8B25110A6B4</string>
+    <string name="test_device_id_thl_w8s">CC4D092BF9087F61DEB0F612B48FF2FB</string>
+    <string name="test_device_unknown_1">B3EEABB8EE11C2BE770B684D95219ECB</string>
+    <string name="test_device_id_lg_g2">2A30C4B96C47B7CE2CC7F47B3A488C4B</string>
+    
+</resources>

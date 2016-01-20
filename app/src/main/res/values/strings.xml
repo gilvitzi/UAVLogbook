@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- App General Strings -->
+
+
+    <!-- Footer -->
+    <string name="footer_home">Home</string>
+    <string name="footer_add_session">Add Session</string>
+    <string name="footer_reports">Reports</string>
+
+    <!-- Activities -->
+    <string name="title_activity_splash_screen"></string>
+    <string name="title_activity_add_session">Add Session</string>
+    <string name="title_activity_reports">Reports</string>
+    <string name="title_activity_sessions_table">All Sessions</string>
+    <string name="title_activity_table_view">ActivityTableView</string>
+    <string name="title_activity_about">About</string>
+    <string name="title_activity_import_export">Import / Export</string>
+    <string name="title_activity_google_drive_sync">Sync with Google Drive</string>
+    <string name="title_activity_activity_google_drive_sync">Sync with Google Drive</string>
+	<string name="title_activity_whats_new">What\'s New ?</string>
+	
+    <!-- Menu Items -->
+    <string name="menu_home">Home</string>
+    <string name="menu_back">Back</string>
+    <string name="menu_reports">Reports</string>
+    <string name="menu_add_session">Add Session</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_go_back">Back</string>
+    <string name="action_add_session">Add Session</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_export_import">Export / Import</string>
+    <string name="action_import">Import</string>
+    <string name="action_export">Export</string>
+    <string name="action_sync">Sync with Google Drive</string>
+    <string name="action_export_table_to_excel">Export To Excel</string>
+
+    <!-- Add Session Form -->
+    <!-- Field Labels -->
+    <string name="input_date">Date:</string>
+    <string name="input_start_time">Start Time:</string>
+    <string name="input_duration">Duration:</string>
+    <string name="input_sessions">Sessions:</string>
+    <string name="input_platform">Platform:</string>
+    <string name="input_location">Location:</string>
+    <string name="input_command">Command:</string>
+    <string name="input_seat">Seat:</string>
+    <string name="input_sim_actual">Sim / Actual:</string>
+    <string name="input_flight_type">Flight Type:</string>
+    <string name="input_crew">Crew:</string>
+    <string name="input_sortie">Sortie:</string>
+    <string name="input_subject">Subject:</string>
+    <string name="input_sub_subject">Sub-Subject:</string>
+    <string name="input_remarks">Remarks:</string>
+    <string name="input_start_date_and_time">Start Date &amp; Time:</string>
+    <string name="lbl_counted_activities">Counted Activities:</string>
+
+    <!-- Default Values -->
+    <string name="command_pic">PIC</string>
+    <string name="command_sic">SIC</string>
+    <string name="command_trainee">Trainee</string>
+    <string name="command_ep">External Pilot</string>
+    <string name="command_other">Other</string>
+    <string name="seat_avo">AVO</string>
+    <string name="seat_po">Payload Operator</string>
+    <string name="seat_mc">Mission Commander</string>
+    <string name="seat_instructor">Instructor</string>
+    <string name="seat_instructor_trainer">Instructor Trainer</string>
+    <string name="seat_ep">External Pilot</string>
+    <string name="seat_other">Other</string>
+    <string name="flight_type_lesson">Lesson</string>
+    <string name="flight_type_training">Training</string>
+    <string name="flight_type_operational">Operational</string>
+    <string name="flight_type_technical">Technical</string>
+    <string name="flight_type_demonstration">Demonstration</string>
+    <string name="flight_type_test_flight">Test Flight</string>
+    <string name="field_day">Day</string>
+    <string name="field_night">Night</string>
+    <string name="field_simulator">Simulator</string>
+    <string name="field_simulator_short">sim</string>
+    <string name="field_actual_flight">Actual Flight</string>
+    <string name="field_actual_flight_short">actual</string>
+    <string name="field_go_around">G/A</string>
+    <string name="field_takeoff">T/O</string>
+    <string name="field_landing">LDG</string>
+    <string name="picker_duration_title">Session Duration:</string>
+    <string name="picker_starttime_title">Start Time:</string>
+    <string name="picker_date_title">Date:</string>
+    <string name="clear_form">Clear Form</string>
+    <string name="input_tags">Tags:</string>
+    <string name="input_add_custom">Add Custom Option</string>
+    <string name="custom_input">Add Your Own:</string>
+
+    <!-- Hints -->
+    <string name="hint_aerodrome_name">Aerodrome Name</string>
+    <string name="hint_icao">ICAO</string>
+    <string name="hint_registration_number">Regis. No.</string>
+    <string name="hint_tail_number">Tail No.</string>
+    <string name="hint_time">Time</string>
+    <string name="hint_date">Date</string>
+    <string name="hint_remarks">Free Text Remarks</string>
+    <string name="hint_duration_time_format">H:mm</string>
+    <string name="hint_custom_text">Enter Custom Text</string>
+    <string name="hint_tag_name">Enter Tag Name</string>
+    <string name="hint_add_new_tag">Enter New Tag Here..</string>
+    <string name="hint_custom_input">Your Custom Value</string>
+    <string name="hint_go_around">0</string>
+    <string name="hint_takeoff">0</string>
+    <string name="hint_landing">0</string>
+    <string name="custom_input_button_caption">Add</string>
+    <string name="custom_input_button_go">Go</string>
+    <string name="hint_platform_type">Type</string>
+    <string name="hint_platform_variation">Variation</string>
+
+    <!-- Error Messages -->
+    <string name="error_date_not_specified">Date is Required, touch to select</string>
+    <string name="error_date_wrong_format">Date wrong format \n correct format is dd/mm/yyyy</string>
+    <string name="error_duration_not_specified">Duration is Required, Touch to select</string>
+    <string name="error_duration_wrong_format">Duration format HH:mm</string>
+    <string name="error_sim_actual_not_selected">Please Choose: Sim / Actual</string>
+    <string name="error_day_night_not_selected">Please Choose: Day / Night</string>
+    <string name="error_takeoffs_input_not_a_number">Please enter number of Takeoffs</string>
+    <string name="error_landings_input_not_a_number">Please enter number of Landings</string>
+    <string name="error_go_arounds_input_not_a_number">Please enter number of Go-Arounds</string>
+    <string name="error_only_numbers_allowed">Please enter number of Go-Arounds</string>
+    <string name="error_unknown">An Error Occurred. \n Please Try Again Later</string>
+
+
+    <!-- Tables -->
+    <string name="input_reg_n_tail">Registration  &amp; Tail Number:</string>
+    <string name="tbl_hdr_date">Date</string>
+    <string name="tbl_hdr_duration">Hours</string>
+    <string name="tbl_hdr_platform">Platform</string>
+    <string name="tbl_hdr_reg">Reg.</string>
+    <string name="tbl_hdr_icao">ICAO</string>
+
+    <!-- Misc. -->
+    <string name="home_page_no_sessions_found">You have no sessions yet..</string>
+    <string name="please_wait_progress">Please Wait&#8230;</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="msg_not_implemented">Not implemented yet</string>
+    <string name="about">About</string>
+    <string name="cont">Content</string>
+
+
+    <!-- Reports Strings -->
+    <string name="report_all_sessions">All Sessions</string>
+    <string name="report_sessions_this_year">Sessions This Year</string>
+    <string name="report_last_session_date">Last Session Date</string>
+    <string name="report_hours_per_platform">Hours Per Platform</string>
+    <string name="report_hours_per_location">Hours Per Location</string>
+    <string name="report_hours_per_year">Hours Per Year</string>
+    <string name="report_caa_report">CAA Report</string>
+    <string name="report_search_by_tag">Search By TAG</string>
+
+    <!-- Import  Export -->
+    <string name="progress_importing_from_excel">Importing From Excel..</string>
+    <string name="warning_importing_failed">Importing Failed</string>
+    <string name="toast_sessions_imported_successfuly"> Sessions Imported Successfully</string>
+    <string name="toast_sessions_failed"> Sessions Import Failed</string>
+    <string name="toast_importing">Importing</string>
+    <string name="toast_failed">Failed</string>
+    <string name="action_share">Share</string>
+    <string name="action_share_subject">UAV Logbook - %s</string>
+    <string name="dialog_exporting_table">Exporting Table...</string>
+    <string name="error_toast_csv_export_failed">CSV Export Failed</string>
+    <string name="exporting_progress_dialog_message">Exporting Table\n %1$s / %2$s</string>
+
+
+    <!-- Google Drive Sync -->
+    <string name="action_google_drive_sync">Sync Google Drive</string>
+    <string name="title_sync_with_google_drive">Syncing your Logbook with Google Drive:</string>
+    <string name="description_sync_with_google_drive">With Google Drive Sync, now you Can:</string>
+    <string name="google_drive_badge_desc">Google Drive Logo</string>
+
+    <string name="sync_with_google_drive_bullet1">&#8226; Sync your data with a Google Sheet File on your Drive</string>
+    <string name="sync_with_google_drive_bullet2">&#8226; Backup and Restore your Logbook.</string>
+    <string name="sync_with_google_drive_bullet3">&#8226; Use multiple devices with the same Logbook database.</string>
+    <string name="sync_with_google_drive_bullet4">&#8226; View, Edit or Print your data directly from the Drive.</string>
+
+    <!-- General Features -->
+    <string name="quick_start_session">Quick Start</string>
+
+
+    <!--  What's New Screen -->
+    <string name="whats_new">What\'s New?</string>
+    <string name="whats_new_title">What\'s New in this Version ?</string>
+    <string name="start_syncing_now">Start Syncing Now!</string>
+    <string name="whats_new_next_button">Next</string>
+    <string name="whats_new_skip_button">Got it!</string>
+    <string name="google_drive_sync_feature_image_desc">Google Drive Sync featuer image</string>
+    <string name="quick_start_feature_image_desc">Quick Start Feature Image</string>
+    <string name="title_quick_start_button_feature">Quick Start Button</string>
+    <string name="quick_start_feature_desc">
+        The new Quick Start button lets you quickly start a duration counter when you start your session,
+        then when you finish, just click Stop.
+        \n an Add Session Form will automatically pop-up with your session Duration and Date.
+    </string>
+    <!-- Version V2 -->
+
+</resources>
