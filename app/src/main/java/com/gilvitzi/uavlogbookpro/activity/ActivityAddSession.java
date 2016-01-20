@@ -169,7 +169,6 @@ public class ActivityAddSession extends DatabaseActivity {
 	
 	private AerodromesDataSource aerodromes_db;
 
-
 	@Override
 	protected void onDestroy() {
 	    super.onDestroy();
@@ -202,7 +201,7 @@ public class ActivityAddSession extends DatabaseActivity {
 
         getPopUpWindowsReference();
 		
-		showProgress(true,thisActivity);
+		showProgress(true, thisActivity);
 		
 
         getFormControlsReferences();
@@ -506,40 +505,39 @@ public class ActivityAddSession extends DatabaseActivity {
 	}
 
 	private boolean isEditMode() {
-		return editSessionId!=0;
+		return editSessionId != 0;
 	}
 
 
 	public class FormPopulateTask extends AsyncTask<String, String, Boolean> {
 
-		private final String LOG_TAG = "FormPopulateTask";
+		private final String LOG_TAG = "PopulateFormTask";
 
 		@Override
 		protected Boolean doInBackground(String... params_list) {
 
 			if (isEditMode()){	//Edit Mode
 				lastSession = getDatasource().getSessionById(editSessionId);
-			}else{					//Add Mode
+			}else{				//Add Mode
 				lastSession = getDatasource().getLastSession();
 			}
 
-			setPlatformTypeAndVariation();
-			setAircraftRegistrationAndTailNum();
-			setAerodromeNameAndIcaoCode();
+			getPlatformTypeAndVariation();
+			getAircraftRegistrationAndTailNum();
+			getAerodromeNameAndIcaoCode();
 
             aerodromes = aerodromes_db.getAllAerodromes(); //fill List with values from db
 
-			addDefaultValues();
+			getCommandSeatAndFlightTypeDefaultValuesFromValuesArray();
+			getCommandSeatAndFlightTypeFromDB();
 
-			addDatabaseValues();
-
-			setComments();
+			getComments();
 
 			addCustomItemToDropDown();
 			return true;
 		}
 
-		private void setComments() {
+        private void getComments() {
 			remarks_li = datasource.distinctValues(LogbookSQLite.COLUMN_COMMENTS);
 		}
 
@@ -553,7 +551,7 @@ public class ActivityAddSession extends DatabaseActivity {
 			flight_type_li.add(item);
 		}
 
-		private void addDatabaseValues() {
+		private void getCommandSeatAndFlightTypeFromDB() {
 			//Commnad
 			ArrayList<String> dbValues = new ArrayList<String>(datasource.distinctValues(LogbookSQLite.COLUMN_COMMAND));
 			for (String item : dbValues){
@@ -579,7 +577,7 @@ public class ActivityAddSession extends DatabaseActivity {
 			}
 		}
 
-		private void addDefaultValues() {
+		private void getCommandSeatAndFlightTypeDefaultValuesFromValuesArray() {
 			//Command
 			String[] defaultValues = getResources().getStringArray(R.array.field_command_items);
 			for (String item : defaultValues){
@@ -599,7 +597,7 @@ public class ActivityAddSession extends DatabaseActivity {
 			}
 		}
 
-		private void setAerodromeNameAndIcaoCode() {
+		private void getAerodromeNameAndIcaoCode() {
 			//Aerodrome Name And ICAO Code
 			ArrayList<NameValuePair> icao_name_pairs = datasource.distinct2ValuesOrdered(LogbookSQLite.COLUMN_ICAO,LogbookSQLite.COLUMN_AERODROME_NAME);
 			if (!icao_name_pairs.isEmpty()){
@@ -616,7 +614,7 @@ public class ActivityAddSession extends DatabaseActivity {
 			}
 		}
 
-		private void setAircraftRegistrationAndTailNum() {
+		private void getAircraftRegistrationAndTailNum() {
 			//Aircraft Registration and Tail Number
 			ArrayList<NameValuePair> reg_n_tail_pairs = datasource.distinct2ValuesOrdered(LogbookSQLite.COLUMN_REGISTRATION,LogbookSQLite.COLUMN_TAIL_NUMBER);
 			if (!reg_n_tail_pairs.isEmpty()){
@@ -633,7 +631,7 @@ public class ActivityAddSession extends DatabaseActivity {
 			}
 		}
 
-		private void setPlatformTypeAndVariation() {
+		private void getPlatformTypeAndVariation() {
 			//Platform Type & Variation
 			ArrayList<NameValuePair> type_variation_pairs = datasource.distinct2ValuesOrdered(LogbookSQLite.COLUMN_PLATFORM_TYPE,LogbookSQLite.COLUMN_PLATFORM_VARIATION);
 			if (!type_variation_pairs.isEmpty()){
@@ -649,8 +647,6 @@ public class ActivityAddSession extends DatabaseActivity {
 				}
 			}
 		}
-
-
 
 		@Override
 		protected void onPostExecute(final Boolean success) {
@@ -701,19 +697,19 @@ public class ActivityAddSession extends DatabaseActivity {
 					seat_spn.setAdapter(seat_adp);
 					flight_type_spn.setAdapter(flight_type_adp);
 
-
 					if (lastSession!=null){
 
 						//set Date for Today
 						setTodaysDate();
 
-						/*  This Code will set the date from last session
-						 String date = null;
-						 date = DateTimeConverter.format(lastSession.getDate(),
-													DateTimeConverter.ISO8601,
-													DateTimeConverter.DATE_SLASHED);
-						 date_et.setText(date);
-						*/
+                        if (isEditMode()) {
+                            // This Code will set the date from last session
+                            String date = null;
+                            date = DateTimeConverter.format(lastSession.getDate(),
+                                    DateTimeConverter.ISO8601,
+                                    DateTimeConverter.DATE_SLASHED);
+                            date_et.setText(date);
+                        }
 
 						// if received duration from Quick Start Button
 						if (qs_duration != 0){
@@ -724,7 +720,6 @@ public class ActivityAddSession extends DatabaseActivity {
 							String duration = d.getString();
 							duration_et.setText(duration);
 						}
-
 
 						//Platform
 						String platform_str = lastSession.getPlatformType() + " " + lastSession.getPlatformVariation();
@@ -784,7 +779,6 @@ public class ActivityAddSession extends DatabaseActivity {
 						//TAGS
 						mTagsContainer.setAutoCompleteValues(datasource.getDistinctTags());
 						mTagsContainer.setTagsFromString(lastSession.getTags());
-
 
 						//set Counted Activities
 						String takeoffs_count = String.valueOf(lastSession.getTakeoffs());
@@ -917,8 +911,8 @@ public class ActivityAddSession extends DatabaseActivity {
 	}
 		
 		
-		public static class DatePickerFragment extends DialogFragment
-        							implements DatePickerDialog.OnDateSetListener {
+    public static class DatePickerFragment extends DialogFragment
+                                implements DatePickerDialog.OnDateSetListener {
 			private ActivityAddSession appState;
 			private String title = "Date:";
 			
@@ -983,539 +977,536 @@ public class ActivityAddSession extends DatabaseActivity {
 			}
 		}
 		
-		// TimePickerDialog Class
-		public static class DurationPickerFragment extends DialogFragment
-								implements TimePickerDialog.OnTimeSetListener {
-	
-			private ActivityAddSession appState;
-			private String title = "Duration:";
-			private EditText editTextObject;
-			@Override
-			public Dialog onCreateDialog(Bundle savedInstanceState) {
-				
-				//get Global Fragment Object Refernce	 
-				 appState = ((ActivityAddSession)getActivity());
-				 Log.v("ADD SESSION","Duration - Fragment onCreate");
-				 editTextObject = appState.duration_et;
-				
-				 int hour;
-				 int minute;
-				 String string_duration = editTextObject.getText().toString();
-				 //if no value in text box
-				 if (string_duration.length() < 0||(string_duration == null)){
-					// put default values:
-					hour = 1;
-					minute = 0;
-					Log.v("ADD SESSION","Duration (Time): default inputs loaded");
-				 }else{ //text box has value
-					//extract date from string
-					 Log.w("ADD SESSION","Time - Parsing Value");
-					Calendar cal = Calendar.getInstance();
-				    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-				    try {
-				    	cal.setTime(sdf.parse(string_duration));
-						//set hour and minute
-						hour = cal.get(Calendar.HOUR_OF_DAY);
-						minute = cal.get(Calendar.MINUTE);
-					} catch (java.text.ParseException e) {
-						//time parse error - set hour and minute to current.
-						e.printStackTrace();
-						Log.e("ADD SESSION","Duration (Time) Parse Error: " + e);
-						final Calendar c = Calendar.getInstance();
-						hour = c.get(Calendar.HOUR_OF_DAY);
-						minute = c.get(Calendar.MINUTE);
-					}
-		
-				 }
-				
-				// Create a new instance of TimePickerDialog and return it
-				return new TimePickerDialog(getActivity(), this, hour, minute,
-				true);
+    // TimePickerDialog Class
+    public static class DurationPickerFragment extends DialogFragment
+                            implements TimePickerDialog.OnTimeSetListener {
 
-			}
-			
-			@Override
-		    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		        // Set title for this dialog
-		        getDialog().setTitle(this.title);
-				return container;
-		    }
-			
-			public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-				// Do something with the time chosen by the user
-				Log.i("ADD SESSION","Duraton - onTimeSet");
-				String str_minute; 
-				if (minute < 10) {str_minute = "0" + minute;}
-				else {str_minute = "" + minute;}
-				editTextObject.setText(hourOfDay + ":" + str_minute);
-				appState.durationPickerFragment = null;
-				this.dismiss();
-			}
-		}
-		public void showTimePickerDialog(View v) {
-			if (timePickerFragment == null){
-				timePickerFragment = new TimePickerFragment();
-				timePickerFragment.show(getSupportFragmentManager(), "timePicker");
-			}
-		}
-		
-		public void showDurationPickerDialog(View v) {
-			if (durationPickerFragment == null){
-				Log.v("ADD SESSION","Duration - showDurationPickerDialog");
-				durationPickerFragment = new DurationPickerFragment();
-				durationPickerFragment.show(getSupportFragmentManager(), "timePicker");
-			}
-		}
-		
-		public void showDatePickerDialog(View v) {
-			if (datePickerFragment == null){
-				datePickerFragment = new DatePickerFragment();
-				datePickerFragment.show(getSupportFragmentManager(), "datePicker");
-			}
-		}
-		
-			//Invoked on Submit button click
-			public void formSubmit(View v){
-				
-				//Hide SoftKeybard
-				InputMethodManager imm = (InputMethodManager)getSystemService(
-					      Context.INPUT_METHOD_SERVICE);
-				imm.hideSoftInputFromWindow(this.date_et.getWindowToken(), 0);
-					
-				//Validate Fields And Post Data to Server
-				
-				//Check if a pending Tag is not submitted
-                AutoCompleteTextView addTagField = (AutoCompleteTextView) UIMessage.getViewsByTag(mTagsContainer,"addTagField").get(0);
-                String unsubmittedTag = addTagField.getText().toString();
-                if (unsubmittedTag.length() != 0){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setTitle("Unsubmitted Tag")
-                    .setMessage("The Tag '" + unsubmittedTag + "' was entered but not added. \n Do you want to add it as a tag to this session?")
-                    
-                    .setNegativeButton("Close",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
+        private ActivityAddSession appState;
+        private String title = "Duration:";
+        private EditText editTextObject;
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+            //get Global Fragment Object Refernce
+             appState = ((ActivityAddSession)getActivity());
+             Log.v("ADD SESSION","Duration - Fragment onCreate");
+             editTextObject = appState.duration_et;
+
+             int hour;
+             int minute;
+             String string_duration = editTextObject.getText().toString();
+             //if no value in text box
+             if (string_duration.length() < 0||(string_duration == null)){
+                // put default values:
+                hour = 1;
+                minute = 0;
+                Log.v("ADD SESSION","Duration (Time): default inputs loaded");
+             }else{ //text box has value
+                //extract date from string
+                 Log.w("ADD SESSION","Time - Parsing Value");
+                Calendar cal = Calendar.getInstance();
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+                try {
+                    cal.setTime(sdf.parse(string_duration));
+                    //set hour and minute
+                    hour = cal.get(Calendar.HOUR_OF_DAY);
+                    minute = cal.get(Calendar.MINUTE);
+                } catch (java.text.ParseException e) {
+                    //time parse error - set hour and minute to current.
+                    e.printStackTrace();
+                    Log.e("ADD SESSION","Duration (Time) Parse Error: " + e);
+                    final Calendar c = Calendar.getInstance();
+                    hour = c.get(Calendar.HOUR_OF_DAY);
+                    minute = c.get(Calendar.MINUTE);
+                }
+
+             }
+
+            // Create a new instance of TimePickerDialog and return it
+            return new TimePickerDialog(getActivity(), this, hour, minute,
+            true);
+
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            // Set title for this dialog
+            getDialog().setTitle(this.title);
+            return container;
+        }
+
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            // Do something with the time chosen by the user
+            Log.i("ADD SESSION","Duraton - onTimeSet");
+            String str_minute;
+            if (minute < 10) {str_minute = "0" + minute;}
+            else {str_minute = "" + minute;}
+            editTextObject.setText(hourOfDay + ":" + str_minute);
+            appState.durationPickerFragment = null;
+            this.dismiss();
+        }
+    }
+    public void showTimePickerDialog(View v) {
+        if (timePickerFragment == null){
+            timePickerFragment = new TimePickerFragment();
+            timePickerFragment.show(getSupportFragmentManager(), "timePicker");
+        }
+    }
+
+    public void showDurationPickerDialog(View v) {
+        if (durationPickerFragment == null){
+            Log.v("ADD SESSION","Duration - showDurationPickerDialog");
+            durationPickerFragment = new DurationPickerFragment();
+            durationPickerFragment.show(getSupportFragmentManager(), "timePicker");
+        }
+    }
+
+    public void showDatePickerDialog(View v) {
+        if (datePickerFragment == null){
+            datePickerFragment = new DatePickerFragment();
+            datePickerFragment.show(getSupportFragmentManager(), "datePicker");
+        }
+    }
+
+    //Invoked on Submit button click
+    public void formSubmit(View v){
+
+            //Hide SoftKeybard
+            InputMethodManager imm = (InputMethodManager)getSystemService(
+                      Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(this.date_et.getWindowToken(), 0);
+
+            //Validate Fields And Post Data to Server
+
+            //Check if a pending Tag is not submitted
+            AutoCompleteTextView addTagField = (AutoCompleteTextView) UIMessage.getViewsByTag(mTagsContainer,"addTagField").get(0);
+            String unsubmittedTag = addTagField.getText().toString();
+            if (unsubmittedTag.length() != 0){
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Unsubmitted Tag")
+                .setMessage("The Tag '" + unsubmittedTag + "' was entered but not added. \n Do you want to add it as a tag to this session?")
+
+                .setNegativeButton("Close",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        //Add the Tag to the Container
+                        AutoCompleteTextView addTagField = (AutoCompleteTextView) UIMessage.getViewsByTag(mTagsContainer, "addTagField").get(0);
+                        mTagsContainer.addTag(addTagField.getText().toString());
+                        attemptSubmit();
+                    }
+                });
+
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                      public void onClick(DialogInterface dialog, int whichButton) {
+                        // Do Nothing ( The Tag will not be Added)
+                          attemptSubmit();
+                      }
                     });
-                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            //Add the Tag to the Container
-                            AutoCompleteTextView addTagField = (AutoCompleteTextView) UIMessage.getViewsByTag(mTagsContainer, "addTagField").get(0);
-                            mTagsContainer.addTag(addTagField.getText().toString());
-                            attemptSubmit();
-                        }
-                    });
-                        
-                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                          public void onClick(DialogInterface dialog, int whichButton) {
-                            // Do Nothing ( The Tag will not be Added)
-                              attemptSubmit();
-                          }
-                        });
-                        
-                    AlertDialog alert = builder.create();
-					alert.show();
-                }else{
-                    //There is no Unsubmitted Tag Pending.
-                    //So Just go On with Adding a Session
-                    attemptSubmit();
-                }
-                
-				
-			}
-		
-			@SuppressWarnings("unchecked")
-			public void attemptSubmit() {
-				if (mAddSessionTask != null) {
-					return;
-				}
-				
-				
-				
-			boolean inputs_ok = check_inputs();
-			if (inputs_ok){
-				// Show a progress spinner, and kick off a background task to
-				// perform the ADD SESSION TASK attempt.
-				showProgress(true,thisActivity);
 
-			    mAddSessionTask = new AddSessionTask(this);
-			    mAddSessionTask.execute();
+                AlertDialog alert = builder.create();
+                alert.show();
+            }else{
+                //There is no Unsubmitted Tag Pending.
+                //So Just go On with Adding a Session
+                attemptSubmit();
+            }
 
 
-			}else{
-				//focusView.requestFocus();
-			}
+        }
 
-		}
-		
-		/**
-		 * This Method Validates the form Inputs
-		 * and displays message to user if error found
-		 * @return true if they are correct format, false otherwise
-		 * 
-		 */
-		private boolean check_inputs(){
-			//set up toast values
-			int toast_duration = Toast.LENGTH_SHORT;
-			Context context = getApplicationContext();
-			Toast toast = null;
-			CharSequence message = null;
-			
-			boolean validate = true;
-
-			
-			// get fields values
-
-			
-			String date = date_et.getText().toString();
-			String duration = duration_et.getText().toString();
-			
-			int sim_actual_selected_id = sim_actual_radio.getCheckedRadioButtonId();
-			int day_night_selected_id = day_night_radio.getCheckedRadioButtonId();
-			
-			String takeoffs = takeoffs_et.getText().toString();
-		    String landings = landings_et.getText().toString();
-		    String go_arounds = go_arounds_et.getText().toString();
-		    
-		    
-			//set up regex and formats
-			final String REGEX_INPUT_DATE = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)";
-			final String REGEX_INPUT_TIME = "([01]?[0-9]|2[0-3]):[0-5][0-9]";
-			final String REGEX_ONLY_NUMS = "^[0-9]*$";
-			
-			Pattern pattern_date = Pattern.compile(REGEX_INPUT_DATE);
-			Pattern pattern_time = Pattern.compile(REGEX_INPUT_TIME);
-			Pattern pattern_numbers = Pattern.compile(REGEX_ONLY_NUMS);
-			
-			Matcher date_matcher = pattern_date.matcher(date);
-			Matcher duration_matcher = pattern_time.matcher(duration);
-			
-			Matcher takeoffs_matcher = pattern_numbers.matcher(takeoffs);
-			Matcher landings_matcher = pattern_numbers.matcher(landings);
-			Matcher go_arounds_matcher = pattern_numbers.matcher(go_arounds);
-			
-			//Check inputs and show errors
-			if (date.length() == 0){ //no date input
-				message = getResources().getString(R.string.error_date_not_specified);
-				date_et.setError(message);
-                date_et.requestFocus();
-				validate = false;
-			}else if (!date_matcher.matches()){//date in wrong format
-			    message = getResources().getString(R.string.error_date_wrong_format);
-				date_et.setError(message);
-				date_et.requestFocus();
-				validate = false;
-			}else if (duration.length() == 0){//no duration input
-			    message = getResources().getString(R.string.error_duration_not_specified);
-				duration_et.setError(message);
-				duration_et.requestFocus();
-				validate = false;
-			}else if (!duration_matcher.matches()){//duration wrong format
-				message = getResources().getString(R.string.error_duration_wrong_format);
-				duration_et.setError(message);
-                duration_et.requestFocus();
-				validate = false;
-			}else if (sim_actual_selected_id == -1){//No Selection was made for Sim / Actual Field
-			    message = getResources().getString(R.string.error_sim_actual_not_selected);
-				sim_radio.requestFocus();
-				validate = false;
-			}else if (day_night_selected_id == -1){//No Selection was made for Sim / Actual Field
-			    message = getResources().getString(R.string.error_day_night_not_selected);
-				day_radio.requestFocus();
-				validate = false;
-			}else if (!takeoffs_matcher.matches()&&(takeoffs.length() > 0)){ //takeoffs not a number (and not empty)
-			    message = getResources().getString(R.string.error_takeoffs_input_not_a_number);
-				takeoffs_et.setError(getResources().getString(R.string.error_only_numbers_allowed));
-				takeoffs_et.requestFocus();
-				validate = false;
-			}else if (!landings_matcher.matches()&&(landings.length() > 0)){ // landings not a number (and not empty)
-			    message = getResources().getString(R.string.error_landings_input_not_a_number);
-				landings_et.setError(getResources().getString(R.string.error_only_numbers_allowed));
-				landings_et.requestFocus();
-				validate = false;
-			}else if (!go_arounds_matcher.matches()&&(go_arounds.length() > 0)){ // go arounds not a number (and not empty)
-			    message = getResources().getString(R.string.error_go_arounds_input_not_a_number);
-				go_arounds_et.setError(getResources().getString(R.string.error_only_numbers_allowed));
-				go_arounds_et.requestFocus();
-				validate = false;
-			}
-			
-		    if (validate){
-		    	return true;
-		    }else{
-		    	Log.e(LOG_TAG,"Form validation failed: " + message);
-		    	toast = Toast.makeText(context, message, toast_duration);
-				toast.show();
-				return false;
-		    }
-		}
-		
-		
-		private class AddSessionTask extends AsyncTask<String, String, Boolean> {
-		    private final String LOG_TAG = "AddSessionTask";
-			private Context context;
-			private Session session;
-			public AddSessionTask(Context context){
-				this.context = context;
-			}
-
-			@Override
-			protected Boolean doInBackground(String... params_list) {
-
-				session = new Session();
+    @SuppressWarnings("unchecked")
+    public void attemptSubmit() {
+            if (mAddSessionTask != null) {
+                return;
+            }
 
 
-				session.setDate(getDate());
-				session.setDuration(getDuration());
-				session.setDayNight(getDayNight());
 
-				StringValuePair platformTypeAndVariation = getPlatformTypeAndVariationPair();
-				session.setPlatformType(platformTypeAndVariation.getFirst());
-				session.setPlatformVariation(platformTypeAndVariation.getSecond());
+        boolean inputs_ok = check_inputs();
+        if (inputs_ok){
+            // Show a progress spinner, and kick off a background task to
+            // perform the ADD SESSION TASK attempt.
+            showProgress(true,thisActivity);
 
-				StringValuePair regAndTailNumber = getRegAndTailNumberPair();
-				session.setRegistration(regAndTailNumber.getFirst());
-				session.setTailNumber(regAndTailNumber.getSecond());
-
-				StringValuePair icaoAndName = getIcaoAndNamePair();
-				session.setICAO(icaoAndName.getFirst());
-				session.setAerodromeName(icaoAndName.getSecond());
+            mAddSessionTask = new AddSessionTask(this);
+            mAddSessionTask.execute();
 
 
-				session.setCommand(getCommand());
-				session.setSeat(getSeat());
-				session.setSimActual(getSimOrActual());
-				session.setFlightType(getFlightType());
-				session.setTags(getTags());
-				session.setTakeoffs(getTakeoffs());
-				session.setLandings(getLandings());
-				session.setGoArounds(getGoArounds());
-				session.setComments(getRemarks());
+        }else{
+            //focusView.requestFocus();
+        }
 
-			    
-			    if (isEditMode())
-					return attemptUpdateSession();
-			    else
-					return attemptAddSession();
+    }
 
+    /**
+     * This Method Validates the form Inputs
+     * and displays message to user if error found
+     * @return true if they are correct format, false otherwise
+     *
+     */
+    private boolean check_inputs(){
+        //set up toast values
+        int toast_duration = Toast.LENGTH_SHORT;
+        Context context = getApplicationContext();
+        Toast toast = null;
+        CharSequence message = null;
 
-			}
-
-			@NonNull
-			private Boolean attemptAddSession() {
-				Log.i(LOG_TAG, "User Attempt Add Session");
-				session.setId(datasource.addSession(session));
-				return true;
-			}
-
-			private boolean attemptUpdateSession() {
-				Log.i(LOG_TAG, "User Attempt Edit Session (id=" + editSessionId + ")");
-				session.setId(editSessionId);
-				return datasource.updateSession(session);
-			}
-
-			@NonNull
-			private String getRemarks() {
-				return remarks_et.getText().toString();
-			}
-
-			private long getTakeoffs() {
-				String takeoffs = takeoffs_et.getText().toString();
-				if (takeoffs.isEmpty()){
-					takeoffs = "0";
-				}
-				return Long.parseLong(takeoffs);
-			}
-
-			private long getLandings() {
-				String landings = landings_et.getText().toString();
-				if (landings.isEmpty()){
-					landings = "0";
-				}
-				return Long.parseLong(landings);
-			}
-
-			private long getGoArounds() {
-				String goArounds = go_arounds_et.getText().toString();
-				if (goArounds.isEmpty()){
-					goArounds = "0";
-				}
-				return Long.parseLong(goArounds);
-			}
-
-			private String getTags() {
-				return mTagsContainer.getTagsString();
-			}
-
-			private String getFlightType() {
-				return flight_type_spn.getSelectedItem().toString();
-			}
-
-			private String getSimOrActual() {
-				int sim_actual_selected_id = sim_actual_radio.getCheckedRadioButtonId();
-				RadioButton sim_actual_sel_btn = (RadioButton) findViewById(sim_actual_selected_id);
-
-				String sim_actual = null;
-				if (sim_actual_sel_btn != null){
-                    return sim_actual_sel_btn.getText().toString();
-                }else{
-                    Log.e(LOG_TAG, "No input for Sim / Actual");
-					return "";
-                }
-			}
-
-			private String getSeat() {
-				return seat_spn.getSelectedItem().toString();
-			}
-
-			private String getCommand() {
-				return command_spn.getSelectedItem().toString();
-			}
-
-			private StringValuePair getIcaoAndNamePair() {
-				//Get Custom Location
-				String loc_icao = "";
-				String loc_name = "";
-
-				int loc_ind = location_spn.getSelectedItemPosition();
-				if(loc_ind==location_spn.getCount()-1){
-					//New Location Entered
-					loc_icao = loc_icao_et.getText().toString();
-					loc_name = loc_name_et.getText().toString();
-				}else{
-					//Preset Location Selected
-					loc_icao = location_li_icao_ind.get(loc_ind);
-					loc_name = location_li_name_ind.get(loc_ind);
-				}
-				return new StringValuePair(loc_icao,loc_name);
-			}
-
-			private StringValuePair getRegAndTailNumberPair() {
-				String reg_no = "";
-				String tail_no = "";
-
-				int reg_n_tail_ind = reg_n_tail_spn.getSelectedItemPosition();
-				if(reg_n_tail_ind == reg_n_tail_spn.getCount()-1){
-					//New Registration Entered
-					reg_no = reg_no_et.getText().toString();
-					tail_no = tail_no_et.getText().toString();
-				}else{
-					reg_no = reg_li.get(reg_n_tail_ind);
-					tail_no = tail_li.get(reg_n_tail_ind);
-				}
-				return new StringValuePair(reg_no, tail_no);
-			}
+        boolean validate = true;
 
 
-			private StringValuePair getPlatformTypeAndVariationPair(){
-				String platformType = "";
-				String platformVariation = "";
+        // get fields values
 
-				int platfomrSelectedIndex = platform_spn.getSelectedItemPosition();
 
-				if(isNewPlatformEntered()) {
-					platformType = plat_type.getText().toString();
-					platformVariation = plat_variation.getText().toString();
-				}else {
-					platformType = plat_type_li.get(platfomrSelectedIndex);
-					platformVariation = plat_variation_li.get(platfomrSelectedIndex);
-				}
+        String date = date_et.getText().toString();
+        String duration = duration_et.getText().toString();
 
-				return new StringValuePair(platformType, platformVariation);
+        int sim_actual_selected_id = sim_actual_radio.getCheckedRadioButtonId();
+        int day_night_selected_id = day_night_radio.getCheckedRadioButtonId();
 
-			}
+        String takeoffs = takeoffs_et.getText().toString();
+        String landings = landings_et.getText().toString();
+        String go_arounds = go_arounds_et.getText().toString();
 
-			private boolean isNewPlatformEntered() {
-				return platform_spn.getSelectedItemPosition() == platform_spn.getCount()-1;
-			}
 
-			private String getDayNight() {
-				int day_night_selected_id = day_night_radio.getCheckedRadioButtonId();
-				RadioButton day_night_sel_btn = (RadioButton) findViewById(day_night_selected_id);
+        //set up regex and formats
+        final String REGEX_INPUT_DATE = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)";
+        final String REGEX_INPUT_TIME = "([01]?[0-9]|2[0-3]):[0-5][0-9]";
+        final String REGEX_ONLY_NUMS = "^[0-9]*$";
 
-				String day_night = null;
-				if (day_night_sel_btn != null){
-                    return day_night_sel_btn.getText().toString();
-                }else{
-					Log.e(LOG_TAG, "No input for Day / Night");
-					return "";
-                }
-			}
+        Pattern pattern_date = Pattern.compile(REGEX_INPUT_DATE);
+        Pattern pattern_time = Pattern.compile(REGEX_INPUT_TIME);
+        Pattern pattern_numbers = Pattern.compile(REGEX_ONLY_NUMS);
 
-			@NonNull
-			private String getDuration() {
-				String durationString = duration_et.getText().toString();
+        Matcher date_matcher = pattern_date.matcher(date);
+        Matcher duration_matcher = pattern_time.matcher(duration);
 
-				Duration d = new Duration();
-				d.setString(durationString);
-				return d.getISO8601();
-			}
+        Matcher takeoffs_matcher = pattern_numbers.matcher(takeoffs);
+        Matcher landings_matcher = pattern_numbers.matcher(landings);
+        Matcher go_arounds_matcher = pattern_numbers.matcher(go_arounds);
 
-			private String getDate() {
-				String date = "";
+        //Check inputs and show errors
+        if (date.length() == 0){ //no date input
+            message = getResources().getString(R.string.error_date_not_specified);
+            date_et.setError(message);
+            date_et.requestFocus();
+            validate = false;
+        }else if (!date_matcher.matches()){//date in wrong format
+            message = getResources().getString(R.string.error_date_wrong_format);
+            date_et.setError(message);
+            date_et.requestFocus();
+            validate = false;
+        }else if (duration.length() == 0){//no duration input
+            message = getResources().getString(R.string.error_duration_not_specified);
+            duration_et.setError(message);
+            duration_et.requestFocus();
+            validate = false;
+        }else if (!duration_matcher.matches()){//duration wrong format
+            message = getResources().getString(R.string.error_duration_wrong_format);
+            duration_et.setError(message);
+            duration_et.requestFocus();
+            validate = false;
+        }else if (sim_actual_selected_id == -1){//No Selection was made for Sim / Actual Field
+            message = getResources().getString(R.string.error_sim_actual_not_selected);
+            sim_radio.requestFocus();
+            validate = false;
+        }else if (day_night_selected_id == -1){//No Selection was made for Sim / Actual Field
+            message = getResources().getString(R.string.error_day_night_not_selected);
+            day_radio.requestFocus();
+            validate = false;
+        }else if (!takeoffs_matcher.matches()&&(takeoffs.length() > 0)){ //takeoffs not a number (and not empty)
+            message = getResources().getString(R.string.error_takeoffs_input_not_a_number);
+            takeoffs_et.setError(getResources().getString(R.string.error_only_numbers_allowed));
+            takeoffs_et.requestFocus();
+            validate = false;
+        }else if (!landings_matcher.matches()&&(landings.length() > 0)){ // landings not a number (and not empty)
+            message = getResources().getString(R.string.error_landings_input_not_a_number);
+            landings_et.setError(getResources().getString(R.string.error_only_numbers_allowed));
+            landings_et.requestFocus();
+            validate = false;
+        }else if (!go_arounds_matcher.matches()&&(go_arounds.length() > 0)){ // go arounds not a number (and not empty)
+            message = getResources().getString(R.string.error_go_arounds_input_not_a_number);
+            go_arounds_et.setError(getResources().getString(R.string.error_only_numbers_allowed));
+            go_arounds_et.requestFocus();
+            validate = false;
+        }
 
-				try{
-                    date = DateTimeConverter.format(date_et.getText().toString(), DateTimeConverter.DATE_SLASHED, DateTimeConverter.ISO8601);
-                }catch(Exception e){
-                    Log.e(LOG_TAG, "Date parsing failed: " + e);
-                }
-				return date;
-			}
+        if (validate){
+            return true;
+        }else{
+            Log.e(LOG_TAG,"Form validation failed: " + message);
+            toast = Toast.makeText(context, message, toast_duration);
+            toast.show();
+            return false;
+        }
+    }
 
-			@Override
-			protected void onPostExecute(final Boolean success) {
-				mAddSessionTask = null;
-				showProgress(false, thisActivity);
-		
-				if (success) {
-				    mTracker.send(new HitBuilders.EventBuilder()
-			        .setCategory("Sessions")
-			        .setAction("Add")
-			        .build());
-					thisActivity.finish();
-				} else {
-					
-			    	Log.e(LOG_TAG,"Error: " + err_msg);
-					UIMessage.makeToast(context, getResources().getString(R.string.error_unknown));
-					mTracker.send(new HitBuilders.EventBuilder()
-			        .setCategory("Sessions")
-			        .setAction("Add Failed")
-			        .build());
-					thisActivity.finish();
-				}
-			}
-		
-			@Override
-			protected void onCancelled() {
-				mAddSessionTask = null;
-				showProgress(false,thisActivity);
-			}
-		}
-		
-		
-		/**
-		 * Shows the progress UI and hides the register form.
-		 */
-		@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-		private void showProgress(final boolean show, Context context) {
-			if (show){
-				pDialog = ProgressDialog.show(context, "", getResources().getString(R.string.please_wait_progress), true);
-			}else{
-				pDialog.dismiss();
-			}
-		}
-		
-	    
-		@Override
-		public boolean onOptionsItemSelected(MenuItem item) {
-		    // Handle item selection
-		    switch (item.getItemId()) {
-		    default:
-		        return super.onOptionsItemSelected(item);
-		    }
-		}
-		
-		private void updateRegAadTail(){
+    private class AddSessionTask extends AsyncTask<String, String, Boolean> {
+        private final String LOG_TAG = "AddSessionTask";
+        private Context context;
+        private Session session;
+        public AddSessionTask(Context context){
+            this.context = context;
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params_list) {
+
+            session = new Session();
+
+
+            session.setDate(getDate());
+            session.setDuration(getDuration());
+            session.setDayNight(getDayNight());
+
+            StringValuePair platformTypeAndVariation = getPlatformTypeAndVariationPair();
+            session.setPlatformType(platformTypeAndVariation.getFirst());
+            session.setPlatformVariation(platformTypeAndVariation.getSecond());
+
+            StringValuePair regAndTailNumber = getRegAndTailNumberPair();
+            session.setRegistration(regAndTailNumber.getFirst());
+            session.setTailNumber(regAndTailNumber.getSecond());
+
+            StringValuePair icaoAndName = getIcaoAndNamePair();
+            session.setICAO(icaoAndName.getFirst());
+            session.setAerodromeName(icaoAndName.getSecond());
+
+
+            session.setCommand(getCommand());
+            session.setSeat(getSeat());
+            session.setSimActual(getSimOrActual());
+            session.setFlightType(getFlightType());
+            session.setTags(getTags());
+            session.setTakeoffs(getTakeoffs());
+            session.setLandings(getLandings());
+            session.setGoArounds(getGoArounds());
+            session.setComments(getRemarks());
+
+
+            if (isEditMode())
+                return attemptUpdateSession();
+            else
+                return attemptAddSession();
+
+
+        }
+
+        @NonNull
+        private Boolean attemptAddSession() {
+            Log.i(LOG_TAG, "User Attempt Add Session");
+            session.setId(datasource.addSession(session));
+            return true;
+        }
+
+        private boolean attemptUpdateSession() {
+            Log.i(LOG_TAG, "User Attempt Edit Session (id=" + editSessionId + ")");
+            session.setId(editSessionId);
+            return datasource.updateSession(session);
+        }
+
+        @NonNull
+        private String getRemarks() {
+            return remarks_et.getText().toString();
+        }
+
+        private long getTakeoffs() {
+            String takeoffs = takeoffs_et.getText().toString();
+            if (takeoffs.isEmpty()){
+                takeoffs = "0";
+            }
+            return Long.parseLong(takeoffs);
+        }
+
+        private long getLandings() {
+            String landings = landings_et.getText().toString();
+            if (landings.isEmpty()){
+                landings = "0";
+            }
+            return Long.parseLong(landings);
+        }
+
+        private long getGoArounds() {
+            String goArounds = go_arounds_et.getText().toString();
+            if (goArounds.isEmpty()){
+                goArounds = "0";
+            }
+            return Long.parseLong(goArounds);
+        }
+
+        private String getTags() {
+            return mTagsContainer.getTagsString();
+        }
+
+        private String getFlightType() {
+            return flight_type_spn.getSelectedItem().toString();
+        }
+
+        private String getSimOrActual() {
+            int sim_actual_selected_id = sim_actual_radio.getCheckedRadioButtonId();
+            RadioButton sim_actual_sel_btn = (RadioButton) findViewById(sim_actual_selected_id);
+
+            String sim_actual = null;
+            if (sim_actual_sel_btn != null){
+                return sim_actual_sel_btn.getText().toString();
+            }else{
+                Log.e(LOG_TAG, "No input for Sim / Actual");
+                return "";
+            }
+        }
+
+        private String getSeat() {
+            return seat_spn.getSelectedItem().toString();
+        }
+
+        private String getCommand() {
+            return command_spn.getSelectedItem().toString();
+        }
+
+        private StringValuePair getIcaoAndNamePair() {
+            //Get Custom Location
+            String loc_icao = "";
+            String loc_name = "";
+
+            int loc_ind = location_spn.getSelectedItemPosition();
+            if(loc_ind==location_spn.getCount()-1){
+                //New Location Entered
+                loc_icao = loc_icao_et.getText().toString();
+                loc_name = loc_name_et.getText().toString();
+            }else{
+                //Preset Location Selected
+                loc_icao = location_li_icao_ind.get(loc_ind);
+                loc_name = location_li_name_ind.get(loc_ind);
+            }
+            return new StringValuePair(loc_icao,loc_name);
+        }
+
+        private StringValuePair getRegAndTailNumberPair() {
+            String reg_no = "";
+            String tail_no = "";
+
+            int reg_n_tail_ind = reg_n_tail_spn.getSelectedItemPosition();
+            if(reg_n_tail_ind == reg_n_tail_spn.getCount()-1){
+                //New Registration Entered
+                reg_no = reg_no_et.getText().toString();
+                tail_no = tail_no_et.getText().toString();
+            }else{
+                reg_no = reg_li.get(reg_n_tail_ind);
+                tail_no = tail_li.get(reg_n_tail_ind);
+            }
+            return new StringValuePair(reg_no, tail_no);
+        }
+
+
+        private StringValuePair getPlatformTypeAndVariationPair(){
+            String platformType = "";
+            String platformVariation = "";
+
+            int platfomrSelectedIndex = platform_spn.getSelectedItemPosition();
+
+            if(isNewPlatformEntered()) {
+                platformType = plat_type.getText().toString();
+                platformVariation = plat_variation.getText().toString();
+            }else {
+                platformType = plat_type_li.get(platfomrSelectedIndex);
+                platformVariation = plat_variation_li.get(platfomrSelectedIndex);
+            }
+
+            return new StringValuePair(platformType, platformVariation);
+
+        }
+
+        private boolean isNewPlatformEntered() {
+            return platform_spn.getSelectedItemPosition() == platform_spn.getCount()-1;
+        }
+
+        private String getDayNight() {
+            int day_night_selected_id = day_night_radio.getCheckedRadioButtonId();
+            RadioButton day_night_sel_btn = (RadioButton) findViewById(day_night_selected_id);
+
+            String day_night = null;
+            if (day_night_sel_btn != null){
+                return day_night_sel_btn.getText().toString();
+            }else{
+                Log.e(LOG_TAG, "No input for Day / Night");
+                return "";
+            }
+        }
+
+        @NonNull
+        private String getDuration() {
+            String durationString = duration_et.getText().toString();
+
+            Duration d = new Duration();
+            d.setString(durationString);
+            return d.getISO8601();
+        }
+
+        private String getDate() {
+            String date = "";
+
+            try{
+                date = DateTimeConverter.format(date_et.getText().toString(), DateTimeConverter.DATE_SLASHED, DateTimeConverter.ISO8601);
+            }catch(Exception e){
+                Log.e(LOG_TAG, "Date parsing failed: " + e);
+            }
+            return date;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            mAddSessionTask = null;
+            showProgress(false, thisActivity);
+
+            if (success) {
+                mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Sessions")
+                .setAction("Add")
+                .build());
+                thisActivity.finish();
+            } else {
+
+                Log.e(LOG_TAG,"Error: " + err_msg);
+                UIMessage.makeToast(context, getResources().getString(R.string.error_unknown));
+                mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Sessions")
+                .setAction("Add Failed")
+                .build());
+                thisActivity.finish();
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            mAddSessionTask = null;
+            showProgress(false,thisActivity);
+        }
+    }
+
+    /**
+     * Shows the progress UI and hides the register form.
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void showProgress(final boolean show, Context context) {
+        if (show){
+            pDialog = ProgressDialog.show(context, "", getResources().getString(R.string.please_wait_progress), true);
+        }else{
+            pDialog.dismiss();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void updateRegAadTail(){
 		    //Disable Filter Method if this is the first 
 		    //platform selection since it's made by the populate Task
 		    if (first_platform_spinner_selection){
@@ -1580,10 +1571,6 @@ public class ActivityAddSession extends DatabaseActivity {
 		    SimpleDateFormat sdf = new SimpleDateFormat(DateTimeConverter.DATE_SLASHED);
 		    String todayAsString = sdf.format(cal.getTime());
 	        date_et.setText(todayAsString);
-
-		
-		
 	 }
 
 }
-
