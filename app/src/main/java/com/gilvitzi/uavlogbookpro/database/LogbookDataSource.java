@@ -43,9 +43,9 @@ public class LogbookDataSource {
     }
 
     public void open() {
-        if (database==null){
+        //if (database == null){
             tryOpenDatabase();
-        }
+        //}
     }
 
     private void tryOpenDatabase(){

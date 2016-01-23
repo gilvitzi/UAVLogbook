@@ -23,10 +23,12 @@ public class ExportTableToHTML extends ExportTable {
     @Override
     protected void createDataObject() {
         htmlOutput = new StringBuilder();
-        htmlOutput.append("<html><body><table>");
+        //htmlOutput.append("<html><body>");
+        htmlOutput.append("<table>");
         appendHeaders();
         appendRows();
-        htmlOutput.append("</table></body></html>");
+        htmlOutput.append("</table>");
+        //htmlOutput.append("</body></html>");
         setData(htmlOutput);
     }
 
@@ -34,7 +36,7 @@ public class ExportTableToHTML extends ExportTable {
         htmlOutput.append("<tr>");
         for (String column : getColumnNames())
         {
-            htmlOutput.append("<th>");
+            htmlOutput.append("<th align=\"right\">");
             htmlOutput.append(column);
             htmlOutput.append("</th>");
         }
@@ -54,7 +56,7 @@ public class ExportTableToHTML extends ExportTable {
     private void appendSessionAsCommaSeperatedRow(List<String> record){
         htmlOutput.append("<tr>");
         for (int i = 0;i < record.size();i++){
-            htmlOutput.append("<td>");
+            htmlOutput.append("<td align=\"right\">");
             htmlOutput.append(record.get(i));
             htmlOutput.append("</td>");
 	    }

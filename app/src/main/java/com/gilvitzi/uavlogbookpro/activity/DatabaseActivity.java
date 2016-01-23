@@ -17,7 +17,6 @@ public class DatabaseActivity extends AnalyticsActivity {
     protected LogbookDataSource datasource;
     protected Context context;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,17 +36,17 @@ public class DatabaseActivity extends AnalyticsActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        datasource.open();
+        //datasource.open();
     }
 
     @Override
     protected void onPause() {
+        //datasource.close();
         super.onPause();
     }
 
     @Override
     protected void onStop() {
-        datasource.close();
         super.onStop();
     }
 

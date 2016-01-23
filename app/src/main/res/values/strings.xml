@@ -168,7 +168,7 @@
     <string name="action_share">Share</string>
     <string name="action_share_subject">UAV Logbook - %s</string>
     <string name="dialog_exporting_table">Exporting Table...</string>
-    <string name="error_toast_csv_export_failed">CSV Export Failed</string>
+    <string name="ERROR_TOAST_SHARE_EXPORT_FAILED">CSV Export Failed</string>
     <string name="exporting_progress_dialog_message">Exporting Table\n %1$s / %2$s</string>
 
 

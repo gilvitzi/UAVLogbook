@@ -85,6 +85,7 @@ public abstract class ExportTable extends AsyncTask<String, String, Boolean> {
     @Override
     protected Boolean doInBackground(String... params) {
         try{
+            datasource.open();
             cursor = datasource.database.rawQuery(query,null);
             columnNames = cursor.getColumnNames();
             records = new LinkedList<List<String>>();
@@ -129,7 +130,7 @@ public abstract class ExportTable extends AsyncTask<String, String, Boolean> {
                 records.add(record);
             } while (cursor.moveToNext());
         }
-        datasource.close();
+        //datasource.close();
     }
 
     @Override
@@ -152,7 +153,7 @@ public abstract class ExportTable extends AsyncTask<String, String, Boolean> {
 
         }else{
             sendExportFailedHit();
-            Toast.makeText(context, R.string.error_toast_csv_export_failed, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.ERROR_TOAST_SHARE_EXPORT_FAILED, Toast.LENGTH_SHORT).show();
         }
     }
 

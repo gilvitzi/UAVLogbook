@@ -71,6 +71,12 @@ public class ActivityTableView extends DatabaseActivity {
 		        return true;
             case R.id.action_share:
                 actionShare();
+
+                //Analytics Tracking
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Share")
+                        .setAction("Share Table " + title)
+                        .build());
 		    default:
 		        return super.onOptionsItemSelected(item);
 	    }
@@ -214,14 +220,13 @@ public class ActivityTableView extends DatabaseActivity {
         return true;
     }
 
-
     private void actionShare()
     {
         ExportTableToHTML exporter = new ExportTableToHTML(thisActivity,datasource,query);
         exporter.setOnDataReadyHandler(new ExportTableToHTML.OnDataReadyHandler() {
             @Override
-            public void onDataReady(String dataAsCSV) {
-                onDataReadyToShare(dataAsCSV);
+            public void onDataReady(String dataAsHTML) {
+                onDataReadyToShare(dataAsHTML);
             }
         });
         exporter.execute();
@@ -229,38 +234,18 @@ public class ActivityTableView extends DatabaseActivity {
 
     private void onDataReadyToShare(String data) {
         String subject = String.format(getString(R.string.action_share_subject),title);
-//        sendSharingIntent(subject, data);
         sendEmailSharingIntent(subject, data);
     }
 
-    private void sendSharingIntent(String subject, String body) {
-//        Intent sharingIntent = new Intent(Intent.ACTION_SEND ); // was ACTION_SEND
-//        sharingIntent.setType("*/*"); //was text/plain
-//        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, subjectString);
-//        sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
-//        startActivity(Intent.createChooser(sharingIntent, "Share via"));
-
-        final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-        emailIntent.setType("text/html");
-        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
-        emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, Html.fromHtml(body));
-        startActivity(Intent.createChooser(emailIntent, "Email:"));
-    }
-
-
     private void sendEmailSharingIntent(String subject, String body)
     {
-        String mailId="yourmail@gmail.com";
-        Intent emailIntent = new Intent(Intent.ACTION_SENDTO,
-                Uri.fromParts("mailto", mailId, null));
-        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
-        // you can use simple text like this
-        // emailIntent.putExtra(android.content.Intent.EXTRA_TEXT,"Body text here");
-        // or get fancy with HTML like this
-        emailIntent.putExtra(
-                Intent.EXTRA_TEXT,
-                Html.fromHtml(body)
-        );
+        final Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+
+        emailIntent.putExtra(Intent.EXTRA_TEXT, body);
+
+        emailIntent.putExtra(Intent.EXTRA_HTML_TEXT, Html.fromHtml(body));
+
         startActivity(Intent.createChooser(emailIntent, "Send email..."));
     }
 
@@ -276,8 +261,9 @@ public class ActivityTableView extends DatabaseActivity {
 		@Override
 		protected Boolean doInBackground(String... params) {
 			try{
+                datasource.open();
 				cursor = getDatasource().database.rawQuery(query,null);
-				//Map Results:
+
 	    		columnNames = cursor.getColumnNames();
 
 	    		//Iteration
@@ -285,41 +271,54 @@ public class ActivityTableView extends DatabaseActivity {
 	    		List<String> row;
 	    		String value;
 
-	    		try {
-	                if (cursor.moveToFirst()) {
-	                    do {
-	                    	row = new ArrayList<String>();
-	                    	for (int i = 0;i<cursor.getColumnCount();i++){
-                                //getCursorFieldType();
-                                try{
-	                    			value = cursor.getString(i);
-	                    			row.add(value);
-	                    		}catch(Exception ignore){
-	                    			try{
-	                    				value = String.valueOf(cursor.getInt(i));
-	                    				row.add(value);
-	                    			}catch(Exception ignored){}
-	                    		}
+                getAllDataRows();
 
-	                    	}
-
-	                    	rows.add(row);
-	                    } while (cursor.moveToNext());
-	                }
-
-	            } finally {
-	                try {
-	                	cursor.close();
-	                } catch (Exception ignore) {}
-	            }
-			}catch (Exception e){
+            }catch (Exception e){
 				Log.e(LOG_TAG,"Retriving Data from DB Failed: " + e);
 				return false;
-			}
-			return true;
+			} finally {
+                datasource.close();
+            }
+            return true;
 		}
 
-       private void getCursorFieldType() {
+        private void getAllDataRows() {
+            List<String> row;
+            try {
+                if (cursor.moveToFirst()) {
+                    do {
+                        row = getRowFromQuery();
+                        rows.add(row);
+                    } while (cursor.moveToNext());
+                }
+            } finally {
+                try {
+                    cursor.close();
+                } catch (Exception ignore) {}
+            }
+        }
+
+        @NonNull
+        private List<String> getRowFromQuery() {
+            List<String> row;
+            String value;
+            row = new ArrayList<String>();
+            for (int columnIndex = 0; columnIndex < cursor.getColumnCount() ; columnIndex++){
+                //getCursorFieldType(); //only on API 10+
+                try{
+                    value = cursor.getString(columnIndex);
+                    row.add(value);
+                }catch(Exception ignore){
+                    try{
+                        value = String.valueOf(cursor.getInt(columnIndex));
+                        row.add(value);
+                    }catch(Exception ignored){}
+                }
+            }
+            return row;
+        }
+
+        private void getCursorFieldType() {
             /*
              *  The next code block was removed because cursor.getType() requires minimum API Level 11 (android 3.0.x)
              *  and the current was API Level is 10 (android 2.3 )
@@ -341,13 +340,20 @@ public class ActivityTableView extends DatabaseActivity {
        }
 
        protected void onPostExecute(final Boolean success) {
-           TableLayout tl = createTableLayout();
-           addHeader(tl);
-           addTableRows(tl);
+           if (success) {
+               TableLayout tl = createTableLayout();
+               addHeader(tl);
+               addTableRows(tl);
+           } else {
+               /*
+                * error occured in loading data from database,
+                * could show message to user too try again later
+                */
+
+           }
+
            whenFinishedTask();
-        }
-
-
+       }
 
        private void addTableRows(TableLayout tl) {
            for (int i = 0;i < rows.size();i++){
@@ -370,7 +376,6 @@ public class ActivityTableView extends DatabaseActivity {
            TableRow tr = (TableRow) View.inflate(context, R.layout.table_view_header, null);
            tr.setTag("header");
            tl.addView(tr);
-
 
            for (String columnName : columnNames) {
                TextView tv = (TextView) View.inflate(context, R.layout.table_view_header_cell, null);

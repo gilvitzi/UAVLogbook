@@ -427,6 +427,9 @@
     <!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.5.0/res/values/version.xml -->
     <eat-comment/>
     <integer name="google_play_services_version">7571000</integer>
+    <!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="ERROR_TOAST_SHARE_EXPORT_FAILED">CSV Export Failed</string>
     <!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <string name="abc_action_bar_home_description">Navigate home</string>
@@ -568,7 +571,6 @@
     <string name="error_only_numbers_allowed">Please enter number of Go-Arounds</string>
     <string name="error_sim_actual_not_selected">Please Choose: Sim / Actual</string>
     <string name="error_takeoffs_input_not_a_number">Please enter number of Takeoffs</string>
-    <string name="error_toast_csv_export_failed">CSV Export Failed</string>
     <string name="error_unknown">An Error Occurred. \n Please Try Again Later</string>
     <string name="exporting_progress_dialog_message">Exporting Table\n %1$s / %2$s</string>
     <string name="field_actual_flight">Actual Flight</string>
