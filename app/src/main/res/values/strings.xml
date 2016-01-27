@@ -201,9 +201,7 @@
         then when you finish, just click Stop.
         \n an Add Session Form will automatically pop-up with your session Duration and Date.
     </string>
-    <string name="analytics_event_category_export_table_name">Export Table %1$s</string>
-    <string name="analytics_event_category_share">Share</string>
-    <string name="analytics_event_category_share_table_name">Share Table %1$s</string>
+
     <!-- Version V2 -->
 
 </resources>
