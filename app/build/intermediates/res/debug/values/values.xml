@@ -472,13 +472,21 @@
     <!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/src/main/res/values/ads.xml -->
     <eat-comment/>
     <string name="ads_unit_id">ca-app-pub-5309694254788217/5249584504</string>
+    <!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="alert_message_delete_sessions">This will Delete the %1$d selected rows,\nAre You Sure?</string>
+    <string name="alert_message_no">No</string>
+    <string name="alert_message_yes">Yes</string>
     <!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/src/main/res/values/analytics.xml -->
     <eat-comment/>
     <string name="analytics_event_action_export_csv_failed">Export Table To CSV Failed</string>
     <string name="analytics_event_action_export_csv_successful">Export Table To CSV Successful</string>
     <string name="analytics_event_action_export_html_failed">HTML Export Failed</string>
+    <string name="analytics_event_action_sessions_delete">Delete</string>
+    <string name="analytics_event_action_sessions_edit">Edit</string>
     <string name="analytics_event_category_export">Export</string>
     <string name="analytics_event_category_export_table_name">Export Table %1$s</string>
+    <string name="analytics_event_category_sessions">Sessions</string>
     <string name="analytics_event_category_share">Share</string>
     <string name="analytics_event_category_share_table_name">Share Table %1$s</string>
     <!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/src/main/res/values/metadata.xml -->
@@ -575,6 +583,7 @@
     <string name="error_sim_actual_not_selected">Please Choose: Sim / Actual</string>
     <string name="error_takeoffs_input_not_a_number">Please enter number of Takeoffs</string>
     <string name="error_unknown">An Error Occurred. \n Please Try Again Later</string>
+    <string name="excel_file_extension">.xls</string>
     <string name="exporting_progress_dialog_message">Exporting Table\n %1$s / %2$s</string>
     <string name="field_actual_flight">Actual Flight</string>
     <string name="field_actual_flight_short">actual</string>
@@ -687,6 +696,7 @@
     <string name="seat_mc">Mission Commander</string>
     <string name="seat_other">Other</string>
     <string name="seat_po">Payload Operator</string>
+    <string name="send_email">Send email...</string>
     <string name="start_syncing_now">Start Syncing Now!</string>
     <!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.5.0/res/values/admob_strings.xml -->
     <eat-comment/>

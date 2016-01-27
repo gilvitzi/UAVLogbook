@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,26 +22,26 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gilvitzi.uavlogbookpro.AnalyticsApplication;
 import com.gilvitzi.uavlogbookpro.R;
 import com.gilvitzi.uavlogbookpro.database.LogbookDataSource;
 import com.gilvitzi.uavlogbookpro.model.Session;
 import com.gilvitzi.uavlogbookpro.util.Duration;
 import com.gilvitzi.uavlogbookpro.util.NameValuePair;
 import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivitySessionsTable extends ActionBarActivity {
-    
+public class ActivitySessionsTable extends DatabaseActivity {
+
     private static final String LOG_TAG = "ActivitySessionsTable";
     private static final String screen_name = "Sessions Table";
-    
-	Context context;
+    public static final String EXTRA_KEY_SESSION_ID = "SessionID";
+    public static final int FIRST_ROW_INDEX = 0;
+
+    Context context;
 	Activity thisActivity;
-	private LogbookDataSource datasource;
+	//private LogbookDataSource datasource;
 	private List<Session> sessions;
 	
 	public  ProgressDialog progressDialog;
@@ -59,7 +58,7 @@ public class ActivitySessionsTable extends ActionBarActivity {
 	GoogleAdMobManager adBottomBannerManager;
 
 	//Google Analytics
-    private Tracker mTracker;
+    //private Tracker mTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +69,7 @@ public class ActivitySessionsTable extends ActionBarActivity {
         thisActivity = this;
 
         //Google Analytics:
-        mTracker = AnalyticsApplication.getDefaultTracker(this);
+        //mTracker = AnalyticsApplication.getDefaultTracker(this);
 
         initGoogleAdMob();
 
@@ -120,27 +119,11 @@ public class ActivitySessionsTable extends ActionBarActivity {
 	    switch (item.getItemId()) {
 		    case R.id.menu_delete:
 		    	menu_deleteSessions();
+                sendAnalyticsEventDeleteSessions();
+                return true;
 
-		    	mTracker.send(new HitBuilders.EventBuilder()
-		        .setCategory("Sessions")
-		        .setAction("Delete")
-		        .setValue(selectedRows.size())
-		        .build());
-
-		        return true;
 		    case R.id.menu_edit:
-		    	Intent intent = new Intent(this, ActivityAddSession.class);
-		    	int id = selectedRows.get(0);
-		    	Log.i(LOG_TAG,"Sending Record ID " + id + " To Editing");
-		    	intent.putExtra("SessionID", id);
-		    	datasource.close();
-
-		    	mTracker.send(new HitBuilders.EventBuilder()
-		        .setCategory("Sessions")
-		        .setAction("Edit")
-		        .build());
-
-		    	startActivity(intent);
+                editMenuItemClicked();
 		        return true;
 
 		    default:
@@ -148,39 +131,75 @@ public class ActivitySessionsTable extends ActionBarActivity {
 	    }
 	}
 
-	public void menu_deleteSessions(){
+    private void editMenuItemClicked() {
+        Intent intent = new Intent(this, ActivityAddSession.class);
+        int id = selectedRows.get(FIRST_ROW_INDEX);
+        intent.putExtra(EXTRA_KEY_SESSION_ID, id);
+        Log.i(LOG_TAG, String.format("Sending Record ID %1$d To Editing", id));
+
+        datasource.close();
+
+        sendAnalyticsEventEditSessions();
+        startActivity(intent);
+    }
+
+    private void sendAnalyticsEventEditSessions() {
+        String category = getResources().getString(R.string.analytics_event_category_sessions);
+        String action = getResources().getString(R.string.analytics_event_action_sessions_edit);
+
+        mTracker.send(new HitBuilders.EventBuilder()
+            .setCategory(category)
+            .setAction(action)
+            .build());
+    }
+
+    private void sendAnalyticsEventDeleteSessions() {
+        String category = getResources().getString(R.string.analytics_event_category_sessions);
+        String action = getResources().getString(R.string.analytics_event_action_sessions_delete);
+
+        mTracker.send(new HitBuilders.EventBuilder()
+            .setCategory(category)
+            .setAction(action)
+            .setValue(selectedRows.size())
+            .build());
+    }
+
+    public void menu_deleteSessions(){
 		// Invoke "Are You Sure" Dialog
 
-		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-		    @Override
-		    public void onClick(DialogInterface dialog, int which) {
-		        switch (which){
-		        case DialogInterface.BUTTON_POSITIVE:
-		            //Yes button clicked
-		            break;
+//		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+//		    @Override
+//		    public void onClick(DialogInterface dialog, int which) {
+//		        switch (which){
+//		        case DialogInterface.BUTTON_POSITIVE:
+//		            //Yes button clicked
+//		            break;
+//
+//		        case DialogInterface.BUTTON_NEGATIVE:
+//		            //No button clicked
+//		            break;
+//		        }
+//		    }
+//		};
 
-		        case DialogInterface.BUTTON_NEGATIVE:
-		            //No button clicked
-		            break;
-		        }
-		    }
-		};
+        String messageFormat = getResources().getString(R.string.alert_message_delete_sessions);
+        String message = String.format(messageFormat, selectedRows.size());
+        String str_no = getResources().getString(R.string.alert_message_no);
+        String str_yes = getResources().getString(R.string.alert_message_yes);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder
-			.setMessage("This will Delete the selected rows, \n Are You Sure?")
-			.setNegativeButton("No", dialogClickListener)
-			.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+			.setMessage(message)
+			.setNegativeButton(str_no, null)
+			.setPositiveButton(str_yes, new DialogInterface.OnClickListener() {
 			    @SuppressWarnings("unchecked")
 				public void onClick(DialogInterface dialog, int which) {
-			        //User clicked yes!
 			        progressDialog = ProgressDialog.show(context, "", getResources().getString(R.string.please_wait_progress), true);
 					DeleteSessionTask delSessionTask = new DeleteSessionTask();
 			    	delSessionTask.execute();
 			    }
 			})
 		    .show();
-
 	}
 
 	@Override
@@ -191,10 +210,6 @@ public class ActivitySessionsTable extends ActionBarActivity {
 
 	public void onResume(){
 		super.onResume();
-		//Analytics
-    	Log.i(LOG_TAG, "Setting screen name: " + screen_name);
-    	mTracker.setScreenName("Image~" + screen_name);
-    	mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
         //GoogleAdMob
         adBottomBannerManager.resume();
@@ -224,8 +239,6 @@ public class ActivitySessionsTable extends ActionBarActivity {
 		super.onStop();
 	}
 
-
-
 	public void onStart(){
 		super.onStart();
 	}
@@ -239,7 +252,6 @@ public class ActivitySessionsTable extends ActionBarActivity {
 	    	datasource.close();
 	    }
 	}
-
 
 	public void finalize() throws Throwable {
 	    if(null != datasource)

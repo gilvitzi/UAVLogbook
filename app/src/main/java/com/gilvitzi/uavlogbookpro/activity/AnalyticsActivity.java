@@ -13,7 +13,6 @@ import com.google.android.gms.analytics.Tracker;
 public class AnalyticsActivity extends ActionBarActivity {
     //Google Analytics
     protected Tracker mTracker;
-    private String analyticsScreenName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

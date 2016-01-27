@@ -203,6 +203,10 @@
     </string>
     <string name="excel_file_extension">.xls</string>
     <string name="send_email">Send email...</string>
+    <string name="alert_message_no">No</string>
+    <string name="alert_message_yes">Yes</string>
+    <string name="alert_message_delete_sessions">This will Delete the %1$d selected rows,\nAre You Sure?</string>
+
 
     <!-- Version V2 -->
 
