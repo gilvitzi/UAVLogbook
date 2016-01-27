@@ -74,6 +74,12 @@
 	    style="@style/reports_page_button"
 	    android:text="@string/report_caa_report"
 	    android:onClick="goToCAAReport" />
+
+    <Button
+        android:id="@+id/btn_caa_report_for_year"
+        style="@style/reports_page_button"
+        android:text="@string/report_yearly_caa_report"
+        android:onClick="goToYearlyCAAReport" />
 	
 	<Button
 	    android:id="@+id/btn_search_by_tag"

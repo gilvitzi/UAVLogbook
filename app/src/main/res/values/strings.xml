@@ -156,6 +156,7 @@
     <string name="report_hours_per_location">Hours Per Location</string>
     <string name="report_hours_per_year">Hours Per Year</string>
     <string name="report_caa_report">CAA Report</string>
+    <string name="report_yearly_caa_report">Yearly CAA Report</string>
     <string name="report_search_by_tag">Search By TAG</string>
 
     <!-- Import  Export -->
@@ -206,7 +207,7 @@
     <string name="alert_message_no">No</string>
     <string name="alert_message_yes">Yes</string>
     <string name="alert_message_delete_sessions">This will Delete the %1$d selected rows,\nAre You Sure?</string>
-
+    <string name="dialog_caa_report_year_selection_title">Pick a year</string>
 
     <!-- Version V2 -->
 

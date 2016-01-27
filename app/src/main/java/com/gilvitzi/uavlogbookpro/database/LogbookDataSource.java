@@ -97,9 +97,9 @@ public class LogbookDataSource {
     }
 
     public void deleteSession(long id) {
-    Log.i(LOG_TAG,"Session id:" + id + " was deleted");
-    database.delete( LogbookSQLite.TABLE_LOGBOOK,  LogbookSQLite.COLUMN_ID
-        + " = " + id, null);
+    Log.i(LOG_TAG, "Session id:" + id + " was deleted");
+    database.delete(LogbookSQLite.TABLE_LOGBOOK, LogbookSQLite.COLUMN_ID
+            + " = " + id, null);
     }
 
     public List<Session> getAllSessions() {
@@ -440,13 +440,13 @@ public class LogbookDataSource {
           "FROM " +  LogbookSQLite.TABLE_LOGBOOK + " " +
           "WHERE " +  LogbookSQLite.COLUMN_ID + "=" + sessionId ;
       try{
-          Cursor cursor = database.rawQuery(query,null);
+          Cursor cursor = database.rawQuery(query, null);
           if (cursor.moveToFirst()) {
                 session = this.cursorToSession(cursor);
           }
           cursor.close();
       }catch(Exception e){
-          Log.e(LOG_TAG,"getSessionById Error: " + e);
+          Log.e(LOG_TAG, "getSessionById Error: " + e);
       }
 
       return session;
@@ -456,9 +456,9 @@ public class LogbookDataSource {
       ContentValues values = session.getContentValues();
 
       try{
-          int res = database.update( LogbookSQLite.TABLE_LOGBOOK, values,  LogbookSQLite.COLUMN_ID + "=?",
-                  new String[] {String.valueOf(session.getId())});
-          Log.i(LOG_TAG,"Session " + session.getId() + " Updated");
+          int res = database.update(LogbookSQLite.TABLE_LOGBOOK, values, LogbookSQLite.COLUMN_ID + "=?",
+                  new String[]{String.valueOf(session.getId())});
+          Log.i(LOG_TAG, "Session " + session.getId() + " Updated");
           return (res == 1);
       }catch(SQLiteException e){
           Log.e(LOG_TAG,"Update Session SQLite Error: " + e);
@@ -518,6 +518,22 @@ public class LogbookDataSource {
         return values;
     }
 
+    public List<String> getAllYears(){
 
+        String query = String.format(
+                "SELECT DISTINCT strftime('%%Y',%1$s) AS 'Year' FROM %2$s ORDER BY %1$s DESC",
+                LogbookSQLite.COLUMN_DATE,
+                LogbookSQLite.TABLE_LOGBOOK);
 
+        Cursor cursor = database.rawQuery(query, null);
+        List<String> values = new ArrayList<String>(cursor.getCount());
+
+        while (cursor.moveToNext()) {
+            String yearString = cursor.getString(0);
+            values.add(yearString);
+        }
+        cursor.close();
+
+        return values;
+    }
 }

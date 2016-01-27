@@ -571,6 +571,7 @@
     <eat-comment/>
     <string name="delete">Delete</string>
     <string name="description_sync_with_google_drive">With Google Drive Sync, now you Can:</string>
+    <string name="dialog_caa_report_year_selection_title">Pick a year</string>
     <string name="dialog_exporting_table">Exporting Table...</string>
     <string name="error_date_not_specified">Date is Required, touch to select</string>
     <string name="error_date_wrong_format">Date wrong format \n correct format is dd/mm/yyyy</string>
@@ -688,6 +689,7 @@
     <string name="report_last_session_date">Last Session Date</string>
     <string name="report_search_by_tag">Search By TAG</string>
     <string name="report_sessions_this_year">Sessions This Year</string>
+    <string name="report_yearly_caa_report">Yearly CAA Report</string>
     <string name="save">Save</string>
     <string name="seat_avo">AVO</string>
     <string name="seat_ep">External Pilot</string>
