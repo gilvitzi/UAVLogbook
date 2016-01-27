@@ -17,22 +17,10 @@ public class ActivityAbout extends DatabaseActivity {
 	final static String LOG_TAG = "ActivityAbout";
 	final static String screen_name = "About";
 
-//    @Override
-//    protected void onResume(){
-//        super.onResume();
-//    	Log.i(LOG_TAG, "Setting screen name: " + screen_name);
-//    	mTracker.setScreenName("Image~" + screen_name);
-//    	mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-//    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        
-//        //Google Analytics:
-//
-//        mTracker = AnalyticsApplication.getDefaultTracker(this);
         
         try {
             ViewConfiguration config = ViewConfiguration.get(this);
@@ -45,7 +33,6 @@ public class ActivityAbout extends DatabaseActivity {
             // Ignore
         }
 
-        
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

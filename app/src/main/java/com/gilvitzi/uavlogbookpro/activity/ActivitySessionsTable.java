@@ -18,21 +18,17 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gilvitzi.uavlogbookpro.AnalyticsApplication;
-import com.gilvitzi.uavlogbookpro.database.LogbookDataSource;
 import com.gilvitzi.uavlogbookpro.R;
+import com.gilvitzi.uavlogbookpro.database.LogbookDataSource;
 import com.gilvitzi.uavlogbookpro.model.Session;
 import com.gilvitzi.uavlogbookpro.util.Duration;
 import com.gilvitzi.uavlogbookpro.util.NameValuePair;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
@@ -52,18 +48,73 @@ public class ActivitySessionsTable extends ActionBarActivity {
 	public  ProgressDialog progressDialog;
 	private Menu contextMenu;
 	private int row_count;
-	private ArrayList<Integer> selectedRows;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_sessions_table);
+        openOptionsMenu();
+        context = this;
+        thisActivity = this;
+
+        //Google Analytics:
+        mTracker = AnalyticsApplication.getDefaultTracker(this);
+
+        initGoogleAdMob();
+
+        datasource = new LogbookDataSource(this);
+        datasource.open();
+
+        selectedRows = new ArrayList<Integer>();
+
+        getExtras();
+
+        //Please Wait... message
+        progressDialog = ProgressDialog.show(context, "", getResources().getString(R.string.please_wait_progress), true);
+
+        getSessionsTask = new GetAllSessionsTask();
+        getSessionsTask.execute();
+    }
+
+    private void initGoogleAdMob() {
+        ViewGroup adContainer = (ViewGroup) findViewById(R.id.adBanner);
+        adBottomBannerManager = new GoogleAdMobManager(context,adContainer);
+        adBottomBannerManager.show();
+    }
+
+    private void getExtras() {
+        //Get Sessions Data:
+        //get Intents Query
+        try{
+            Bundle extras = getIntent().getExtras();
+
+            if (extras != null) {
+                query = extras.getString("query");
+                String title = extras.getString("title");
+                setTitle(title);
+                getSupportActionBar().setTitle(title);
+            }
+            Log.i(LOG_TAG, "Query Received: " + query);
+        }catch(Exception e){
+            e.printStackTrace();
+            finish();
+        }
+    }
+
+    private ArrayList<Integer> selectedRows;
+
 	private GetAllSessionsTask getSessionsTask;
-	
+
 	private String query;
-	
+
 	//Google AdMob Ads Banner
-	private AdView adView;
-	private AdRequest adRequest;
-	
+	//private AdView adView;
+//	private AdRequest adRequest;
+	GoogleAdMobManager adBottomBannerManager;
+
 	//Google Analytics
     private Tracker mTracker;
-    
+
 	//----- MENU ACTIONS
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -71,37 +122,37 @@ public class ActivitySessionsTable extends ActionBarActivity {
 	    switch (item.getItemId()) {
 		    case R.id.menu_delete:
 		    	menu_deleteSessions();
-		    	
+
 		    	mTracker.send(new HitBuilders.EventBuilder()
 		        .setCategory("Sessions")
 		        .setAction("Delete")
 		        .setValue(selectedRows.size())
 		        .build());
-		    	
+
 		        return true;
-		    case R.id.menu_edit:		    
+		    case R.id.menu_edit:
 		    	Intent intent = new Intent(this, ActivityAddSession.class);
 		    	int id = selectedRows.get(0);
 		    	Log.i(LOG_TAG,"Sending Record ID " + id + " To Editing");
 		    	intent.putExtra("SessionID", id);
 		    	datasource.close();
-		    	
+
 		    	mTracker.send(new HitBuilders.EventBuilder()
 		        .setCategory("Sessions")
 		        .setAction("Edit")
 		        .build());
-		    	
+
 		    	startActivity(intent);
 		        return true;
-	
+
 		    default:
 		        return super.onOptionsItemSelected(item);
 	    }
 	}
-	
+
 	public void menu_deleteSessions(){
 		// Invoke "Are You Sure" Dialog
-		
+
 		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
 		    @Override
 		    public void onClick(DialogInterface dialog, int which) {
@@ -131,23 +182,27 @@ public class ActivitySessionsTable extends ActionBarActivity {
 			    }
 			})
 		    .show();
-		
+
 	}
-	
+
 	@Override
     public void onPause() {
-      adView.pause();
-      super.onPause();
+        adBottomBannerManager.pause();
+//      adView.pause();
+        super.onPause();
     }
-	
+
 	public void onResume(){
 		super.onResume();
 		//Analytics
     	Log.i(LOG_TAG, "Setting screen name: " + screen_name);
     	mTracker.setScreenName("Image~" + screen_name);
     	mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-    	
-    	//Database
+
+        //GoogleAdMob
+        adBottomBannerManager.resume();
+
+        //Database
 		if(null != datasource)
 	    	datasource.open();
 		if (getSessionsTask!=null){
@@ -163,100 +218,62 @@ public class ActivitySessionsTable extends ActionBarActivity {
 	    	getSessionsTask = new GetAllSessionsTask();
 	    	getSessionsTask.execute();
 	    }
-		
+
 	}
-	
+
 	public void onStop(){
 		if(null != datasource)
 	    	datasource.close();
 		super.onStop();
 	}
-	
+
+
+
 	public void onStart(){
 		super.onStart();
 	}
-	
-	
-	
+
 	@Override
 	protected void onDestroy() {
-	    adView.destroy();
+//	    adView.destroy();
+        adBottomBannerManager.destroy();
+
 	    super.onDestroy();
 	    if (datasource != null) {
 	    	datasource.close();
 	    }
 	}
-	
+
+
 	public void finalize() throws Throwable {
 	    if(null != datasource)
 	    	datasource.close();
 	    super.finalize();
 	}
-	
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_sessions_table);
-		openOptionsMenu();
-		context = this;
-		thisActivity = this;
-
-		//Google Analytics:
-		mTracker = AnalyticsApplication.getDefaultTracker(this);
-        
-        
-		datasource = new LogbookDataSource(this);
-	    datasource.open();
-	    
-		selectedRows = new ArrayList<Integer>();
-		
-		//Get Sessions Data:
-		//get Intents Query
-		try{
-			Bundle extras = getIntent().getExtras(); 
-
-			if (extras != null) {
-				query = extras.getString("query");
-				String title = extras.getString("title");
-				setTitle(title);
-				getSupportActionBar().setTitle(title);
-			}
-			Log.i(LOG_TAG,"Query Received: " + query);
-		}catch(Exception e){
-			e.printStackTrace();
-			finish();
-		}
-		
-		
-		//Please Wait... message
-		progressDialog = ProgressDialog.show(context, "", getResources().getString(R.string.please_wait_progress), true);
-
-		getSessionsTask = new GetAllSessionsTask();
-		getSessionsTask.execute();
-	}
-	
 	/**
      * This method will initiate The AdView Object
      * and attach it to the viewport
      */
-    private void showAds(){
-      //Google AdMob Ads
-        //adView = (AdView)this.findViewById(R.id.adView);
-        adView = new AdView(this);
-        adView.setAdUnitId(getResources().getString(R.string.ads_unit_id));
-        adView.setAdSize(AdSize.BANNER);
-        LinearLayout ll= (LinearLayout) findViewById(R.id.adBanner);
-        ll.addView(adView);  
-        adRequest = new AdRequest.Builder()
-                                            .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                                            .addTestDevice(getResources().getString(R.string.test_device_id_galaxy_ace))
-                                            .addTestDevice(getResources().getString(R.string.test_device_id_thl_w8s))
-                                            .addTestDevice(getResources().getString(R.string.test_device_id_lg_g2))
-                                            .build();
-        adView.loadAd(adRequest);
-    }
-    
+//
+//    private void showAds(){
+//      //Google AdMob Ads
+//        //adView = (AdView)this.findViewById(R.id.adView);
+//        adView = new AdView(this);
+//        adView.setAdUnitId(getResources().getString(R.string.ads_unit_id));
+//        adView.setAdSize(AdSize.BANNER);
+//        LinearLayout ll= (LinearLayout) findViewById(R.id.adBanner);
+//        ll.addView(adView);
+//        adRequest = new AdRequest.Builder()
+//                                            .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+//                                            .addTestDevice(getResources().getString(R.string.test_device_id_galaxy_ace))
+//                                            .addTestDevice(getResources().getString(R.string.test_device_id_thl_w8s))
+//                                            .addTestDevice(getResources().getString(R.string.test_device_id_lg_g2))
+//                                            .addTestDevice(getResources().getString(R.string.test_device_id_lg_g4))
+//                                            .build();
+//        adView.loadAd(adRequest);
+//    }
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -410,7 +427,8 @@ public class ActivitySessionsTable extends ActionBarActivity {
                            }
                     });//END OF onCheckedChanged (Listener)
                 }
-                showAds(); //AdMob Ads Banner
+                adBottomBannerManager.show();
+//                showAds(); //AdMob Ads Banner
                 progressDialog.dismiss();
 			}else{
 			    progressDialog.dismiss();

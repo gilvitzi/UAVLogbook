@@ -404,7 +404,6 @@ public class ActivityAddSession extends DatabaseActivity {
         location_li_icao_ind = new ArrayList<String>();
         location_li_name_ind = new ArrayList<String>();
 
-
         platform_adp = new ArrayAdapter<String>(getBaseContext(),android.R.layout.simple_spinner_item,platform_li);
         reg_n_tail_adp = new ArrayAdapter<String>(getBaseContext(),android.R.layout.simple_spinner_item,reg_n_tail_li);
         location_adp = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,location_li);
@@ -421,14 +420,12 @@ public class ActivityAddSession extends DatabaseActivity {
         flight_type_adp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         remarks_adp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-
         platform_spn = (Spinner) findViewById(R.id.field_platform);
         reg_n_tail_spn = (Spinner) findViewById(R.id.field_reg_n_tail);
         location_spn = (Spinner) findViewById(R.id.field_location);
         command_spn = (Spinner) findViewById(R.id.field_command);
         seat_spn = (Spinner) findViewById(R.id.field_seat);
         flight_type_spn = (Spinner) findViewById(R.id.field_flight_type);
-
 
         //EditText and other field reference
         //Date & Time EditText View (& duration)
@@ -475,7 +472,6 @@ public class ActivityAddSession extends DatabaseActivity {
         aerodromes_db.close();
     }
 
-
     private void selectedLocICAO(){
 		String value = loc_icao_et.getText().toString();
 		for (Aerodrome aerodrome : aerodromes){
@@ -484,7 +480,6 @@ public class ActivityAddSession extends DatabaseActivity {
 		    }
 		}
 	}
-	
 
 	private void selectedLocName(){
 		String value = loc_name_et.getText().toString();
@@ -505,7 +500,6 @@ public class ActivityAddSession extends DatabaseActivity {
 	private boolean isEditMode() {
 		return editSessionId != 0;
 	}
-
 
 	public class FormPopulateTask extends AsyncTask<String, String, Boolean> {
 

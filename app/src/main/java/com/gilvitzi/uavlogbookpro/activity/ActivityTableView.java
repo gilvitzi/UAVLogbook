@@ -14,7 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -23,9 +23,6 @@ import com.gilvitzi.uavlogbookpro.R;
 import com.gilvitzi.uavlogbookpro.export.ExportTableToExcelTask;
 import com.gilvitzi.uavlogbookpro.export.ExportTableToHTML;
 import com.gilvitzi.uavlogbookpro.util.FileDialog;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
 import com.google.android.gms.analytics.HitBuilders;
 
 import java.io.File;
@@ -51,8 +48,9 @@ public class ActivityTableView extends DatabaseActivity {
 	private String title;
 
 	//Google AdMob Ads
-	AdView adView;
-	AdRequest adRequest;
+	//AdView adView;
+	//AdRequest adRequest;
+    GoogleAdMobManager adBottomBannerManager;
 
 	//----- MENU ACTIONS -----
 	@Override
@@ -108,7 +106,8 @@ public class ActivityTableView extends DatabaseActivity {
 		//Analytics
 
         refreshTableIfNeeded();
-        adView.resume();
+        //adView.resume();
+        adBottomBannerManager.resume();
 	}
 
     private void refreshTableIfNeeded() {
@@ -123,13 +122,15 @@ public class ActivityTableView extends DatabaseActivity {
 
 	@Override
 	public void onPause() {
-	  adView.pause();
-	  super.onPause();
+	    //adView.pause();
+        adBottomBannerManager.pause();
+	    super.onPause();
 	}
 
 	@Override
 	protected void onDestroy() {
-	    adView.destroy();
+        adBottomBannerManager.destroy();
+	    //adView.destroy();
 	    super.onDestroy();
 	}
 
@@ -142,7 +143,8 @@ public class ActivityTableView extends DatabaseActivity {
 		context = this;
 		thisActivity = this;
 
-        showGoogleAdMobAds();
+        initGoogleAdMob();
+        //showGoogleAdMobAds();
 
 		selectedRows = new ArrayList<Integer>();
 		row_count = 0;
@@ -152,7 +154,11 @@ public class ActivityTableView extends DatabaseActivity {
         refreshTable();
 	}
 
-
+    private void initGoogleAdMob() {
+        ViewGroup adContainer = (ViewGroup) findViewById(R.id.adBanner);
+        adBottomBannerManager = new GoogleAdMobManager(context,adContainer);
+        adBottomBannerManager.show();
+    }
 
     private void getActivityExtras() {
         try{
@@ -181,7 +187,8 @@ public class ActivityTableView extends DatabaseActivity {
 	   //delete last table if exist
 	    try{
 	        setContentView(R.layout.activity_table_view);
-	        showGoogleAdMobAds();
+	        //showGoogleAdMobAds();
+            adBottomBannerManager.show();
 	    }catch(Exception ignore){}
 
 	  //Please Wait... message
@@ -191,10 +198,7 @@ public class ActivityTableView extends DatabaseActivity {
         getTableValues.execute();
 	}
 
-	/**
-	 * This method will initiate The AdView Object
-	 * and attach it to the viewport
-	 */
+/*
 	private void showGoogleAdMobAds(){
 	  //Google AdMob Ads
         //adView = (AdView)this.findViewById(R.id.adView);
@@ -208,9 +212,11 @@ public class ActivityTableView extends DatabaseActivity {
                             .addTestDevice(getResources().getString(R.string.test_device_id_galaxy_ace))
                             .addTestDevice(getResources().getString(R.string.test_device_id_thl_w8s))
                             .addTestDevice(getResources().getString(R.string.test_device_id_lg_g2))
+                            .addTestDevice(getResources().getString(R.string.test_device_id_lg_g4))
                             .build();
         adView.loadAd(adRequest);
 	}
+*/
 
    @Override
     public boolean onCreateOptionsMenu(Menu menu) {

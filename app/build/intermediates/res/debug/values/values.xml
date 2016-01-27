@@ -486,7 +486,7 @@
     <string name="app_name">UAV Logbook</string>
     <string name="app_splash_screen_copyrights">UAV Logbook \u00A9 2014</string>
     <string name="app_splash_screen_title">UAV Operator \n Flight Logbook Pro</string>
-    <string name="app_version">2.0.6</string>
+    <string name="app_version">2.0.7 Beta</string>
     <!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.5.0/res/values/auth_strings.xml -->
     <eat-comment/>
     <string name="auth_google_play_services_client_facebook_display_name">Facebook</string>
@@ -704,6 +704,7 @@
     <eat-comment/>
     <string name="test_device_id_galaxy_ace">90A9A55C6F9A37170417A8B25110A6B4</string>
     <string name="test_device_id_lg_g2">2A30C4B96C47B7CE2CC7F47B3A488C4B</string>
+    <string name="test_device_id_lg_g4">E8021AEA1A87461C3763FD0F78642C3A</string>
     <string name="test_device_id_thl_w8s">CC4D092BF9087F61DEB0F612B48FF2FB</string>
     <string name="test_device_unknown_1">B3EEABB8EE11C2BE770B684D95219ECB</string>
     <!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/src/main/res/values/strings.xml -->
