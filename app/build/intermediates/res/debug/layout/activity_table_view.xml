@@ -39,7 +39,6 @@
 	</ScrollView>
 	
  	<include layout="@layout/ads_banner" />
-	
 
 </RelativeLayout>
 

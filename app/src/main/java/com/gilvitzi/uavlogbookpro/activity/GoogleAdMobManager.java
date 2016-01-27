@@ -23,6 +23,7 @@ public class GoogleAdMobManager {
     public GoogleAdMobManager(Context context, ViewGroup adViewContainer) {
         this.context = context;
         this.adViewContainer = adViewContainer;
+
         adView = new AdView(context);
         adView.setAdUnitId(context.getResources().getString(R.string.ads_unit_id));
         adView.setAdSize(AdSize.BANNER);    //default size

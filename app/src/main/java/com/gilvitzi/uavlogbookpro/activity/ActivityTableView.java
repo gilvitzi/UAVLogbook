@@ -44,43 +44,70 @@ public class ActivityTableView extends DatabaseActivity {
     private ArrayList<Integer> selectedRows;
 	private GetTableValues getTableValues;
 
-	private String query;
+    private String query;
 	private String title;
 
 	//Google AdMob Ads
-	//AdView adView;
-	//AdRequest adRequest;
     GoogleAdMobManager adBottomBannerManager;
 
-	//----- MENU ACTIONS -----
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_table_view);
+        openOptionsMenu();
+        context = this;
+        thisActivity = this;
+
+        initGoogleAdMob();
+
+        selectedRows = new ArrayList<Integer>();
+        row_count = 0;
+
+        getActivityExtras();
+
+        refreshTable();
+    }
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
-	    // Handle item selection
+
 	    switch (item.getItemId()) {
 		    case R.id.action_export_table_to_excel:
 		        exportTableToExcel();
-
-		        //Analytics Tracking
-		        mTracker.send(new HitBuilders.EventBuilder()
-		        .setCategory("Export")
-		        .setAction("Export Table " + title)
-		        .build());
-		        return true;
+                sendAnalyticsEventExport();
+                return true;
             case R.id.action_share:
                 actionShare();
-
-                //Analytics Tracking
-                mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Share")
-                        .setAction("Share Table " + title)
-                        .build());
-		    default:
+                sendAnalyticsEventShareTable();
+            default:
 		        return super.onOptionsItemSelected(item);
 	    }
 	}
 
-	private void exportTableToExcel(){
+    private void sendAnalyticsEventShareTable() {
+        String category = getResources().getString(R.string.analytics_event_category_share);
+        String actionFormat = getResources().getString(R.string.analytics_event_category_share_table_name);
+        String action = String.format(actionFormat, title);
+
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory(category)
+                .setAction(action)
+                .build());
+    }
+
+    private void sendAnalyticsEventExport() {
+        String category = getResources().getString(R.string.analytics_event_category_export);
+        String actionFormat = getResources().getString(R.string.analytics_event_category_export_table_name);
+        String action = String.format(actionFormat, title);
+
+        mTracker.send(new HitBuilders.EventBuilder()
+        .setCategory(category)
+        .setAction(action)
+        .build());
+    }
+
+    private void exportTableToExcel(){
 	    //create new file dialog
         FileDialog folderDialog;
         Log.v(LOG_TAG,"Select File Dialog Invoked");
@@ -101,12 +128,10 @@ public class ActivityTableView extends DatabaseActivity {
 
         Log.v(LOG_TAG, "Folder Dialog Invoked");
 	}
+
 	public void onResume(){
 		super.onResume();
-		//Analytics
-
         refreshTableIfNeeded();
-        //adView.resume();
         adBottomBannerManager.resume();
 	}
 
@@ -122,7 +147,6 @@ public class ActivityTableView extends DatabaseActivity {
 
 	@Override
 	public void onPause() {
-	    //adView.pause();
         adBottomBannerManager.pause();
 	    super.onPause();
 	}
@@ -130,28 +154,7 @@ public class ActivityTableView extends DatabaseActivity {
 	@Override
 	protected void onDestroy() {
         adBottomBannerManager.destroy();
-	    //adView.destroy();
 	    super.onDestroy();
-	}
-
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_table_view);
-		openOptionsMenu();
-		context = this;
-		thisActivity = this;
-
-        initGoogleAdMob();
-        //showGoogleAdMobAds();
-
-		selectedRows = new ArrayList<Integer>();
-		row_count = 0;
-
-        getActivityExtras();
-
-        refreshTable();
 	}
 
     private void initGoogleAdMob() {
@@ -184,39 +187,21 @@ public class ActivityTableView extends DatabaseActivity {
      * added after calling this method or called in side this method after setContentView
      */
 	private void refreshTable(){
-	   //delete last table if exist
+
 	    try{
-	        setContentView(R.layout.activity_table_view);
-	        //showGoogleAdMobAds();
+	        //setContentView(R.layout.activity_table_view);    - was restarting the AdView Container and therefore adView was needed to be restarted in order for AdBanner to show.
+            //delete last table if exist
+            TableLayout tl = (TableLayout) findViewById(R.id.tbl_view);
+            tl.removeAllViews();
             adBottomBannerManager.show();
 	    }catch(Exception ignore){}
 
-	  //Please Wait... message
+	    //Please Wait... message
         progressDialog = ProgressDialog.show(context, "", getResources().getString(R.string.please_wait_progress), true);
 
         getTableValues = new GetTableValues();
         getTableValues.execute();
 	}
-
-/*
-	private void showGoogleAdMobAds(){
-	  //Google AdMob Ads
-        //adView = (AdView)this.findViewById(R.id.adView);
-        adView = new AdView(this);
-        adView.setAdUnitId(getResources().getString(R.string.ads_unit_id));
-        adView.setAdSize(AdSize.BANNER);
-        LinearLayout ll= (LinearLayout) findViewById(R.id.adBanner);
-        ll.addView(adView);
-        adRequest = new AdRequest.Builder()
-                            .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                            .addTestDevice(getResources().getString(R.string.test_device_id_galaxy_ace))
-                            .addTestDevice(getResources().getString(R.string.test_device_id_thl_w8s))
-                            .addTestDevice(getResources().getString(R.string.test_device_id_lg_g2))
-                            .addTestDevice(getResources().getString(R.string.test_device_id_lg_g4))
-                            .build();
-        adView.loadAd(adRequest);
-	}
-*/
 
    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -435,8 +420,8 @@ public class ActivityTableView extends DatabaseActivity {
                contextMenu.getItem(0).setVisible(true);
                Log.d(LOG_TAG, "contextMenu is Null in " + LOG_TAG);
            }
+
+           adBottomBannerManager.show();
        }
-
    }
-
-} //END OF Activity
+}

@@ -5,5 +5,4 @@
           android:layout_width="fill_parent"
           android:layout_height="50dip"
           android:layout_alignParentBottom="true"
-          android:background="@color/red"
 /><!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/src/main/res/layout/ads_banner.xml -->

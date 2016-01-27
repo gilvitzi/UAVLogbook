@@ -49,6 +49,18 @@ public class ActivitySessionsTable extends ActionBarActivity {
 	private Menu contextMenu;
 	private int row_count;
 
+    private ArrayList<Integer> selectedRows;
+
+	private GetAllSessionsTask getSessionsTask;
+
+	private String query;
+
+	//Google AdMob Ads Banner
+	GoogleAdMobManager adBottomBannerManager;
+
+	//Google Analytics
+    private Tracker mTracker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,20 +112,6 @@ public class ActivitySessionsTable extends ActionBarActivity {
             finish();
         }
     }
-
-    private ArrayList<Integer> selectedRows;
-
-	private GetAllSessionsTask getSessionsTask;
-
-	private String query;
-
-	//Google AdMob Ads Banner
-	//private AdView adView;
-//	private AdRequest adRequest;
-	GoogleAdMobManager adBottomBannerManager;
-
-	//Google Analytics
-    private Tracker mTracker;
 
 	//----- MENU ACTIONS
 	@Override
@@ -188,7 +186,6 @@ public class ActivitySessionsTable extends ActionBarActivity {
 	@Override
     public void onPause() {
         adBottomBannerManager.pause();
-//      adView.pause();
         super.onPause();
     }
 
@@ -235,7 +232,6 @@ public class ActivitySessionsTable extends ActionBarActivity {
 
 	@Override
 	protected void onDestroy() {
-//	    adView.destroy();
         adBottomBannerManager.destroy();
 
 	    super.onDestroy();
@@ -250,29 +246,6 @@ public class ActivitySessionsTable extends ActionBarActivity {
 	    	datasource.close();
 	    super.finalize();
 	}
-
-	/**
-     * This method will initiate The AdView Object
-     * and attach it to the viewport
-     */
-//
-//    private void showAds(){
-//      //Google AdMob Ads
-//        //adView = (AdView)this.findViewById(R.id.adView);
-//        adView = new AdView(this);
-//        adView.setAdUnitId(getResources().getString(R.string.ads_unit_id));
-//        adView.setAdSize(AdSize.BANNER);
-//        LinearLayout ll= (LinearLayout) findViewById(R.id.adBanner);
-//        ll.addView(adView);
-//        adRequest = new AdRequest.Builder()
-//                                            .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-//                                            .addTestDevice(getResources().getString(R.string.test_device_id_galaxy_ace))
-//                                            .addTestDevice(getResources().getString(R.string.test_device_id_thl_w8s))
-//                                            .addTestDevice(getResources().getString(R.string.test_device_id_lg_g2))
-//                                            .addTestDevice(getResources().getString(R.string.test_device_id_lg_g4))
-//                                            .build();
-//        adView.loadAd(adRequest);
-//    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
