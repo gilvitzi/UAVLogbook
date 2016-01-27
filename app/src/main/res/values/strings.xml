@@ -201,6 +201,8 @@
         then when you finish, just click Stop.
         \n an Add Session Form will automatically pop-up with your session Duration and Date.
     </string>
+    <string name="excel_file_extension">.xls</string>
+    <string name="send_email">Send email...</string>
 
     <!-- Version V2 -->
 

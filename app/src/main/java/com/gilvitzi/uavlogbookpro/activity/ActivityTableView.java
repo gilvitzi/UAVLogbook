@@ -110,14 +110,13 @@ public class ActivityTableView extends DatabaseActivity {
     private void exportTableToExcel(){
 	    //create new file dialog
         FileDialog folderDialog;
-        Log.v(LOG_TAG,"Select File Dialog Invoked");
+        Log.d(LOG_TAG,"Select File Dialog Invoked");
         File mPath = new File(Environment.getExternalStorageDirectory() +"//"); // + "//DIR//"
         folderDialog = new FileDialog(this, mPath);
-        folderDialog.setFileEndsWith(".xls");
+        folderDialog.setFileEndsWith(getResources().getString(R.string.excel_file_extension));
         folderDialog.addDirectoryListener(new FileDialog.DirectorySelectedListener() {
             public void directorySelected(File directory) {
                 Log.d(getClass().getName(), "selected dir " + directory.toString());
-                Log.v(LOG_TAG, "Exporting Table To Excel");
                 String fileName = title;
                 ExportTableToExcelTask exportTask = new ExportTableToExcelTask(ActivityTableView.this, getDatasource(), fileName, directory.toString(), query);
                 exportTask.execute();
@@ -126,7 +125,7 @@ public class ActivityTableView extends DatabaseActivity {
         folderDialog.setSelectDirectoryOption(true);
         folderDialog.showDialog();
 
-        Log.v(LOG_TAG, "Folder Dialog Invoked");
+        Log.d(LOG_TAG, "Folder Dialog Invoked");
 	}
 
 	public void onResume(){
@@ -237,7 +236,7 @@ public class ActivityTableView extends DatabaseActivity {
 
         emailIntent.putExtra(Intent.EXTRA_HTML_TEXT, Html.fromHtml(body));
 
-        startActivity(Intent.createChooser(emailIntent, "Send email..."));
+        startActivity(Intent.createChooser(emailIntent, getResources().getString(R.string.send_email)));
     }
 
     /**
