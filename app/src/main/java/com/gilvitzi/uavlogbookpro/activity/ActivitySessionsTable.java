@@ -184,8 +184,8 @@ public class ActivitySessionsTable extends DatabaseActivity {
 
         String messageFormat = getResources().getString(R.string.alert_message_delete_sessions);
         String message = String.format(messageFormat, selectedRows.size());
-        String str_no = getResources().getString(R.string.alert_message_no);
-        String str_yes = getResources().getString(R.string.alert_message_yes);
+        String str_no = getResources().getString(R.string.no);
+        String str_yes = getResources().getString(R.string.yes);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder

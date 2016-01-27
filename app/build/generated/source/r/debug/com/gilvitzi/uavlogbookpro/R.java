@@ -2399,8 +2399,8 @@ containing a value of this type.
         public static final int action_sync=0x7f08004a;
         public static final int ads_unit_id=0x7f08004b;
         public static final int alert_message_delete_sessions=0x7f08004c;
-        public static final int alert_message_no=0x7f08004d;
-        public static final int alert_message_yes=0x7f08004e;
+        public static final int no =0x7f08004d;
+        public static final int yes =0x7f08004e;
         public static final int analytics_event_action_export_csv_failed=0x7f08004f;
         public static final int analytics_event_action_export_csv_successful=0x7f080050;
         public static final int analytics_event_action_export_html_failed=0x7f080051;

@@ -14,12 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LogbookDataSource {
-	// Database fields
-        private static final String LOG_TAG = "LogbookDataSource";
-	  public SQLiteDatabase database;
-	  private LogbookSQLite dbHelper;
-	  @SuppressWarnings("unused")
-	private String[] allColumns = { 	
+    private static final String LOG_TAG = "LogbookDataSource";
+    public SQLiteDatabase database;
+    private LogbookSQLite dbHelper;
+
+    @SuppressWarnings("unused")
+    private String[] allColumns = {
 		  LogbookSQLite.COLUMN_ID,
 		  LogbookSQLite.COLUMN_DATE,
 		  LogbookSQLite.COLUMN_DURATION,
@@ -39,13 +39,11 @@ public class LogbookDataSource {
     };
 
     public LogbookDataSource(Context context) {
-    dbHelper = new LogbookSQLite(context);
+        dbHelper = new LogbookSQLite(context);
     }
 
     public void open() {
-        //if (database == null){
-            tryOpenDatabase();
-        //}
+        tryOpenDatabase();
     }
 
     private void tryOpenDatabase(){
@@ -66,7 +64,7 @@ public class LogbookDataSource {
 
     public long addSession(Session session) {
 
-      ContentValues values = new ContentValues();
+        ContentValues values = new ContentValues();
 
 
         values.put( LogbookSQLite.COLUMN_DATE, session.getDate());
@@ -89,44 +87,45 @@ public class LogbookDataSource {
         values.put( LogbookSQLite.COLUMN_COMMENTS, session.getComments());
 
 
-        long insertId = database.insert( LogbookSQLite.TABLE_LOGBOOK, null,
-            values);
+        long insertId = database.insert( LogbookSQLite.TABLE_LOGBOOK, null, values);
         Log.i(LOG_TAG,"Session " + insertId + " added");
         return insertId;
 
     }
 
     public void deleteSession(long id) {
-    Log.i(LOG_TAG, "Session id:" + id + " was deleted");
-    database.delete(LogbookSQLite.TABLE_LOGBOOK, LogbookSQLite.COLUMN_ID
+        Log.i(LOG_TAG, "Session id:" + id + " was deleted");
+        database.delete(LogbookSQLite.TABLE_LOGBOOK, LogbookSQLite.COLUMN_ID
             + " = " + id, null);
     }
 
     public List<Session> getAllSessions() {
-    List<Session> sessions = new ArrayList<Session>();
-    String selectQuery = "SELECT  * FROM " +  LogbookSQLite.TABLE_LOGBOOK;
-    Cursor cursor = database.rawQuery(selectQuery, null);
-    try {
+        List<Session> sessions = new ArrayList<Session>();
+        String selectQuery = "SELECT  * FROM " +  LogbookSQLite.TABLE_LOGBOOK;
+        Cursor cursor = database.rawQuery(selectQuery, null);
 
-        // looping through all rows and adding to list
-        Session session = null;
-        if (cursor.moveToFirst()) {
-            do {
-                session = cursorToSession(cursor);
-                sessions.add(session);
-            } while (cursor.moveToNext());
+        try {
+
+            // looping through all rows and adding to list
+            Session session = null;
+            if (cursor.moveToFirst()) {
+                do {
+                    session = cursorToSession(cursor);
+                    sessions.add(session);
+                } while (cursor.moveToNext());
+            }
+
+        } finally {
+            try {
+                cursor.close();
+                return sessions;
+
+            } catch (Exception ignore) {}
         }
 
-    } finally {
-        try {
-            cursor.close();
-            return sessions;
-
-        } catch (Exception ignore) {}
-    }
-    cursor.moveToNext();
-    cursor.close();
-    return sessions;
+        cursor.moveToNext();
+        cursor.close();
+        return sessions;
     }
 
     public List<Session> getAllSessionsDesc() {

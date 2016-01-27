@@ -143,6 +143,9 @@
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
     <string name="delete">Delete</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="select">Select</string>
     <string name="msg_not_implemented">Not implemented yet</string>
     <string name="about">About</string>
     <string name="cont">Content</string>
@@ -204,10 +207,10 @@
     </string>
     <string name="excel_file_extension">.xls</string>
     <string name="send_email">Send email...</string>
-    <string name="alert_message_no">No</string>
-    <string name="alert_message_yes">Yes</string>
     <string name="alert_message_delete_sessions">This will Delete the %1$d selected rows,\nAre You Sure?</string>
     <string name="dialog_caa_report_year_selection_title">Pick a year</string>
+    <string name="dialog_tag_selection_title">Select Tag</string>
+
 
     <!-- Version V2 -->
 

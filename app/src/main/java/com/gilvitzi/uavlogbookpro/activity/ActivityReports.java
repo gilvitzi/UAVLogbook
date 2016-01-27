@@ -121,6 +121,7 @@ public class ActivityReports extends DatabaseActivity {
     	startActivity(intent);
     	
 	}
+
 	public void goToLastSessionDatePerPlatform(View view){
 		String query = "SELECT " +
 				"(platform_type || ' ' || platform_variation) AS 'Platform'," +
@@ -184,26 +185,28 @@ public class ActivityReports extends DatabaseActivity {
 	
 	public void goToSearchByTag(View view){
         showTagSelectionDialog();
-//	    LinearLayout mInputCustomTextWindow = (LinearLayout) findViewById(R.id.custom_text_window);
-//	    mInputCustomTextWindow.setVisibility(View.VISIBLE);
     }
 
     private void showTagSelectionDialog() {
         final AutoCompleteTextView acTextView = new AutoCompleteTextView(this);
-        acTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+        acTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         acTextView.setAdapter(tags_values_adp);
 
+        String selectString = getResources().getString(R.string.select);
+        String cancelString = getResources().getString(R.string.cancel);
+        String dialogTitle = getResources().getString(R.string.dialog_tag_selection_title);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select Tag")
+        builder.setTitle(dialogTitle)
                 .setCancelable(true)
                 .setView(acTextView)
-                .setPositiveButton("Select", new DialogInterface.OnClickListener() {
+                .setPositiveButton(selectString, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                         searchByTag(acTextView.getText().toString());
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(cancelString, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
