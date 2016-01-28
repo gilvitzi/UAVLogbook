@@ -294,6 +294,9 @@
     <color name="switch_thumb_normal_material_light">#fff1f1f1</color>
     <!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/src/main/res/values/colors.xml -->
     <eat-comment/>
+    <color name="table_header_gradient_end">@color/darker_red_style</color>
+    <color name="table_header_gradient_start">@color/dark_red_style</color>
+    <color name="table_header_text">@color/white</color>
     <color name="table_row_even">#F7E1E1</color>
     <color name="table_row_odd">#F7EDED</color>
     <color name="transparent">#00000000</color>
@@ -2216,7 +2219,8 @@
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/table_header_text</item>
+
         <item name="android:typeface">sans</item>
     </style>
     <style name="table_cell_sessions">

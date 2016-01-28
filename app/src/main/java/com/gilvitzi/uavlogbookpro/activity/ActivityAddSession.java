@@ -389,28 +389,28 @@ public class ActivityAddSession extends DatabaseActivity {
     }
 
     private void getFormControlsReferences() {
-        platform_li = new ArrayList<String>();
-        plat_type_li = new ArrayList<String>();
-        plat_variation_li = new ArrayList<String>();
-        reg_li = new ArrayList<String>();
-        tail_li = new ArrayList<String>();
-        reg_n_tail_li = new ArrayList<String>();
-        location_li = new ArrayList<String>();
-        command_li = new ArrayList<String>();
-        seat_li = new ArrayList<String>();
-        flight_type_li = new ArrayList<String>();
-        remarks_li = new ArrayList<String>();
-        platform_li_ind = new ArrayList<String>();
-        location_li_icao_ind = new ArrayList<String>();
-        location_li_name_ind = new ArrayList<String>();
+        platform_li = new ArrayList<>();
+        plat_type_li = new ArrayList<>();
+        plat_variation_li = new ArrayList<>();
+        reg_li = new ArrayList<>();
+        tail_li = new ArrayList<>();
+        reg_n_tail_li = new ArrayList<>();
+        location_li = new ArrayList<>();
+        command_li = new ArrayList<>();
+        seat_li = new ArrayList<>();
+        flight_type_li = new ArrayList<>();
+        remarks_li = new ArrayList<>();
+        platform_li_ind = new ArrayList<>();
+        location_li_icao_ind = new ArrayList<>();
+        location_li_name_ind = new ArrayList<>();
 
-        platform_adp = new ArrayAdapter<String>(getBaseContext(),android.R.layout.simple_spinner_item,platform_li);
-        reg_n_tail_adp = new ArrayAdapter<String>(getBaseContext(),android.R.layout.simple_spinner_item,reg_n_tail_li);
-        location_adp = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,location_li);
-        command_adp = new ArrayAdapter<String>(getBaseContext(),android.R.layout.simple_spinner_item,command_li);
-        seat_adp = new ArrayAdapter<String>(getBaseContext(),android.R.layout.simple_spinner_item,seat_li);
-        flight_type_adp = new ArrayAdapter<String>(getBaseContext(),android.R.layout.simple_spinner_item,flight_type_li);
-        remarks_adp  = new ArrayAdapter<String>(getBaseContext(),android.R.layout.simple_spinner_item,remarks_li);
+        platform_adp = new ArrayAdapter<>(getBaseContext(),android.R.layout.simple_spinner_item,platform_li);
+        reg_n_tail_adp = new ArrayAdapter<>(getBaseContext(),android.R.layout.simple_spinner_item,reg_n_tail_li);
+        location_adp = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,location_li);
+        command_adp = new ArrayAdapter<>(getBaseContext(),android.R.layout.simple_spinner_item,command_li);
+        seat_adp = new ArrayAdapter<>(getBaseContext(),android.R.layout.simple_spinner_item,seat_li);
+        flight_type_adp = new ArrayAdapter<>(getBaseContext(),android.R.layout.simple_spinner_item,flight_type_li);
+        remarks_adp  = new ArrayAdapter<>(getBaseContext(),android.R.layout.simple_spinner_item,remarks_li);
 
         platform_adp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         reg_n_tail_adp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -1142,10 +1142,7 @@ public class ActivityAddSession extends DatabaseActivity {
 
         boolean validate = true;
 
-
         // get fields values
-
-
         String date = date_et.getText().toString();
         String duration = duration_et.getText().toString();
 
@@ -1155,7 +1152,6 @@ public class ActivityAddSession extends DatabaseActivity {
         String takeoffs = takeoffs_et.getText().toString();
         String landings = landings_et.getText().toString();
         String go_arounds = go_arounds_et.getText().toString();
-
 
         //set up regex and formats
         final String REGEX_INPUT_DATE = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)";

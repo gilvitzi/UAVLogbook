@@ -4,9 +4,6 @@
     <style name="AppBaseTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar" >
     </style>
 
-
-
-
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
 
@@ -167,7 +164,8 @@
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/table_header_text</item>
+
         <item name="android:typeface">sans</item>
     </style>
     

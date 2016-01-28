@@ -13,12 +13,27 @@ import java.util.List;
  */
 public class ExportTableToHTML extends ExportTable {
 
+
     private final String LOG_TAG = "ExportTableToHTML";
     StringBuilder htmlOutput;
 
-	public ExportTableToHTML(ActivityTableView activity, LogbookDataSource datasource, String query) {
+    private String HEADER_BG_COLOR = "#930B0B";
+    private String HEADER_TEXT_COLOR = "#FFFFFF";
+    private String ODD_ROW_BG_COLOR;
+    private String EVEN_ROW_BG_COLOR;
+
+    public ExportTableToHTML(ActivityTableView activity, LogbookDataSource datasource, String query) {
         super(activity, datasource, query);
+
+        initColorsFromResources();
 	}
+
+    private void initColorsFromResources() {
+        HEADER_BG_COLOR = Integer.toHexString(context.getResources().getColor(R.color.dark_red_style));;
+        HEADER_TEXT_COLOR = Integer.toHexString(context.getResources().getColor(R.color.table_header_text));
+        ODD_ROW_BG_COLOR = Integer.toHexString(context.getResources().getColor(R.color.table_row_odd));
+        EVEN_ROW_BG_COLOR = Integer.toHexString(context.getResources().getColor(R.color.table_row_even));
+    }
 
     @Override
     protected void createDataObject() {
@@ -36,7 +51,7 @@ public class ExportTableToHTML extends ExportTable {
         htmlOutput.append("<tr>");
         for (String column : getColumnNames())
         {
-            htmlOutput.append("<th align=\"right\">");
+            htmlOutput.append(String.format("<th align='right' style='background-color:%1$s;color:%1$s'>", HEADER_BG_COLOR, HEADER_TEXT_COLOR));
             htmlOutput.append(column);
             htmlOutput.append("</th>");
         }
@@ -44,19 +59,22 @@ public class ExportTableToHTML extends ExportTable {
     }
 
     private void appendRows() {
+
         List<List<String>> records = getRecords();
 
         for(int row =0; row < records.size(); row++){
             List<String> record = records.get(row);
-            appendSessionAsCommaSeperatedRow(record);
+            appendSessionAsCommaSeperatedRow(record, row);
             publishProgress(String.valueOf(1 + row), String.valueOf(records.size()));
         }
     }
 
-    private void appendSessionAsCommaSeperatedRow(List<String> record){
-        htmlOutput.append("<tr>");
+    private void appendSessionAsCommaSeperatedRow(List<String> record,int index){
+        String rowBGColor = (index % 2 == 0) ? EVEN_ROW_BG_COLOR : ODD_ROW_BG_COLOR;
+
+        htmlOutput.append(String.format("<tr style='background-color:%1$s'>",rowBGColor));
         for (int i = 0;i < record.size();i++){
-            htmlOutput.append("<td align=\"right\">");
+            htmlOutput.append("<td align='right'>");
             htmlOutput.append(record.get(i));
             htmlOutput.append("</td>");
 	    }
