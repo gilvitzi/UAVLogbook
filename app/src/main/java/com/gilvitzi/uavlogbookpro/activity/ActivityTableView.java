@@ -20,9 +20,10 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.gilvitzi.uavlogbookpro.R;
+import com.gilvitzi.uavlogbookpro.ads.GoogleAdMobBanner;
 import com.gilvitzi.uavlogbookpro.export.ExportTableToExcelTask;
-import com.gilvitzi.uavlogbookpro.export.ExportTableToHTML;
-import com.gilvitzi.uavlogbookpro.util.FileDialog;
+import com.gilvitzi.uavlogbookpro.export.ShareTableAsExcelFileTask;
+import com.gilvitzi.uavlogbookpro.view.FileDialog;
 import com.google.android.gms.analytics.HitBuilders;
 
 import java.io.File;
@@ -78,7 +79,7 @@ public class ActivityTableView extends DatabaseActivity {
                 sendAnalyticsEventExport();
                 return true;
             case R.id.action_share:
-                actionShare();
+                shareMenuItemClicked();
                 sendAnalyticsEventShareTable();
             default:
 		        return super.onOptionsItemSelected(item);
@@ -98,13 +99,13 @@ public class ActivityTableView extends DatabaseActivity {
 
     private void sendAnalyticsEventExport() {
         String category = getResources().getString(R.string.analytics_event_category_export);
-        String actionFormat = getResources().getString(R.string.analytics_event_category_export_table_name);
+        String actionFormat = getResources().getString(R.string.analytics_event_action_export_table_name);
         String action = String.format(actionFormat, title);
 
         mTracker.send(new HitBuilders.EventBuilder()
-        .setCategory(category)
-        .setAction(action)
-        .build());
+                .setCategory(category)
+                .setAction(action)
+                .build());
     }
 
     private void exportTableToExcel(){
@@ -210,16 +211,19 @@ public class ActivityTableView extends DatabaseActivity {
         return true;
     }
 
-    private void actionShare()
-    {
-        ExportTableToHTML exporter = new ExportTableToHTML(thisActivity,datasource,query);
-        exporter.setOnDataReadyHandler(new ExportTableToHTML.OnDataReadyHandler() {
-            @Override
-            public void onDataReady(String dataAsHTML) {
-                onDataReadyToShare(dataAsHTML);
-            }
-        });
-        exporter.execute();
+
+    private void shareMenuItemClicked() {
+        ShareTableAsExcelFileTask shareTask = new ShareTableAsExcelFileTask(this, datasource, query, title);
+        shareTask.execute();
+
+//        ExportTableToHTML exporter = new ExportTableToHTML(thisActivity,datasource,query);
+//        exporter.setOnDataReadyHandler(new ExportTableToHTML.OnDataReadyHandler() {
+//            @Override
+//            public void onDataReady(String dataAsHTML) {
+//                onDataReadyToShare(dataAsHTML);
+//            }
+//        });
+//        exporter.execute();
     }
 
     private void onDataReadyToShare(String data) {

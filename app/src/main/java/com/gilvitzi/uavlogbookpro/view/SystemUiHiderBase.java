@@ -1,4 +1,4 @@
-package com.gilvitzi.uavlogbookpro.util;
+package com.gilvitzi.uavlogbookpro.view;
 
 import android.app.Activity;
 import android.view.View;

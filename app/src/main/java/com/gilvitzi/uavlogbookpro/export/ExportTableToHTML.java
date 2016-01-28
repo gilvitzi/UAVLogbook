@@ -84,18 +84,16 @@ public class ExportTableToHTML extends ExportTable {
     protected void sendExportSuccessfulHit()
     {
         mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory(mActivity.getString(R.string.analytics_event_category_export))
-                .setAction(mActivity.getString(R.string.analytics_event_action_export_csv_successful))
+                .setCategory(context.getString(R.string.analytics_event_category_export))
+                .setAction(context.getString(R.string.analytics_event_action_export_csv_successful))
                 .build());
     }
 
     protected void sendExportFailedHit()
     {
         mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory(mActivity.getString(R.string.analytics_event_category_export))
-                .setAction(mActivity.getString(R.string.analytics_event_action_export_html_failed))
+                .setCategory(context.getString(R.string.analytics_event_category_export))
+                .setAction(context.getString(R.string.analytics_event_action_export_html_failed))
                 .build());
     }
-
-
 }

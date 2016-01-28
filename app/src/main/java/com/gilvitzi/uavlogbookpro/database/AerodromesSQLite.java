@@ -205,9 +205,6 @@ public class AerodromesSQLite extends SQLiteOpenHelper {
                 this.dialog.dismiss();
             }
         }
-
-
     }
-	
 }
 

@@ -1,4 +1,4 @@
-package com.gilvitzi.uavlogbookpro.util;
+package com.gilvitzi.uavlogbookpro.view;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

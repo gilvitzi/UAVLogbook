@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths name="file_paths" xmlns:android="http://schemas.android.com/apk/res/android">
+    <cache-path name="excel_files" path="excel/" />
+    <cache-path name="root" path="/" />
+</paths>

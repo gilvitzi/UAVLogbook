@@ -1,13 +1,6 @@
-package com.gilvitzi.uavlogbookpro.util;
-
-import java.util.ArrayList;
-import java.util.Locale;
-
-import com.gilvitzi.uavlogbookpro.model.Aerodrome;
-import com.gilvitzi.uavlogbookpro.R;
+package com.gilvitzi.uavlogbookpro.view;
 
 import android.content.Context;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,19 +9,24 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
-public class AerodromeNameListAdapter extends BaseAdapter implements Filterable{
+import com.gilvitzi.uavlogbookpro.R;
+import com.gilvitzi.uavlogbookpro.model.Aerodrome;
+
+import java.util.ArrayList;
+import java.util.Locale;
+
+public class AerodromeICAOListAdapter extends BaseAdapter implements Filterable{
     //Main data structure
     private ArrayList<Aerodrome> aerodromes;
     private ArrayList<Aerodrome> filteredAerodromes;
     private Context context;
     private AerodromesListAdapterFilter adapterFilter;
     
-    public AerodromeNameListAdapter(ArrayList<Aerodrome> aerodromes, Context context) {
+    public AerodromeICAOListAdapter(ArrayList<Aerodrome> aerodromes, Context context) {
         this.aerodromes = aerodromes;
         this.context = context;
     }
 
-    
     @Override
     public int getCount() {
         return filteredAerodromes.size();
@@ -36,7 +34,7 @@ public class AerodromeNameListAdapter extends BaseAdapter implements Filterable{
 
     @Override
     public Object getItem(int position) {
-        return filteredAerodromes.get(position).getAerodromeName();
+        return filteredAerodromes.get(position).getICAO();
     }
 
     @Override
@@ -50,7 +48,7 @@ public class AerodromeNameListAdapter extends BaseAdapter implements Filterable{
         if (v == null) {
             LayoutInflater vi = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = vi.inflate(R.layout.aerodrome_list_item_name, null);
+            v = vi.inflate(R.layout.aerodrome_list_item, null);
         }
 
         TextView icaoView = (TextView) v
@@ -82,14 +80,15 @@ public class AerodromeNameListAdapter extends BaseAdapter implements Filterable{
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults results = new FilterResults();
             if (constraint == null || constraint.length() == 0) {
-                results.values = null;
-                results.count = 0;
+                results.values = aerodromes;
+                results.count = aerodromes.size();
+                
             } else {
                 ArrayList<Aerodrome> filteredAerodromeList = new ArrayList<Aerodrome>();
                 for (Aerodrome aerodrome : aerodromes) {
-                    if (aerodrome.getAerodromeName()
+                    if (aerodrome.getICAO()
                             .toLowerCase(Locale.getDefault())
-                            .contains(
+                            .startsWith(
                                     constraint.toString().toLowerCase(
                                             Locale.getDefault()))) {
                         filteredAerodromeList.add(aerodrome);

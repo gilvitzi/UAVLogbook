@@ -1,4 +1,4 @@
-package com.gilvitzi.uavlogbookpro.util;
+package com.gilvitzi.uavlogbookpro.view;
 
 
 import android.app.ProgressDialog;
@@ -10,6 +10,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.widget.TableLayout;
+
+import com.gilvitzi.uavlogbookpro.util.NameValuePair;
 
 import java.util.ArrayList;
 import java.util.List;

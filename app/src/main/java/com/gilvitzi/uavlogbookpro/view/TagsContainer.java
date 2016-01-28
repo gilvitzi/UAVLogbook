@@ -1,4 +1,4 @@
-package com.gilvitzi.uavlogbookpro.util;
+package com.gilvitzi.uavlogbookpro.view;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

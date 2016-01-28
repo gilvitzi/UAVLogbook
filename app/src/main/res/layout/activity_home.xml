@@ -67,7 +67,7 @@
 
             </LinearLayout>
 
-		    <com.gilvitzi.uavlogbookpro.util.QuickStartButton
+		    <com.gilvitzi.uavlogbookpro.view.QuickStartButton
 		        android:id="@+id/btn_quick_start"
 		        android:layout_width="100dp"
 		        android:layout_height="100dp"

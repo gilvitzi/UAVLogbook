@@ -175,7 +175,7 @@
     <string name="dialog_exporting_table">Exporting Table...</string>
     <string name="ERROR_TOAST_SHARE_EXPORT_FAILED">CSV Export Failed</string>
     <string name="exporting_progress_dialog_message">Exporting Table\n %1$s / %2$s</string>
-
+    <string name="export_table_dialog_initial_msg">Exporting Table to Excel...</string>
 
     <!-- Google Drive Sync -->
     <string name="action_google_drive_sync">Sync Google Drive</string>
@@ -209,8 +209,11 @@
     <string name="excel_file_extension">.xls</string>
     <string name="send_email">Send email...</string>
     <string name="alert_message_delete_sessions">This will Delete the %1$d selected rows,\nAre You Sure?</string>
-    <string name="dialog_caa_report_year_selection_title">Pick a year</string>
+    <string name="dialog_caa_report_year_selection_title">Select year</string>
     <string name="dialog_tag_selection_title">Select Tag</string>
+    <string name="sharing_file">Sharing File...</string>
+    <string name="share_file">Share File</string>
+    <string name="sharing_file_subject">UAV Logbook Table Export</string>
 
 
 

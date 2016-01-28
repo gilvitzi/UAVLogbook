@@ -46,13 +46,13 @@ import com.gilvitzi.uavlogbookpro.database.AerodromesDataSource;
 import com.gilvitzi.uavlogbookpro.database.LogbookSQLite;
 import com.gilvitzi.uavlogbookpro.R;
 import com.gilvitzi.uavlogbookpro.model.Session;
-import com.gilvitzi.uavlogbookpro.util.AerodromeICAOListAdapter;
-import com.gilvitzi.uavlogbookpro.util.AerodromeNameListAdapter;
+import com.gilvitzi.uavlogbookpro.view.AerodromeICAOListAdapter;
+import com.gilvitzi.uavlogbookpro.view.AerodromeNameListAdapter;
 import com.gilvitzi.uavlogbookpro.util.DateTimeConverter;
 import com.gilvitzi.uavlogbookpro.util.Duration;
 import com.gilvitzi.uavlogbookpro.util.NameValuePair;
 import com.gilvitzi.uavlogbookpro.util.StringValuePair;
-import com.gilvitzi.uavlogbookpro.util.TagsContainer;
+import com.gilvitzi.uavlogbookpro.view.TagsContainer;
 import com.gilvitzi.uavlogbookpro.util.UIMessage;
 import com.google.android.gms.analytics.HitBuilders;
 

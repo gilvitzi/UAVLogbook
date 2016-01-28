@@ -23,7 +23,7 @@ public class DatabaseActivity extends AnalyticsActivity {
 
         context = this.getBaseContext();
         datasource = new LogbookDataSource(this);
-        datasource.open();
+        //datasource.open();
 
         tryForcingActionBar();
     }
@@ -36,12 +36,10 @@ public class DatabaseActivity extends AnalyticsActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //datasource.open();
     }
 
     @Override
     protected void onPause() {
-        //datasource.close();
         super.onPause();
     }
 

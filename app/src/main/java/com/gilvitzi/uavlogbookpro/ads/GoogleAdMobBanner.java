@@ -1,4 +1,4 @@
-package com.gilvitzi.uavlogbookpro.activity;
+package com.gilvitzi.uavlogbookpro.ads;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

@@ -32,8 +32,7 @@ public class LogbookSQLite extends SQLiteOpenHelper {
 	public static final String COLUMN_GO_AROUNDS = "go_arounds";
 	public static final String COLUMN_COMMENTS = "comments";
 	
-	   //Common query Parameters
-	
+    //Common query Parameters
     public static final String DURATION_SUM_HOURS = "(" +
             "(SUM(strftime('%s', duration))/60/60)" +
             "|| ':' ||" +
@@ -82,9 +81,6 @@ public class LogbookSQLite extends SQLiteOpenHelper {
             + COLUMN_COMMENTS
             + " FROM " + TABLE_LOGBOOK;
             
-            
-    
-    
 	// Database creation sql statement
 	  private static final String DATABASE_CREATE = "CREATE TABLE "
 	      + TABLE_LOGBOOK + "(" 
@@ -127,5 +123,4 @@ public class LogbookSQLite extends SQLiteOpenHelper {
 		    db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOGBOOK);
 		    this.onCreate(db);
 	}
-
 }

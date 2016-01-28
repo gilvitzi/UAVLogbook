@@ -13,6 +13,7 @@ import com.gilvitzi.uavlogbookpro.R;
 import com.gilvitzi.uavlogbookpro.database.LogbookDataSource;
 import com.google.android.gms.analytics.Tracker;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,7 +25,6 @@ public abstract class ExportTable extends AsyncTask<String, String, Boolean> {
     private final ProgressDialog dialog;
 
     protected OnDataReadyHandler onDataReadyHandler;
-    protected Activity mActivity;
     protected Context context;
 
     private LogbookDataSource datasource;
@@ -67,7 +67,6 @@ public abstract class ExportTable extends AsyncTask<String, String, Boolean> {
     /* Internal Implementation */
     public ExportTable(Activity activity,LogbookDataSource  datasource,String query) {
         this.context = activity;
-        this.mActivity = activity;
         this.datasource = datasource;
         this.query = query;
 
@@ -76,19 +75,19 @@ public abstract class ExportTable extends AsyncTask<String, String, Boolean> {
 
     @Override
     protected void onPreExecute(){
-        dialog.setMessage(mActivity.getString(R.string.dialog_exporting_table));
+        dialog.setMessage(context.getString(R.string.dialog_exporting_table));
         dialog.show();
 
-        mTracker = AnalyticsApplication.getDefaultTracker(mActivity);
+        mTracker = AnalyticsApplication.getDefaultTracker(context);
     }
 
     @Override
     protected Boolean doInBackground(String... params) {
         try{
             datasource.open();
-            cursor = datasource.database.rawQuery(query,null);
+            cursor = datasource.database.rawQuery(query, null);
             columnNames = cursor.getColumnNames();
-            records = new LinkedList<List<String>>();
+            records = new ArrayList<List<String>>(records.size());
             List<String> record;
             String value = "";
 
@@ -130,7 +129,6 @@ public abstract class ExportTable extends AsyncTask<String, String, Boolean> {
                 records.add(record);
             } while (cursor.moveToNext());
         }
-        //datasource.close();
     }
 
     @Override

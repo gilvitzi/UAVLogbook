@@ -1,4 +1,4 @@
-package com.gilvitzi.uavlogbookpro.util;
+package com.gilvitzi.uavlogbookpro.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -14,6 +14,7 @@ import android.widget.Button;
 
 import com.gilvitzi.uavlogbookpro.activity.ActivityAddSession;
 import com.gilvitzi.uavlogbookpro.activity.AnalyticsActivity;
+import com.gilvitzi.uavlogbookpro.util.UIMessage;
 import com.google.android.gms.analytics.HitBuilders;
 
 import java.util.Date;

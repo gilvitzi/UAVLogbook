@@ -10,7 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.gilvitzi.uavlogbookpro.R;
-import com.gilvitzi.uavlogbookpro.util.SystemUiHider;
+import com.gilvitzi.uavlogbookpro.view.SystemUiHider;
 
 
 public class ActivitySplashScreen extends Activity {

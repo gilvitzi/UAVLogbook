@@ -18,6 +18,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 
 import com.gilvitzi.uavlogbookpro.R;
+import com.gilvitzi.uavlogbookpro.ads.GoogleAdMobFullScreenAd;
 import com.gilvitzi.uavlogbookpro.database.LogbookReportQuery;
 import com.gilvitzi.uavlogbookpro.util.RandomBoolean;
 import com.google.android.gms.ads.AdListener;

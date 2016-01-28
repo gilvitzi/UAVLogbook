@@ -11,13 +11,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
-
             <TableLayout
                 android:id="@+id/tbl_all_sessions"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:stretchColumns="*"
                  />
+
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"

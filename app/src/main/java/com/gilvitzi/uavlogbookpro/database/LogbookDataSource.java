@@ -43,7 +43,12 @@ public class LogbookDataSource {
     }
 
     public void open() {
-        tryOpenDatabase();
+        if (database == null) {
+            tryOpenDatabase();
+        } else if (!database.isOpen()) {
+            database.close();
+            tryOpenDatabase();
+        }
     }
 
     private void tryOpenDatabase(){
@@ -66,7 +71,6 @@ public class LogbookDataSource {
 
         ContentValues values = new ContentValues();
 
-
         values.put( LogbookSQLite.COLUMN_DATE, session.getDate());
         values.put( LogbookSQLite.COLUMN_DURATION, session.getDuration());
         values.put( LogbookSQLite.COLUMN_DAY_NIGHT, session.getDayNight());
@@ -86,11 +90,9 @@ public class LogbookDataSource {
         values.put( LogbookSQLite.COLUMN_GO_AROUNDS, session.getGoArounds());
         values.put( LogbookSQLite.COLUMN_COMMENTS, session.getComments());
 
-
         long insertId = database.insert( LogbookSQLite.TABLE_LOGBOOK, null, values);
         Log.i(LOG_TAG,"Session " + insertId + " added");
         return insertId;
-
     }
 
     public void deleteSession(long id) {
@@ -178,8 +180,6 @@ public class LogbookDataSource {
         cursor.moveToNext();
         return sessions;
     }
-
-
 
     public Session cursorToSession(Cursor cursor) {
         long id = cursor.getLong(cursor.getColumnIndex( LogbookSQLite.COLUMN_ID));
@@ -332,10 +332,10 @@ public class LogbookDataSource {
     }
 
     public String getTotalHours(){
-      String query = "SELECT " +  LogbookSQLite.DURATION_SUM_HOURS + " AS 'Hours' "+ " FROM " +  LogbookSQLite.TABLE_LOGBOOK;
-      Cursor cursor = database.rawQuery(query,null);
-      String duration = "";
-      try {
+        String query = "SELECT " +  LogbookSQLite.DURATION_SUM_HOURS + " AS 'Hours' "+ " FROM " +  LogbookSQLite.TABLE_LOGBOOK;
+        Cursor cursor = database.rawQuery(query,null);
+        String duration = "";
+        try {
             if (cursor.moveToFirst()) {
                duration = cursor.getString(0);
             }
@@ -345,6 +345,7 @@ public class LogbookDataSource {
             } catch (Exception ignore) {}
         }
         cursor.moveToNext();
+        cursor.close();
 
         return duration;
     }

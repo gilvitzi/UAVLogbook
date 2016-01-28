@@ -26,9 +26,9 @@ import com.gilvitzi.uavlogbookpro.export.ImportDBExcelTask;
 import com.gilvitzi.uavlogbookpro.R;
 import com.gilvitzi.uavlogbookpro.model.Session;
 import com.gilvitzi.uavlogbookpro.util.Duration;
-import com.gilvitzi.uavlogbookpro.util.FileDialog;
+import com.gilvitzi.uavlogbookpro.view.FileDialog;
 import com.gilvitzi.uavlogbookpro.util.NameValuePair;
-import com.gilvitzi.uavlogbookpro.util.QuickStartButton;
+import com.gilvitzi.uavlogbookpro.view.QuickStartButton;
 import com.google.android.gms.analytics.HitBuilders;
 
 import java.io.File;
@@ -81,7 +81,6 @@ public class ActivityHome extends DatabaseActivity {
 	    }
 	}
 	
-
     @SuppressWarnings("unchecked")
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,7 +91,6 @@ public class ActivityHome extends DatabaseActivity {
 
         // Show What's New in this Version Screen
         checkWhatsNew();
-
 
         AerodromesDataSource mAerodromesDataSource = new AerodromesDataSource(this);
         mAerodromesDataSource.initiate();
@@ -269,14 +267,17 @@ public class ActivityHome extends DatabaseActivity {
 		@Override
 		protected Boolean doInBackground(List<NameValuePair>... params) {
 			try{
-				totalHours = getDatasource().getTotalHours();
+                datasource.open();
+				totalHours = datasource.getTotalHours();
 				if (totalHours == null){
 				    totalHours = "00:00";
 				}
 				totalSessions = getDatasource().countRecords();
-			}catch(Exception e){
+			} catch(Exception e) {
 				Log.e("HomePageData","Error: " + e);
-			}
+			} finally {
+                datasource.close();
+            }
 			return true;
 		}
 		
@@ -287,14 +288,13 @@ public class ActivityHome extends DatabaseActivity {
 				
 				TextView tv_flight_hours = (TextView) findViewById(R.id.total_flight_hours);
 				tv_flight_hours.setText("Flight Hours: " + totalHours);
-				
-				TextView tv_sessions = (TextView) findViewById(R.id.total_sessions);
+
+                TextView tv_sessions = (TextView) findViewById(R.id.total_sessions);
 				tv_sessions.setText("Sessions: " + totalSessions);
-			}
+            }
 		}
     }
 
-    
     private Date getQuickStartTime()
     {
     	long millis = 0;
