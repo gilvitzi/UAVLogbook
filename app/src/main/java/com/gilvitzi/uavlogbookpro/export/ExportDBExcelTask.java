@@ -3,15 +3,15 @@ package com.gilvitzi.uavlogbookpro.export;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 import com.gilvitzi.uavlogbookpro.AnalyticsApplication;
+import com.gilvitzi.uavlogbookpro.R;
 import com.gilvitzi.uavlogbookpro.database.LogbookDataSource;
 import com.gilvitzi.uavlogbookpro.database.LogbookSQLite;
 import com.gilvitzi.uavlogbookpro.model.Session;
-import com.gilvitzi.uavlogbookpro.activity.ActivityHome;
 import com.gilvitzi.uavlogbookpro.util.Duration;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -22,22 +22,27 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExportDBExcelTask extends AsyncTask<String, Void, Boolean> {
-	
-	private final ProgressDialog dialog;
+
+    public static final String EXCEL_SHEET_NAME = "logbook";
+    private final ProgressDialog dialog;
 	private Context context;
 	private Activity mActivity;
 	private LogbookDataSource datasource;
 	
-	private final String outFileName = "logbook_export.xls";
 	private String outFilePath = "";
     
     private Tracker mTracker; //Google Analytics
-    
-	public ExportDBExcelTask(Activity activity,LogbookDataSource datasource,String filePath){
+
+    private List<Listener> listeners = new ArrayList<>(); // Event Listeners
+
+	public ExportDBExcelTask(Activity activity,LogbookDataSource datasource,String filePath, String outFileName){
 	    this.context = activity;
 	    mActivity = activity;
 	    outFilePath = filePath + "/" + outFileName;
@@ -48,7 +53,7 @@ public class ExportDBExcelTask extends AsyncTask<String, Void, Boolean> {
 
 	@Override
 	protected void onPreExecute(){
-		this.dialog.setMessage("Exporting to Excel...");
+		this.dialog.setMessage(context.getResources().getString(R.string.export_table_dialog_initial_msg));
 		this.dialog.show();
 
 		//Google Analytics:
@@ -58,36 +63,60 @@ public class ExportDBExcelTask extends AsyncTask<String, Void, Boolean> {
 	@Override
 	protected Boolean doInBackground(String... params) {
 	    List<Session> sessions = null;
-	    try{
+        boolean success = false;
+
+	    try {
 	    	sessions = datasource.getAllSessions();
-	    
-	    	HSSFWorkbook hwb = new HSSFWorkbook();
-	    	HSSFSheet sheet = hwb.createSheet("logbook");
-	    	
-	    	//Headers Row:
-	    	HSSFRow row = sheet.createRow((short) 0);
-	    	putHeadersToExcelRow(row);
-	    	
-	    	//Data Rows:
-	    	for(int r=0;r<sessions.size();r++){
-	    		Session session = sessions.get(r);
-	    		row = sheet.createRow((short) 1+r);
-	    		putSessionToExcelRow(row,session);
-	    	}
-	    	
-	    	FileOutputStream fileOut = new FileOutputStream(outFilePath);
-		    hwb.write(fileOut);
-		    fileOut.close();
-		    datasource.close();
-		    return true;
-	    } catch (Exception e) {
-	    	e.printStackTrace();
-	    	datasource.close();
-	    	return false;
-	    }
-	    
+            HSSFWorkbook hwb = createExcelWorkbook(sessions);
+            writeWorkbookToFile(hwb);
+		    success = true;
+	    } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            datasource.close();
+        }
+
+        return success;
 	}
-	private void putSessionToExcelRow(HSSFRow row,Session session){
+
+    private void writeWorkbookToFile(HSSFWorkbook hwb) throws FileNotFoundException {
+        FileOutputStream fileOut = null;
+        try {
+            fileOut = new FileOutputStream(outFilePath);
+            hwb.write(fileOut);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try{
+                fileOut.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @NonNull
+    private HSSFWorkbook createExcelWorkbook(List<Session> sessions) {
+        HSSFWorkbook hwb = new HSSFWorkbook();
+        HSSFSheet sheet = hwb.createSheet(EXCEL_SHEET_NAME);
+
+        //Headers Row:
+        HSSFRow row = sheet.createRow((short) 0);
+        putHeadersToExcelRow(row);
+
+        //Data Rows:
+        for(int r = 0; r < sessions.size() ; r++){
+            Session session = sessions.get(r);
+            row = sheet.createRow((short)1 + r);
+            putSessionToExcelRow(row,session);
+        }
+
+        return hwb;
+    }
+
+    private void putSessionToExcelRow(HSSFRow row,Session session){
 		HSSFCell cell;
 		int i = 0;
 		cell = row.createCell(i++);
@@ -208,20 +237,20 @@ public class ExportDBExcelTask extends AsyncTask<String, Void, Boolean> {
 	        this.dialog.dismiss();
 	    }
 	    if (success){
-	        Toast.makeText(context, "Logbook Exported Successfully", Toast.LENGTH_SHORT).show();
-	        Toast.makeText(context, "File Saved: " + outFilePath, Toast.LENGTH_LONG).show();
+//	        Toast.makeText(context, "Logbook Exported Successfully", Toast.LENGTH_SHORT).show();
+//	        Toast.makeText(context, "File Saved: " + outFilePath, Toast.LENGTH_LONG).show();
 	        
             //Google Analytics
 	        mTracker.send(new HitBuilders.EventBuilder()
 	        .setCategory("Export")
 	        .setAction("Export Successful")
 	        .build());
-	        
-	        mActivity.finish();
-            Intent intent = new Intent(context, ActivityHome.class);
-            intent.putExtra("title", "Export To Excel");
-            intent.putExtra("message", "Logbook Exported Successfully" + "\n" + "File Saved: " + outFilePath);
-            context.startActivity(intent);
+
+//	        mActivity.finish();
+//            Intent intent = new Intent(context, ActivityHome.class);
+//            intent.putExtra("title", "Export To Excel");
+//            intent.putExtra("message", "Logbook Exported Successfully" + "\n" + "File Saved: " + outFilePath);
+//            context.startActivity(intent);
 	    }else{
 	        Toast.makeText(context, "Export Failed", Toast.LENGTH_SHORT).show();
             //Google Analytics
@@ -230,6 +259,26 @@ public class ExportDBExcelTask extends AsyncTask<String, Void, Boolean> {
 	        .setAction("Export Failed")
 	        .build());
 	    }
-	}
 
+        onTaskCompleted();
+    }
+
+    public void addListnener(Listener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeListener(Listener listener) {
+        listeners.remove(listener);
+    }
+
+    private void onTaskCompleted()
+    {
+        for (Listener listener : listeners) {
+            listener.onTaskCompleted();
+        }
+    }
+
+    public interface Listener {
+        public void onTaskCompleted();
+    }
 }

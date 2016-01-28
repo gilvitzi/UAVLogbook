@@ -214,8 +214,8 @@
     <string name="sharing_file">Sharing File...</string>
     <string name="share_file">Share File</string>
     <string name="sharing_file_subject">UAV Logbook Table Export</string>
-
-
+    <string name="home_page_flight_hours_text">Flight Hours: %1$s</string>
+    <string name="home_page_sessions_count_text">Sessions: %1$s</string>
 
     <!-- Version V2 -->
 

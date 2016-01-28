@@ -19,15 +19,16 @@ import android.view.ViewConfiguration;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.gilvitzi.uavlogbookpro.R;
 import com.gilvitzi.uavlogbookpro.database.AerodromesDataSource;
-import com.gilvitzi.uavlogbookpro.export.ExportDBExcelTask;
+import com.gilvitzi.uavlogbookpro.database.LogbookReportQuery;
 import com.gilvitzi.uavlogbookpro.export.GoogleDriveSyncTask;
 import com.gilvitzi.uavlogbookpro.export.ImportDBExcelTask;
-import com.gilvitzi.uavlogbookpro.R;
+import com.gilvitzi.uavlogbookpro.export.ShareDBAsExcelFileTask;
 import com.gilvitzi.uavlogbookpro.model.Session;
 import com.gilvitzi.uavlogbookpro.util.Duration;
-import com.gilvitzi.uavlogbookpro.view.FileDialog;
 import com.gilvitzi.uavlogbookpro.util.NameValuePair;
+import com.gilvitzi.uavlogbookpro.view.FileDialog;
 import com.gilvitzi.uavlogbookpro.view.QuickStartButton;
 import com.google.android.gms.analytics.HitBuilders;
 
@@ -51,8 +52,9 @@ public class ActivityHome extends DatabaseActivity {
     private FileDialog folderDialog;
 
 	private QuickStartButton qsButton;
+    private Session lastSession;
 
-	@Override
+    @Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		getMenuInflater().inflate(R.menu.home, menu);
@@ -162,7 +164,6 @@ public class ActivityHome extends DatabaseActivity {
         super.onResume();
 
         refreshHomePageData();
-        refreshLastSessionData();
     }
 
     private void refreshHomePageData() {
@@ -180,9 +181,7 @@ public class ActivityHome extends DatabaseActivity {
     public void footer_goHome(View view){
     	//Do Nothing..
     }
-    
 
-    
     public void footer_goReports(View view){
         Intent intent = new Intent(this, ActivityReports.class);
     	startActivity(intent);
@@ -194,28 +193,15 @@ public class ActivityHome extends DatabaseActivity {
     	startActivity(intent);
     }
 
-    public void menu_exportToExcel(){
-        File mPath = new File(Environment.getExternalStorageDirectory() +"//");
-        folderDialog = new FileDialog(this, mPath);
-        folderDialog.setFileEndsWith(".xls");
-        folderDialog.addDirectoryListener(new FileDialog.DirectorySelectedListener() {
-            public void directorySelected(File directory) {
+    public void menu_exportToExcel() {
+        String query = LogbookReportQuery.getAllSessions();
+        ShareDBAsExcelFileTask shareTask = new ShareDBAsExcelFileTask(this, datasource, query);
+        shareTask.execute();
 
-                ExportDBExcelTask exportTask = new ExportDBExcelTask((Activity) ActivityHome.this, getDatasource(), directory.toString());
-                exportTask.execute();
-
-                Log.d(getClass().getName(), "selected dir " + directory.toString());
-                Log.v("ImportExport", "Exporting Data To Excel");
-
-                mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("ImportExport")
-                        .setAction("DB Export")
-                        .build());
-            }
-        });
-        folderDialog.setSelectDirectoryOption(true);
-        folderDialog.showDialog();
-
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("ImportExport")
+                .setAction("DB Export")
+                .build());
     }
     
     public void menu_importFromExcel(){
@@ -257,7 +243,6 @@ public class ActivityHome extends DatabaseActivity {
     	{
     		Log.e("GoogleDriveSync", "Activity Sync Start Failed with error:\n" + e);
     	}
-    	
     }
 
     private class HomePageData extends AsyncTask<List<NameValuePair>, String, Boolean> {
@@ -269,7 +254,8 @@ public class ActivityHome extends DatabaseActivity {
 			try{
                 datasource.open();
 				totalHours = datasource.getTotalHours();
-				if (totalHours == null){
+                lastSession = datasource.getLastSession();
+                if (totalHours == null){
 				    totalHours = "00:00";
 				}
 				totalSessions = getDatasource().countRecords();
@@ -284,15 +270,47 @@ public class ActivityHome extends DatabaseActivity {
 		@Override
 		protected void onPostExecute(final Boolean success) {
 			if (success){
-				//Update Views:
-				
-				TextView tv_flight_hours = (TextView) findViewById(R.id.total_flight_hours);
-				tv_flight_hours.setText("Flight Hours: " + totalHours);
-
-                TextView tv_sessions = (TextView) findViewById(R.id.total_sessions);
-				tv_sessions.setText("Sessions: " + totalSessions);
+                updateHoursAndSessionsViews();
+                updateLastSessionDataView();
             }
 		}
+
+        private void updateHoursAndSessionsViews() {
+            String hoursText = String.format(context.getResources().getString(R.string.home_page_flight_hours_text), totalHours);
+            TextView tv_flight_hours = (TextView) findViewById(R.id.total_flight_hours);
+            tv_flight_hours.setText(hoursText);
+
+            String sessionsText = String.format(context.getResources().getString(R.string.home_page_sessions_count_text), totalSessions);
+            TextView tv_sessions = (TextView) findViewById(R.id.total_sessions);
+            tv_sessions.setText(sessionsText);
+        }
+
+        private void updateLastSessionDataView()
+        {
+            if (lastSession != null) {
+                setSessionDataInViews();
+            }else{
+                setNoSessionFound();
+            }
+        }
+
+        private void setSessionDataInViews() {
+            ((TextView) findViewById(R.id.session_list_item_date)).setText(lastSession.getDateString());
+            ((TextView) findViewById(R.id.session_list_item_icao)).setText(lastSession.getICAO());
+            TextView bottomLeftTv = ((TextView) findViewById(R.id.session_list_item_platform_type_and_variation));
+            String sim_or_nothing = (lastSession.getSimActual().equalsIgnoreCase("simulator"))?"(SIM)":"";
+            bottomLeftTv.setText(lastSession.getPlatformType() + " " + lastSession.getPlatformVariation() + sim_or_nothing);
+            Duration duration = new Duration();
+            duration.setISO8601(lastSession.getDuration());
+            ((TextView) findViewById(R.id.session_list_item_Duration)).setText(duration.getString());
+        }
+
+        private void setNoSessionFound() {
+            ((TextView) findViewById(R.id.session_list_item_date)).setText(R.string.home_page_no_sessions_found);
+            ((TextView) findViewById(R.id.session_list_item_icao)).setText("");
+            ((TextView) findViewById(R.id.session_list_item_platform_type_and_variation)).setText("");
+            ((TextView) findViewById(R.id.session_list_item_Duration)).setText("");
+        }
     }
 
     private Date getQuickStartTime()
@@ -342,7 +360,6 @@ public class ActivityHome extends DatabaseActivity {
     		Log.e("ActivityHome","showWhatsNew get from Preferences Failed: " + e);
     		showWhatsNewScreen();
     	}
-
     }
     
     private void showWhatsNewScreen()
@@ -367,29 +384,7 @@ public class ActivityHome extends DatabaseActivity {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	private void setFooterButton()
     {
-
         LinearLayout homeBtnContainer = (LinearLayout) findViewById(R.id.btn_home_container);
         homeBtnContainer.setBackgroundColor(getResources().getColor(R.color.darker_red_style));
-
-    }
-
-    private void refreshLastSessionData()
-    {
-        Session session = getDatasource().getLastSession();
-        if (session != null) {
-            ((TextView) findViewById(R.id.session_list_item_date)).setText(session.getDateString());
-            ((TextView) findViewById(R.id.session_list_item_icao)).setText(session.getICAO());
-            TextView bottomLeftTv = ((TextView) findViewById(R.id.session_list_item_platform_type_and_variation));
-            String sim_or_nothing = (session.getSimActual().equalsIgnoreCase("simulator"))?"(SIM)":"";
-            bottomLeftTv.setText(session.getPlatformType() + " " + session.getPlatformVariation() + sim_or_nothing);
-            Duration duration = new Duration();
-            duration.setISO8601(session.getDuration());
-            ((TextView) findViewById(R.id.session_list_item_Duration)).setText(duration.getString());
-        }else{
-            ((TextView) findViewById(R.id.session_list_item_date)).setText(R.string.home_page_no_sessions_found);
-            ((TextView) findViewById(R.id.session_list_item_icao)).setText("");
-            ((TextView) findViewById(R.id.session_list_item_platform_type_and_variation)).setText("");
-            ((TextView) findViewById(R.id.session_list_item_Duration)).setText("");
-        }
     }
 }

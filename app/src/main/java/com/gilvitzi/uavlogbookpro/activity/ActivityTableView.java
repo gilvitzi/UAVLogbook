@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.text.Html;
 import android.util.Log;
@@ -21,12 +20,9 @@ import android.widget.TextView;
 
 import com.gilvitzi.uavlogbookpro.R;
 import com.gilvitzi.uavlogbookpro.ads.GoogleAdMobBanner;
-import com.gilvitzi.uavlogbookpro.export.ExportTableToExcelTask;
 import com.gilvitzi.uavlogbookpro.export.ShareTableAsExcelFileTask;
-import com.gilvitzi.uavlogbookpro.view.FileDialog;
 import com.google.android.gms.analytics.HitBuilders;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,10 +70,6 @@ public class ActivityTableView extends DatabaseActivity {
         super.onOptionsItemSelected(item);
 
 	    switch (item.getItemId()) {
-		    case R.id.action_export_table_to_excel:
-		        exportTableToExcel();
-                sendAnalyticsEventExport();
-                return true;
             case R.id.action_share:
                 shareMenuItemClicked();
                 sendAnalyticsEventShareTable();
@@ -97,39 +89,7 @@ public class ActivityTableView extends DatabaseActivity {
                 .build());
     }
 
-    private void sendAnalyticsEventExport() {
-        String category = getResources().getString(R.string.analytics_event_category_export);
-        String actionFormat = getResources().getString(R.string.analytics_event_action_export_table_name);
-        String action = String.format(actionFormat, title);
-
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory(category)
-                .setAction(action)
-                .build());
-    }
-
-    private void exportTableToExcel(){
-	    //create new file dialog
-        FileDialog folderDialog;
-        Log.d(LOG_TAG,"Select File Dialog Invoked");
-        File mPath = new File(Environment.getExternalStorageDirectory() +"//"); // + "//DIR//"
-        folderDialog = new FileDialog(this, mPath);
-        folderDialog.setFileEndsWith(getResources().getString(R.string.excel_file_extension));
-        folderDialog.addDirectoryListener(new FileDialog.DirectorySelectedListener() {
-            public void directorySelected(File directory) {
-                Log.d(getClass().getName(), "selected dir " + directory.toString());
-                String fileName = title;
-                ExportTableToExcelTask exportTask = new ExportTableToExcelTask(ActivityTableView.this, getDatasource(), fileName, directory.toString(), query);
-                exportTask.execute();
-            }
-        });
-        folderDialog.setSelectDirectoryOption(true);
-        folderDialog.showDialog();
-
-        Log.d(LOG_TAG, "Folder Dialog Invoked");
-	}
-
-	public void onResume(){
+    public void onResume(){
 		super.onResume();
         refreshTableIfNeeded();
         adBottomBannerManager.resume();
@@ -215,15 +175,6 @@ public class ActivityTableView extends DatabaseActivity {
     private void shareMenuItemClicked() {
         ShareTableAsExcelFileTask shareTask = new ShareTableAsExcelFileTask(this, datasource, query, title);
         shareTask.execute();
-
-//        ExportTableToHTML exporter = new ExportTableToHTML(thisActivity,datasource,query);
-//        exporter.setOnDataReadyHandler(new ExportTableToHTML.OnDataReadyHandler() {
-//            @Override
-//            public void onDataReady(String dataAsHTML) {
-//                onDataReadyToShare(dataAsHTML);
-//            }
-//        });
-//        exporter.execute();
     }
 
     private void onDataReadyToShare(String data) {
@@ -312,27 +263,6 @@ public class ActivityTableView extends DatabaseActivity {
             return row;
         }
 
-        private void getCursorFieldType() {
-            /*
-             *  The next code block was removed because cursor.getType() requires minimum API Level 11 (android 3.0.x)
-             *  and the current was API Level is 10 (android 2.3 )
-            switch (cursor.getType(i)){
-                case Cursor.FIELD_TYPE_INTEGER:
-                    value = String.valueOf(cursor.getInt(i));
-                case Cursor.FIELD_TYPE_FLOAT:
-                    value = String.valueOf(cursor.getFloat(i));
-                case Cursor.FIELD_TYPE_STRING:
-                    value = cursor.getString(i);
-                default:
-                    try{
-                        value = String.valueOf(cursor.getBlob(i));
-                    }catch(Exception e){
-                        Log.e(LOG_TAG,"Error parsing result value on column " + cursor.getColumnName(i));
-                    }
-            }
-            */
-       }
-
        protected void onPostExecute(final Boolean success) {
            if (success) {
                TableLayout tl = createTableLayout();
@@ -343,7 +273,6 @@ public class ActivityTableView extends DatabaseActivity {
                 * error occured in loading data from database,
                 * could show message to user too try again later
                 */
-
            }
 
            whenFinishedTask();
@@ -381,19 +310,16 @@ public class ActivityTableView extends DatabaseActivity {
        private void createRow(TableLayout tl, int i, List<String> rowStrings) {
            TableRow tr;
            tr = initRowParams(tl, i);
-
            setRowBackgroundColor(tr, i);
-
            populateRowViews(tr, rowStrings);
        }
 
        @NonNull
        private TableRow initRowParams(TableLayout tl, int i) {
            TableRow tr;
-           tr = new TableRow(context);     //Create New TableRow
-           tl.addView(tr);                 //Append to TableLayout
+           tr = new TableRow(context);
+           tl.addView(tr);
 
-           // Set Dynamic Parameters
            tr.setTag(i); //row index will be the session index.
            return tr;
        }
