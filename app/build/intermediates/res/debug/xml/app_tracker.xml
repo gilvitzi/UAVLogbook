@@ -7,8 +7,6 @@
     <!-- Percentage of events to include in reports -->
     <string name="ga_sampleFrequency">100.0</string>
 
-
-
     <!-- catch and report uncaught exceptions from the app -->
     <bool name="ga_reportUncaughtExceptions">true</bool>
 

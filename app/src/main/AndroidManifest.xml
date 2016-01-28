@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gilvitzi.uavlogbookpro"
-    android:versionCode="15"
-    android:versionName="2.0.7" >
+    android:versionCode="16"
+    android:versionName="2.1.0" >
 
     <uses-sdk
         android:minSdkVersion="10"
         android:targetSdkVersion="22" />
 
-    <!-- Optionally, register AnalyticsReceiver and AnalyticsService to support background
-         dispatching on non-Google Play devices -->
-
-    
     <!-- INTERNET ACCESS REQUIRED FOR GOOGLE ANALYTICS SERVICES -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -145,6 +141,4 @@
                  android:enabled="true"
                  android:exported="false"/>
     </application>
-
-</manifest> <!-- TODO: add 'debug' to version name AndroidManifest.xml -->
-
+</manifest>

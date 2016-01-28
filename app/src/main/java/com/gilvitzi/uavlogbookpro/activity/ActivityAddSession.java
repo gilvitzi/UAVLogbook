@@ -508,10 +508,12 @@ public class ActivityAddSession extends DatabaseActivity {
 		@Override
 		protected Boolean doInBackground(String... params_list) {
 
+            datasource.open();
+
 			if (isEditMode()){	//Edit Mode
-				lastSession = getDatasource().getSessionById(editSessionId);
+				lastSession = datasource.getSessionById(editSessionId);
 			}else{				//Add Mode
-				lastSession = getDatasource().getLastSession();
+				lastSession = datasource.getLastSession();
 			}
 
 			getPlatformTypeAndVariation();
@@ -526,6 +528,8 @@ public class ActivityAddSession extends DatabaseActivity {
 			getComments();
 
 			addCustomItemToDropDown();
+
+            datasource.close();
 			return true;
 		}
 
@@ -642,7 +646,6 @@ public class ActivityAddSession extends DatabaseActivity {
 
 		@Override
 		protected void onPostExecute(final Boolean success) {
-			//show the results from doInBackground()
 			mPopulateTask = null;
 			showProgress(false,thisActivity);
 
@@ -1236,6 +1239,15 @@ public class ActivityAddSession extends DatabaseActivity {
         @Override
         protected Boolean doInBackground(String... params_list) {
 
+            createNewSession();
+
+            if (isEditMode())
+                return attemptUpdateSession();
+            else
+                return attemptAddSession();
+        }
+
+        private void createNewSession() {
             session = new Session();
 
 
@@ -1265,27 +1277,36 @@ public class ActivityAddSession extends DatabaseActivity {
             session.setLandings(getLandings());
             session.setGoArounds(getGoArounds());
             session.setComments(getRemarks());
-
-
-            if (isEditMode())
-                return attemptUpdateSession();
-            else
-                return attemptAddSession();
-
-
         }
 
         @NonNull
         private Boolean attemptAddSession() {
-            Log.i(LOG_TAG, "User Attempt Add Session");
-            session.setId(datasource.addSession(session));
-            return true;
+            boolean success = false;
+
+            try{
+                datasource.open();
+                Log.i(LOG_TAG, "User Attempt Add Session");
+                session.setId(datasource.addSession(session));
+                success = true;
+            } finally {
+                datasource.close();
+            }
+            return success;
         }
 
         private boolean attemptUpdateSession() {
-            Log.i(LOG_TAG, "User Attempt Edit Session (id=" + editSessionId + ")");
-            session.setId(editSessionId);
-            return datasource.updateSession(session);
+            boolean success = false;
+
+            try {
+                datasource.open();
+                Log.i(LOG_TAG, "User Attempt Edit Session (id=" + editSessionId + ")");
+                session.setId(editSessionId);
+                success = datasource.updateSession(session);
+            } finally {
+                datasource.close();
+            }
+
+            return success;
         }
 
         @NonNull

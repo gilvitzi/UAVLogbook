@@ -139,8 +139,6 @@ public class ActivitySessionsTable extends DatabaseActivity {
         intent.putExtra(EXTRA_KEY_SESSION_ID, id);
         Log.i(LOG_TAG, String.format("Sending Record ID %1$d To Editing", id));
 
-        datasource.close();
-
         sendAnalyticsEventEditSessions();
         startActivity(intent);
     }
@@ -167,22 +165,6 @@ public class ActivitySessionsTable extends DatabaseActivity {
     }
 
     public void menu_deleteSessions(){
-		// Invoke "Are You Sure" Dialog
-
-//		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-//		    @Override
-//		    public void onClick(DialogInterface dialog, int which) {
-//		        switch (which){
-//		        case DialogInterface.BUTTON_POSITIVE:
-//		            //Yes button clicked
-//		            break;
-//
-//		        case DialogInterface.BUTTON_NEGATIVE:
-//		            //No button clicked
-//		            break;
-//		        }
-//		    }
-//		};
 
         String messageFormat = getResources().getString(R.string.alert_message_delete_sessions);
         String message = String.format(messageFormat, selectedRows.size());
@@ -425,15 +407,25 @@ public class ActivitySessionsTable extends DatabaseActivity {
 
 		@Override
 		protected Boolean doInBackground(List<NameValuePair>... params) {
-			//delete each selected row id
-			for (int i = 0;i < selectedRows.size();i++){
-				datasource.deleteSession(selectedRows.get(i));
-			}
-			
-			return true;
+			boolean success = false;
+            try{
+                datasource.open();
+                deleteAllSelectedSessions();
+                success = true;
+            } finally {
+                datasource.close();
+            }
+
+            return success;
 		}
-		
-		@Override
+
+        private void deleteAllSelectedSessions() {
+            for (int i = 0;i < selectedRows.size();i++){
+                datasource.deleteSession(selectedRows.get(i));
+            }
+        }
+
+        @Override
 		protected void onPostExecute(final Boolean success) {
 		    String message = selectedRows.size() + " Sessions Deleted";
 		    Toast.makeText(context,message, Toast.LENGTH_LONG).show();

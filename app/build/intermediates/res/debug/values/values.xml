@@ -510,7 +510,7 @@
     <string name="app_name">UAV Logbook</string>
     <string name="app_splash_screen_copyrights">UAV Logbook \u00A9 2014</string>
     <string name="app_splash_screen_title">UAV Operator \n Flight Logbook Pro</string>
-    <string name="app_version">2.0.7 Beta</string>
+    <string name="app_version">2.1.0</string>
     <!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.5.0/res/values/auth_strings.xml -->
     <eat-comment/>
     <string name="auth_google_play_services_client_facebook_display_name">Facebook</string>
@@ -585,7 +585,7 @@
     <string name="delete">Delete</string>
     <string name="description_sync_with_google_drive">With Google Drive Sync, now you Can:</string>
     <string name="dialog_caa_report_year_selection_title">Select year</string>
-    <string name="dialog_exporting_table">Exporting Table...</string>
+    <string name="dialog_exporting_table">Exporting Table…</string>
     <string name="dialog_tag_selection_title">Select Tag</string>
     <string name="error_date_not_specified">Date is Required, touch to select</string>
     <string name="error_date_wrong_format">Date wrong format \n correct format is dd/mm/yyyy</string>
@@ -599,7 +599,7 @@
     <string name="error_takeoffs_input_not_a_number">Please enter number of Takeoffs</string>
     <string name="error_unknown">An Error Occurred. \n Please Try Again Later</string>
     <string name="excel_file_extension">.xls</string>
-    <string name="export_table_dialog_initial_msg">Exporting Table to Excel...</string>
+    <string name="export_table_dialog_initial_msg">Exporting Table to Excel…</string>
     <string name="exporting_progress_dialog_message">Exporting Table\n %1$s / %2$s</string>
     <string name="field_actual_flight">Actual Flight</string>
     <string name="field_actual_flight_short">actual</string>
@@ -692,12 +692,6 @@
     <string name="picker_starttime_title">Start Time:</string>
     <string name="please_wait_progress">Please Wait…</string>
     <string name="progress_importing_from_excel">Importing From Excel..</string>
-    <string name="quick_start_feature_desc">
-        The new Quick Start button lets you quickly start a duration counter when you start your session,
-        then when you finish, just click Stop.
-        \n an Add Session Form will automatically pop-up with your session Duration and Date.
-    </string>
-    <string name="quick_start_feature_image_desc">Quick Start Feature Image</string>
     <string name="quick_start_session">Quick Start</string>
     <string name="report_all_sessions">All Sessions</string>
     <string name="report_caa_report">CAA Report</string>
@@ -718,9 +712,10 @@
     <string name="seat_other">Other</string>
     <string name="seat_po">Payload Operator</string>
     <string name="select">Select</string>
-    <string name="send_email">Send email...</string>
+    <string name="send_email">Send email…</string>
     <string name="share_file">Share File</string>
-    <string name="sharing_file">Sharing File...</string>
+    <string name="share_table_feature_desc">Easily Share any table as Excel File by Email, Add to Cloud, and many more options!</string>
+    <string name="sharing_file">Sharing File…</string>
     <string name="sharing_file_subject">UAV Logbook Table Export</string>
     <string name="start_syncing_now">Start Syncing Now!</string>
     <!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.5.0/res/values/admob_strings.xml -->
@@ -757,8 +752,9 @@
     <string name="title_activity_splash_screen"/>
     <string name="title_activity_table_view">ActivityTableView</string>
     <string name="title_activity_whats_new">What\'s New ?</string>
-    <string name="title_quick_start_button_feature">Quick Start Button</string>
+    <string name="title_share_table_button_feature">Share Table Feature</string>
     <string name="title_sync_with_google_drive">Syncing your Logbook with Google Drive:</string>
+    <string name="title_yearly_caa_report__feature">Yearly CAA Report</string>
     <string name="toast_failed">Failed</string>
     <string name="toast_importing">Importing</string>
     <string name="toast_sessions_failed"> Sessions Import Failed</string>
@@ -770,9 +766,11 @@
     <eat-comment/>
     <string name="warning_importing_failed">Importing Failed</string>
     <string name="whats_new">What\'s New?</string>
+    <string name="whats_new_feature_image_desc">Share Table Feature</string>
     <string name="whats_new_next_button">Next</string>
     <string name="whats_new_skip_button">Got it!</string>
     <string name="whats_new_title">What\'s New in this Version ?</string>
+    <string name="yearly_caa_report_feature_desc">Now you can get a Civial Aviation Yearly Report availabel on the Repors Page</string>
     <string name="yes">Yes</string>
     <!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>

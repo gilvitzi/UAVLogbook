@@ -394,11 +394,8 @@ public class LogbookDataSource {
 
       Cursor  cursor = database.rawQuery(query,null);
       try {
-            // looping through all rows and adding values to list
-
             if (cursor.moveToFirst()) {
                 do {
-
                     values.add(new NameValuePair(cursor.getString(0),cursor.getString(1)));
                 } while (cursor.moveToNext());
             }

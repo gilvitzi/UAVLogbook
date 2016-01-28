@@ -172,10 +172,10 @@
     <string name="toast_failed">Failed</string>
     <string name="action_share">Share</string>
     <string name="action_share_subject">UAV Logbook - %s</string>
-    <string name="dialog_exporting_table">Exporting Table...</string>
+    <string name="dialog_exporting_table">Exporting Table…</string>
     <string name="ERROR_TOAST_SHARE_EXPORT_FAILED">CSV Export Failed</string>
     <string name="exporting_progress_dialog_message">Exporting Table\n %1$s / %2$s</string>
-    <string name="export_table_dialog_initial_msg">Exporting Table to Excel...</string>
+    <string name="export_table_dialog_initial_msg">Exporting Table to Excel…</string>
 
     <!-- Google Drive Sync -->
     <string name="action_google_drive_sync">Sync Google Drive</string>
@@ -199,23 +199,22 @@
     <string name="whats_new_next_button">Next</string>
     <string name="whats_new_skip_button">Got it!</string>
     <string name="google_drive_sync_feature_image_desc">Google Drive Sync featuer image</string>
-    <string name="quick_start_feature_image_desc">Quick Start Feature Image</string>
-    <string name="title_quick_start_button_feature">Quick Start Button</string>
-    <string name="quick_start_feature_desc">
-        The new Quick Start button lets you quickly start a duration counter when you start your session,
-        then when you finish, just click Stop.
-        \n an Add Session Form will automatically pop-up with your session Duration and Date.
-    </string>
+
     <string name="excel_file_extension">.xls</string>
-    <string name="send_email">Send email...</string>
+    <string name="send_email">Send email…</string>
     <string name="alert_message_delete_sessions">This will Delete the %1$d selected rows,\nAre You Sure?</string>
     <string name="dialog_caa_report_year_selection_title">Select year</string>
     <string name="dialog_tag_selection_title">Select Tag</string>
-    <string name="sharing_file">Sharing File...</string>
+    <string name="sharing_file">Sharing File…</string>
     <string name="share_file">Share File</string>
     <string name="sharing_file_subject">UAV Logbook Table Export</string>
     <string name="home_page_flight_hours_text">Flight Hours: %1$s</string>
     <string name="home_page_sessions_count_text">Sessions: %1$s</string>
+    <string name="whats_new_feature_image_desc">Share Table Feature</string>
+    <string name="title_share_table_button_feature">Share Table Feature</string>
+    <string name="share_table_feature_desc">Easily Share any table as Excel File by Email, Add to Cloud, and many more options!</string>
+    <string name="title_yearly_caa_report__feature">Yearly CAA Report</string>
+    <string name="yearly_caa_report_feature_desc">Now you can get a Civial Aviation Yearly Report availabel on the Repors Page</string>
 
     <!-- Version V2 -->
 

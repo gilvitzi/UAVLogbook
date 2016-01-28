@@ -27,7 +27,7 @@
           android:orderInCategory="30"
           android:enabled="true"
           android:icon="@drawable/abc_ic_menu_share_mtrl_alpha"
-          app:showAsAction="never"
+          app:showAsAction="ifRoom"
           android:visible="true"
         />
 </menu>
