@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ads_unit_id">ca-app-pub-5309694254788217/5249584504</string>
-    
+    <string name="ads_banner_unit_id">ca-app-pub-5309694254788217/5249584504</string>
+    <string name="ads_full_screen_unit_id">ca-app-pub-5309694254788217/2722698907</string>
+
     <string name="test_device_id_galaxy_ace">90A9A55C6F9A37170417A8B25110A6B4</string>
     <string name="test_device_id_thl_w8s">CC4D092BF9087F61DEB0F612B48FF2FB</string>
     <string name="test_device_unknown_1">B3EEABB8EE11C2BE770B684D95219ECB</string>
     <string name="test_device_id_lg_g2">2A30C4B96C47B7CE2CC7F47B3A488C4B</string>
     <string name="test_device_id_lg_g4">E8021AEA1A87461C3763FD0F78642C3A</string>
+
+    <string-array name="ad_test_devices">
+        <item >@string/test_device_id_galaxy_ace</item>
+        <item >@string/test_device_id_thl_w8s</item>
+        <item >@string/test_device_unknown_1</item>
+        <item >@string/test_device_id_lg_g2</item>
+        <item >@string/test_device_id_lg_g4</item>
+    </string-array>
 </resources>

@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,26 +17,28 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 
-import com.gilvitzi.uavlogbookpro.AnalyticsApplication;
 import com.gilvitzi.uavlogbookpro.R;
-import com.gilvitzi.uavlogbookpro.database.LogbookDataSource;
-import com.gilvitzi.uavlogbookpro.database.LogbookSQLite;
+import com.gilvitzi.uavlogbookpro.database.LogbookReportQuery;
+import com.gilvitzi.uavlogbookpro.util.RandomBoolean;
+import com.google.android.gms.ads.AdListener;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class ActivityReports extends DatabaseActivity {
 
     private static final String LOG_TAG = "ActivityReports";
-    private static final String screen_name = "Reports";
-    
+
     private static final int CUSTOM_TEXT_TAG = 0;
+    public static final String EXTRA_QUERY = "query";
+    public static final String EXTRA_TITLE = "title";
+    public static final double CHANCE_OF_FULL_SCREEN_AD = 0.4;
     private int customTextInputType = 0;
     protected Context context;
 
     private ArrayAdapter<String> tags_values_adp;
     private List<String> availableYearsFromDatabase;
+    GoogleAdMobFullScreenAd fullScreenAd;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +46,10 @@ public class ActivityReports extends DatabaseActivity {
 		setContentView(R.layout.activity_reports);
 		context = this;
 
-		//Google Analytics:
-		mTracker = AnalyticsApplication.getDefaultTracker(this);
-        
-		datasource = new LogbookDataSource(context);
-		
+        fullScreenAd = new GoogleAdMobFullScreenAd(this);
+
 		setFooterButton();
         
-        //Get AutoComplete Tags
         GetAllTagsTask getAllTagsTask = new GetAllTagsTask();
         getAllTagsTask.execute();
 
@@ -81,105 +78,102 @@ public class ActivityReports extends DatabaseActivity {
         startActivity(intent);
         this.finish();
     }
-	
-	//Report Links
+
 	public void goToShowAllSessions(View view){
-		String query = LogbookSQLite.SELECT_ALL_SESSIONS +
-						" ORDER BY date DESC";
-		
-		Intent intent = new Intent(this, ActivitySessionsTable.class);
-		intent.putExtra("query", query);
-		intent.putExtra("title", getResources().getString(R.string.report_all_sessions));
-    	startActivity(intent);
-    	
+        if (RandomBoolean.get(CHANCE_OF_FULL_SCREEN_AD))
+        {
+            fullScreenAd.addAdListener(new AdListener() {
+                @Override
+                public void onAdClosed() {
+                    super.onAdClosed();
+                    openAllSessionsReport();
+                }
+            });
+
+            fullScreenAd.show();
+        } else {
+            openAllSessionsReport();
+        }
 	}
 
-	public void goToSessionsThisYear(View view){
-		Calendar c = Calendar.getInstance(); 
-		int year = c.get(Calendar.YEAR);
-		String time = year + "-01-01 00:00:00";
-		String query = LogbookSQLite.SELECT_ALL_SESSIONS +
-						" WHERE " + LogbookSQLite.COLUMN_DATE + ">= '" + time + "'";
-		
-		Intent intent = new Intent(this, ActivitySessionsTable.class);
-		intent.putExtra("query", query);
-		intent.putExtra("title", getResources().getString(R.string.report_sessions_this_year));
-    	startActivity(intent);
-    	
+    private void openAllSessionsReport() {
+        String query = LogbookReportQuery.getAllSessions();
+
+        Intent intent = new Intent(this, ActivitySessionsTable.class);
+        intent.putExtra(EXTRA_QUERY, query);
+        intent.putExtra(EXTRA_TITLE, getResources().getString(R.string.report_all_sessions));
+        startActivity(intent);
+    }
+
+    public void goToSessionsThisYear(View view){
+        if (RandomBoolean.get(CHANCE_OF_FULL_SCREEN_AD))
+        {
+            fullScreenAd.addAdListener(new AdListener() {
+                @Override
+                public void onAdClosed() {
+                    super.onAdClosed();
+                    openSessionsThisYearReport();
+                }
+            });
+
+            fullScreenAd.show();
+        } else {
+            openSessionsThisYearReport();
+        }
 	}
-	
-	public void goToSessionsCountedActivities(View view){
-		String query = "SELECT platform_type AS 'Platform Type'," +
-				"SUM(takeoffs) AS 'Takeoffs'," +
-				"SUM(landings) AS 'Landings'," +
-				"SUM(go_arounds) AS 'Go Arounds' " +
-				"FROM logbook GROUP BY platform_type";
-		
+
+    private void openSessionsThisYearReport() {
+        String query = LogbookReportQuery.getSessionsThisYear();
+
+        Intent intent = new Intent(this, ActivitySessionsTable.class);
+        intent.putExtra(EXTRA_QUERY, query);
+        intent.putExtra(EXTRA_TITLE, getResources().getString(R.string.report_sessions_this_year));
+        startActivity(intent);
+    }
+
+    public void goToSessionsCountedActivities(View view){
+        String query = LogbookReportQuery.getSessionsCountedActivities();
+
 		Intent intent = new Intent(this, ActivityTableView.class);
-		intent.putExtra("query", query);
-		intent.putExtra("title", "Counted Activities");
+		intent.putExtra(EXTRA_QUERY, query);
+		intent.putExtra(EXTRA_TITLE, getResources().getString(R.string.report_counted_activities));
     	startActivity(intent);
-    	
 	}
 
 	public void goToLastSessionDatePerPlatform(View view){
-		String query = "SELECT " +
-				"(platform_type || ' ' || platform_variation) AS 'Platform'," +
-				"strftime('%d.%m.%Y',MAX(date)) AS 'Last Session Date' " +				
-				"FROM logbook " +
-				"GROUP BY platform_type,platform_variation " +
-				"ORDER BY MAX(date) DESC";
-		
-		Intent intent = new Intent(this, ActivityTableView.class);
-		intent.putExtra("query", query);
-		intent.putExtra("title", getResources().getString(R.string.report_last_session_date));
+        String query = LogbookReportQuery.getSessionDatePerPlatform();
+
+        Intent intent = new Intent(this, ActivityTableView.class);
+		intent.putExtra(EXTRA_QUERY, query);
+		intent.putExtra(EXTRA_TITLE, getResources().getString(R.string.report_last_session_date));
     	startActivity(intent);
 	}
 	
 	public void goToHoursPerPlatform(View view){
-		String query = "SELECT " +
-				"(platform_type || ' ' || platform_variation) AS 'Platform', " +
-		        
-                LogbookSQLite.DURATION_SUM_HOURS + " AS 'Hours', "+
-				
-				"COUNT(*) AS 'Sessions'" +
-				"FROM logbook " +
-				"GROUP BY platform_type,platform_variation " +
-				"ORDER BY SUM(duration) DESC";
-		Intent intent = new Intent(this, ActivityTableView.class);
+        String query = LogbookReportQuery.getHoursPerPlatform();
+
+        Intent intent = new Intent(this, ActivityTableView.class);
 		Log.v(LOG_TAG,query);
-		intent.putExtra("query", query);
-		intent.putExtra("title", getResources().getString(R.string.report_hours_per_platform));
+		intent.putExtra(EXTRA_QUERY, query);
+		intent.putExtra(EXTRA_TITLE, getResources().getString(R.string.report_hours_per_platform));
     	startActivity(intent);
 	}
 	
 	public void goToHoursPerLocation(View view){
-		String query = "SELECT " +
-				"( aerodrome_name || ' (' || icao || ')') AS 'Aerodrome'," +
-				LogbookSQLite.DURATION_SUM_HOURS + " AS 'Hours', "+	
-				"COUNT(*) AS 'Sessions'" +
-				"FROM logbook " +
-				"GROUP BY icao,aerodrome_name " +
-				"ORDER BY SUM(duration) DESC";
-		
-		Intent intent = new Intent(this, ActivityTableView.class);
-		intent.putExtra("query", query);
-		intent.putExtra("title", getResources().getString(R.string.report_hours_per_location));
+        String query = LogbookReportQuery.getHoursPerLocation();
+
+        Intent intent = new Intent(this, ActivityTableView.class);
+		intent.putExtra(EXTRA_QUERY, query);
+		intent.putExtra(EXTRA_TITLE, getResources().getString(R.string.report_hours_per_location));
     	startActivity(intent);
 	}
 	
 	public void goToHoursPerYear(View view){
-		String query = "SELECT " +
-				"strftime('%Y',date) AS 'Year'," +
-				LogbookSQLite.DURATION_SUM_HOURS + " AS 'Hours', "+	
-				"COUNT(*) AS 'Sessions'" +
-				"FROM logbook " +
-				"GROUP BY strftime('%Y',date) " +
-				"ORDER BY strftime('%Y',date) DESC";
+		String query = LogbookReportQuery.getHoursPerYear();
 		
 		Intent intent = new Intent(this, ActivityTableView.class);
-		intent.putExtra("query", query);
-		intent.putExtra("title", getResources().getString(R.string.report_hours_per_year));
+		intent.putExtra(EXTRA_QUERY, query);
+		intent.putExtra(EXTRA_TITLE, getResources().getString(R.string.report_hours_per_year));
     	startActivity(intent);
 	}
 	
@@ -215,43 +209,39 @@ public class ActivityReports extends DatabaseActivity {
     }
 
 	private void searchByTag(String tag){
-	    String query = LogbookSQLite.SELECT_ALL_SESSIONS + 
-                " WHERE tags LIKE '%" + tag + "%'" +
-                " ORDER BY date DESC";
+	    String query = LogbookReportQuery.getSessionsByTag(tag);
 
         Intent intent = new Intent(this, ActivitySessionsTable.class);
-        intent.putExtra("query", query);
-        intent.putExtra("title", getResources().getString(R.string.report_search_by_tag));
+        intent.putExtra(EXTRA_QUERY, query);
+        intent.putExtra(EXTRA_TITLE, getResources().getString(R.string.report_search_by_tag));
         startActivity(intent);
 	}
+
 	public void goToCAAReport(View view){
-		String query = "SELECT " +
-		        "strftime('%d.%m.%Y',date) AS 'Date'," +
-		        LogbookSQLite.DURATION_HOURS + " AS 'Hours', "+
-		        "(platform_type || ' ' || platform_variation) AS 'Platform',"+
-		        "icao AS 'Location',"+
-		        "registration AS 'Reg.',"+
-		        "tail_number AS 'Tail No.',"+
-		        "(CASE WHEN "+ 
-		            "((command=='PIC' OR command=='Instructor') AND sim_actual<>'Simulator') "+
-		            "THEN (" + LogbookSQLite.DURATION_HOURS_DECIMAL + ") "+
-		            "ELSE 0 "+
-		        "END) "+
-		        " AS 'PIC',"+
-		        "(CASE command WHEN 'SIC' THEN (" + LogbookSQLite.DURATION_HOURS_DECIMAL + ") ELSE 0 END) AS 'SIC',"+
-		        "(CASE command WHEN 'Instructor' THEN (" + LogbookSQLite.DURATION_HOURS_DECIMAL + ") ELSE 0 END) AS 'Instructor',"+
-		        "(CASE command WHEN 'Trainee' THEN (" + LogbookSQLite.DURATION_HOURS_DECIMAL + ") ELSE 0 END) AS 'Trainee',"+
-		        "(CASE sim_actual WHEN 'Simulator' THEN (" + LogbookSQLite.DURATION_HOURS_DECIMAL + ") ELSE 0 END) AS 'Sim',"+
-		        "day_night AS 'Day / Night' "+
-		        " FROM logbook";
-		
-		Intent intent = new Intent(this, ActivityTableView.class);
-		intent.putExtra("query", query);
-		intent.putExtra("title", getResources().getString(R.string.report_caa_report));
-    	startActivity(intent);
+        if (RandomBoolean.get(CHANCE_OF_FULL_SCREEN_AD)) {
+            fullScreenAd.addAdListener(new AdListener() {
+                @Override
+                public void onAdClosed() {
+                    super.onAdClosed();
+                    openCAAReport();
+                }
+            });
+
+            fullScreenAd.show();
+        } else {
+            openCAAReport();
+        }
 	}
-	
-	public void goToYearlyCAAReport(View view){
+
+    private void openCAAReport() {
+        String query = LogbookReportQuery.getCaaReport();
+        Intent intent = new Intent(this, ActivityTableView.class);
+        intent.putExtra(EXTRA_QUERY, query);
+        intent.putExtra(EXTRA_TITLE, getResources().getString(R.string.report_caa_report));
+        startActivity(intent);
+    }
+
+    public void goToYearlyCAAReport(View view){
         showCAAReportYearSelectionDialog();
     }
 
@@ -263,43 +253,35 @@ public class ActivityReports extends DatabaseActivity {
         builder.setTitle(title);
         builder.setItems(years, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(DialogInterface dialog,final int which) {
 
+                if (RandomBoolean.get(CHANCE_OF_FULL_SCREEN_AD))
+                {
+                    fullScreenAd.addAdListener(new AdListener() {
+                        @Override
+                        public void onAdClosed() {
+                            super.onAdClosed();
+                            openCAAYearlyReport(which);
+                        }
+                    });
+
+                    fullScreenAd.show();
+                } else {
+                    openCAAYearlyReport(which);
+                }
+            }
+
+            private void openCAAYearlyReport(int which) {
                 int year = Integer.parseInt((String)years[which]);
-                String query = getCAAReportorYearQueryString(year);
+                String query = LogbookReportQuery.getYearlyCAAReport(year);
 
                 Intent intent = new Intent((Activity)context, ActivityTableView.class);
-                intent.putExtra("query", query);
-                intent.putExtra("title", String.format("CAA Report For %1$s",year));
+                intent.putExtra(EXTRA_QUERY, query);
+                intent.putExtra(EXTRA_TITLE, String.format("CAA Report For %1$s",year));
                 startActivity(intent);
             }
         });
         builder.show();
-    }
-
-    @NonNull
-    private String getCAAReportorYearQueryString(int year) {
-        String query =  "SELECT " +
-                "strftime('%d.%m.%Y',date) AS 'Date'," +
-                LogbookSQLite.DURATION_HOURS + " AS 'Hours', "+
-                "(platform_type || ' ' || platform_variation) AS 'Platform',"+
-                "icao AS 'Location',"+
-                "registration AS 'Reg.',"+
-                "tail_number AS 'Tail No.',"+
-                "(CASE WHEN "+
-                    "((command=='PIC' OR command=='Instructor') AND sim_actual<>'Simulator') "+
-                    "THEN (" + LogbookSQLite.DURATION_HOURS_DECIMAL + ") "+
-                    "ELSE 0 "+
-                "END) "+
-                " AS 'PIC',"+
-                "(CASE command WHEN 'SIC' THEN (" + LogbookSQLite.DURATION_HOURS_DECIMAL + ") ELSE 0 END) AS 'SIC',"+
-                "(CASE command WHEN 'Instructor' THEN (" + LogbookSQLite.DURATION_HOURS_DECIMAL + ") ELSE 0 END) AS 'Instructor',"+
-                "(CASE command WHEN 'Trainee' THEN (" + LogbookSQLite.DURATION_HOURS_DECIMAL + ") ELSE 0 END) AS 'Trainee',"+
-                "(CASE sim_actual WHEN 'Simulator' THEN (" + LogbookSQLite.DURATION_HOURS_DECIMAL + ") ELSE 0 END) AS 'Sim',"+
-                "day_night AS 'Day / Night' "+
-                " FROM logbook " +
-                " WHERE strftime('%Y', date) = '" + year + "'";
-        return query;
     }
 
     public void customTextInputSubmit(View view){
@@ -332,10 +314,6 @@ public class ActivityReports extends DatabaseActivity {
     	startActivity(intent);
     }
     
-    /*
-     * //set Search Tag AutoComplete Values
-
-     */
     private class GetAllTagsTask extends AsyncTask<String, String, Boolean> {
         private static final String LOG_TAG = "GetAllTagsTask";
         private List<String> tags_values_list = new ArrayList<String>();
@@ -361,7 +339,6 @@ public class ActivityReports extends DatabaseActivity {
                 tags_values_adp.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
                 AutoCompleteTextView customTextView = (AutoCompleteTextView) findViewById(R.id.custom_text_input_field);
                 customTextView.setAdapter(tags_values_adp);
-
             }
         }
     }
@@ -387,11 +364,7 @@ public class ActivityReports extends DatabaseActivity {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void setFooterButton()
     {
-//        TextView tv = (TextView) findViewById(R.id.btn_home_text);
-//        tv.setTextColor(getResources().getColor(R.color.black));
-
         LinearLayout homeBtnContainer = (LinearLayout) findViewById(R.id.btn_reports_container);
         homeBtnContainer.setBackgroundColor(getResources().getColor(R.color.darker_red_style));
-
     }
 }

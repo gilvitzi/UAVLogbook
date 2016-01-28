@@ -55,7 +55,7 @@ public class ActivitySessionsTable extends DatabaseActivity {
 	private String query;
 
 	//Google AdMob Ads Banner
-	GoogleAdMobManager adBottomBannerManager;
+	GoogleAdMobBanner adBottomBanner;
 
 	//Google Analytics
     //private Tracker mTracker;
@@ -89,13 +89,11 @@ public class ActivitySessionsTable extends DatabaseActivity {
 
     private void initGoogleAdMob() {
         ViewGroup adContainer = (ViewGroup) findViewById(R.id.adBanner);
-        adBottomBannerManager = new GoogleAdMobManager(context,adContainer);
-        adBottomBannerManager.show();
+        adBottomBanner = new GoogleAdMobBanner(context,adContainer);
+        adBottomBanner.show();
     }
 
     private void getExtras() {
-        //Get Sessions Data:
-        //get Intents Query
         try{
             Bundle extras = getIntent().getExtras();
 
@@ -204,7 +202,7 @@ public class ActivitySessionsTable extends DatabaseActivity {
 
 	@Override
     public void onPause() {
-        adBottomBannerManager.pause();
+        adBottomBanner.pause();
         super.onPause();
     }
 
@@ -212,7 +210,7 @@ public class ActivitySessionsTable extends DatabaseActivity {
 		super.onResume();
 
         //GoogleAdMob
-        adBottomBannerManager.resume();
+        adBottomBanner.resume();
 
         //Database
 		if(null != datasource)
@@ -245,7 +243,7 @@ public class ActivitySessionsTable extends DatabaseActivity {
 
 	@Override
 	protected void onDestroy() {
-        adBottomBannerManager.destroy();
+        adBottomBanner.destroy();
 
 	    super.onDestroy();
 	    if (datasource != null) {
@@ -412,7 +410,7 @@ public class ActivitySessionsTable extends DatabaseActivity {
                            }
                     });//END OF onCheckedChanged (Listener)
                 }
-                adBottomBannerManager.show();
+                adBottomBanner.show();
 //                showAds(); //AdMob Ads Banner
                 progressDialog.dismiss();
 			}else{

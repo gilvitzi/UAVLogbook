@@ -48,7 +48,7 @@ public class ActivityTableView extends DatabaseActivity {
 	private String title;
 
 	//Google AdMob Ads
-    GoogleAdMobManager adBottomBannerManager;
+    GoogleAdMobBanner adBottomBannerManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,7 +158,7 @@ public class ActivityTableView extends DatabaseActivity {
 
     private void initGoogleAdMob() {
         ViewGroup adContainer = (ViewGroup) findViewById(R.id.adBanner);
-        adBottomBannerManager = new GoogleAdMobManager(context,adContainer);
+        adBottomBannerManager = new GoogleAdMobBanner(context,adContainer);
         adBottomBannerManager.show();
     }
 

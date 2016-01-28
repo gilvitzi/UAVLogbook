@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/src/main/res/values/ads.xml -->
+    <eat-comment/>
+    <string-array name="ad_test_devices">
+        <item>@string/test_device_id_galaxy_ace</item>
+        <item>@string/test_device_id_thl_w8s</item>
+        <item>@string/test_device_unknown_1</item>
+        <item>@string/test_device_id_lg_g2</item>
+        <item>@string/test_device_id_lg_g4</item>
+    </string-array>
     <!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/src/main/res/values/arrays.xml -->
     <eat-comment/>
     <string-array name="field_command_items">
@@ -471,12 +480,11 @@
     <string name="action_sync">Sync with Google Drive</string>
     <!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/src/main/res/values/ads.xml -->
     <eat-comment/>
-    <string name="ads_unit_id">ca-app-pub-5309694254788217/5249584504</string>
+    <string name="ads_banner_unit_id">ca-app-pub-5309694254788217/5249584504</string>
+    <string name="ads_full_screen_unit_id">ca-app-pub-5309694254788217/2722698907</string>
     <!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="alert_message_delete_sessions">This will Delete the %1$d selected rows,\nAre You Sure?</string>
-    <string name="alert_message_no">No</string>
-    <string name="alert_message_yes">Yes</string>
     <!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/src/main/res/values/analytics.xml -->
     <eat-comment/>
     <string name="analytics_event_action_export_csv_failed">Export Table To CSV Failed</string>
@@ -573,6 +581,7 @@
     <string name="description_sync_with_google_drive">With Google Drive Sync, now you Can:</string>
     <string name="dialog_caa_report_year_selection_title">Pick a year</string>
     <string name="dialog_exporting_table">Exporting Table...</string>
+    <string name="dialog_tag_selection_title">Select Tag</string>
     <string name="error_date_not_specified">Date is Required, touch to select</string>
     <string name="error_date_wrong_format">Date wrong format \n correct format is dd/mm/yyyy</string>
     <string name="error_day_night_not_selected">Please Choose: Day / Night</string>
@@ -668,6 +677,7 @@
     <!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="msg_not_implemented">Not implemented yet</string>
+    <string name="no">No</string>
     <string name="ok">OK</string>
     <string name="picker_date_title">Date:</string>
     <string name="picker_duration_title">Session Duration:</string>
@@ -683,6 +693,7 @@
     <string name="quick_start_session">Quick Start</string>
     <string name="report_all_sessions">All Sessions</string>
     <string name="report_caa_report">CAA Report</string>
+    <string name="report_counted_activities">Counted Activities</string>
     <string name="report_hours_per_location">Hours Per Location</string>
     <string name="report_hours_per_platform">Hours Per Platform</string>
     <string name="report_hours_per_year">Hours Per Year</string>
@@ -698,6 +709,7 @@
     <string name="seat_mc">Mission Commander</string>
     <string name="seat_other">Other</string>
     <string name="seat_po">Payload Operator</string>
+    <string name="select">Select</string>
     <string name="send_email">Send email...</string>
     <string name="start_syncing_now">Start Syncing Now!</string>
     <!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.5.0/res/values/admob_strings.xml -->
@@ -750,6 +762,7 @@
     <string name="whats_new_next_button">Next</string>
     <string name="whats_new_skip_button">Got it!</string>
     <string name="whats_new_title">What\'s New in this Version ?</string>
+    <string name="yes">Yes</string>
     <!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <style name="Animation.AppCompat.DropDownUp" parent="Base.Animation.AppCompat.DropDownUp"/>

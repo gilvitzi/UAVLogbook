@@ -14,18 +14,18 @@ import com.google.android.gms.ads.AdView;
  * Google AdMob Ads Manager, Manages One AdView
  */
 
-public class GoogleAdMobManager {
+public class GoogleAdMobBanner {
 
     private AdView adView = null;
     private Context context;
     private ViewGroup adViewContainer;
 
-    public GoogleAdMobManager(Context context, ViewGroup adViewContainer) {
+    public GoogleAdMobBanner(Context context, ViewGroup adViewContainer) {
         this.context = context;
         this.adViewContainer = adViewContainer;
 
         adView = new AdView(context);
-        adView.setAdUnitId(context.getResources().getString(R.string.ads_unit_id));
+        adView.setAdUnitId(context.getResources().getString(R.string.ads_banner_unit_id));
         adView.setAdSize(AdSize.BANNER);    //default size
         adViewContainer.addView(adView);
     }
