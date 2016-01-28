@@ -504,8 +504,9 @@ public class ActivityAddSession extends DatabaseActivity {
 	public class FormPopulateTask extends AsyncTask<String, String, Boolean> {
 
 		private final String LOG_TAG = "PopulateFormTask";
+        private List<String> allTagsFromDB;
 
-		@Override
+        @Override
 		protected Boolean doInBackground(String... params_list) {
 
             datasource.open();
@@ -516,22 +517,28 @@ public class ActivityAddSession extends DatabaseActivity {
 				lastSession = datasource.getLastSession();
 			}
 
-			getPlatformTypeAndVariation();
-			getAircraftRegistrationAndTailNum();
-			getAerodromeNameAndIcaoCode();
-
-            aerodromes = aerodromes_db.getAllAerodromes(); //fill List with values from db
-
-			getCommandSeatAndFlightTypeDefaultValuesFromValuesArray();
-			getCommandSeatAndFlightTypeFromDB();
-
-			getComments();
-
-			addCustomItemToDropDown();
+            getAllDataFromDB();
 
             datasource.close();
 			return true;
 		}
+
+        private void getAllDataFromDB() {
+            getPlatformTypeAndVariation();
+            getAircraftRegistrationAndTailNum();
+            getAerodromeNameAndIcaoCode();
+
+            aerodromes = aerodromes_db.getAllAerodromes(); //fill List with values from db
+
+            getCommandSeatAndFlightTypeDefaultValuesFromValuesArray();
+            getCommandSeatAndFlightTypeFromDB();
+
+            getComments();
+
+            addCustomItemToDropDown();
+
+            allTagsFromDB = datasource.getDistinctTags();
+        }
 
         private void getComments() {
 			remarks_li = datasource.distinctValues(LogbookSQLite.COLUMN_COMMENTS);
@@ -770,7 +777,7 @@ public class ActivityAddSession extends DatabaseActivity {
 						}
 
 						//TAGS
-						mTagsContainer.setAutoCompleteValues(datasource.getDistinctTags());
+						mTagsContainer.setAutoCompleteValues(allTagsFromDB);
 						mTagsContainer.setTagsFromString(lastSession.getTags());
 
 						//set Counted Activities
@@ -1240,16 +1247,24 @@ public class ActivityAddSession extends DatabaseActivity {
         protected Boolean doInBackground(String... params_list) {
 
             createNewSession();
+            boolean success = false;
 
-            if (isEditMode())
-                return attemptUpdateSession();
-            else
-                return attemptAddSession();
+            try{
+                datasource.open();
+
+                if (isEditMode()) {
+                    success = attemptUpdateSession();
+                } else {
+                    success = attemptAddSession();
+                }
+            } finally {
+                datasource.close();
+            }
+            return success;
         }
 
         private void createNewSession() {
             session = new Session();
-
 
             session.setDate(getDate());
             session.setDuration(getDuration());
@@ -1267,7 +1282,6 @@ public class ActivityAddSession extends DatabaseActivity {
             session.setICAO(icaoAndName.getFirst());
             session.setAerodromeName(icaoAndName.getSecond());
 
-
             session.setCommand(getCommand());
             session.setSeat(getSeat());
             session.setSimActual(getSimOrActual());
@@ -1281,32 +1295,16 @@ public class ActivityAddSession extends DatabaseActivity {
 
         @NonNull
         private Boolean attemptAddSession() {
-            boolean success = false;
-
-            try{
-                datasource.open();
-                Log.i(LOG_TAG, "User Attempt Add Session");
-                session.setId(datasource.addSession(session));
-                success = true;
-            } finally {
-                datasource.close();
-            }
-            return success;
+            Log.i(LOG_TAG, "User Attempt Add Session");
+            session.setId(datasource.addSession(session));
+            return true;
         }
 
         private boolean attemptUpdateSession() {
             boolean success = false;
-
-            try {
-                datasource.open();
-                Log.i(LOG_TAG, "User Attempt Edit Session (id=" + editSessionId + ")");
-                session.setId(editSessionId);
-                success = datasource.updateSession(session);
-            } finally {
-                datasource.close();
-            }
-
-            return success;
+            Log.i(LOG_TAG, "User Attempt Edit Session (id=" + editSessionId + ")");
+            session.setId(editSessionId);
+            return datasource.updateSession(session);
         }
 
         @NonNull
