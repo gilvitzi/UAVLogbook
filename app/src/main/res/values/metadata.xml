@@ -5,7 +5,7 @@
   <string name="app_name">UAV Logbook</string>
   <string name="app_com_name">UAV_Logbook</string>
   <string name="app_description">UAV Operator Flight Logbook</string>
-  <string name="app_version">2.0.7 Beta</string> <!--  remove Beta from version name metadata.xml -->
+  <string name="app_version">2.1.0 Beta</string> <!--  remove Beta from version name metadata.xml -->
   <string name="app_splash_screen_title">UAV Operator \n Flight Logbook Pro</string>
   <string name="app_splash_screen_copyrights">UAV Logbook \u00A9 2014</string>
   <string name="app_logo_image_desc">UAV Logbook Logo</string>
