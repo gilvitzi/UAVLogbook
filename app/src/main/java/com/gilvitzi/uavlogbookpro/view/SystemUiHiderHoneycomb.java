@@ -3,6 +3,7 @@ package com.gilvitzi.uavlogbookpro.view;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -102,10 +103,14 @@ public class SystemUiHiderHoneycomb extends SystemUiHiderBase {
 				if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
 					// Pre-Jelly Bean, we must manually hide the action bar
 					// and use the old window flags API.
-					mActivity.getActionBar().hide();
-					mActivity.getWindow().setFlags(
-							WindowManager.LayoutParams.FLAG_FULLSCREEN,
-							WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                    try {
+                        mActivity.getActionBar().hide();
+                        mActivity.getWindow().setFlags(
+                                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                    } catch (Exception e) {
+                        Log.e(SystemUiHiderHoneycomb.class.getName(), "onSystemUiVisibilityChange Fatal Error: " + e.getMessage());
+                    }
 				}
 
 				// Trigger the registered listener and cache the visibility
