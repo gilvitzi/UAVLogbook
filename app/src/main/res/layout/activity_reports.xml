@@ -34,7 +34,13 @@
 	    style="@style/reports_page_button"
 	    android:text="@string/report_sessions_this_year"
 	    android:onClick="goToSessionsThisYear" />
-	
+
+    <Button
+        android:id="@+id/btn_sessions_per_platform"
+        style="@style/reports_page_button"
+        android:text="@string/report_sessions_per_platform"
+        android:onClick="goToSessionsPerPlatform" />
+
 	 <Button
 	    android:id="@+id/btn_hours_per_year"
 	    style="@style/reports_page_button"

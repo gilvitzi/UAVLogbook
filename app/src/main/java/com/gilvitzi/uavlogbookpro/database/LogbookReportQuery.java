@@ -1,5 +1,7 @@
 package com.gilvitzi.uavlogbookpro.database;
 
+import com.gilvitzi.uavlogbookpro.util.StringValuePair;
+
 import java.util.Calendar;
 
 /**
@@ -114,6 +116,20 @@ public class LogbookReportQuery {
         return query;
     }
 
+    public static String getSessionsPerPLatform(StringValuePair platformTypeAndVariation) {
+        String platformType = platformTypeAndVariation.getFirst();
+        String platformVariation = platformTypeAndVariation.getSecond();
+
+        StringBuilder query = new StringBuilder();
+        query.append("SELECT * ");
+        query.append(" FROM ").append(LogbookSQLite.TABLE_LOGBOOK);
+        query.append(" WHERE " + LogbookSQLite.COLUMN_PLATFORM_TYPE + "= '" + platformType + "'");
+        query.append(" AND ");
+        query.append(LogbookSQLite.COLUMN_PLATFORM_VARIATION + "= '" + platformVariation + "'");
+
+        return query.toString();
+    }
+
     public static String getSessionsThisYear() {
         Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
@@ -122,7 +138,6 @@ public class LogbookReportQuery {
                 " WHERE " + LogbookSQLite.COLUMN_DATE + ">= '" + time + "'";
 
         return query;
-
     }
 
     public static String getAllSessions() {

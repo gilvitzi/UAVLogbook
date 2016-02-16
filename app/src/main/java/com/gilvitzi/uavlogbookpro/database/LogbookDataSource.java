@@ -3,12 +3,14 @@ package com.gilvitzi.uavlogbookpro.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
 import com.gilvitzi.uavlogbookpro.model.Session;
 import com.gilvitzi.uavlogbookpro.util.NameValuePair;
+import com.gilvitzi.uavlogbookpro.util.StringValuePair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -528,6 +530,25 @@ public class LogbookDataSource {
         while (cursor.moveToNext()) {
             String yearString = cursor.getString(0);
             values.add(yearString);
+        }
+        cursor.close();
+
+        return values;
+    }
+
+    public List<StringValuePair> getDistinctPlatformTypeAndVariation() {
+        String query = String.format(
+                "SELECT DISTINCT %1$s, %2$s FROM %3$s ORDER BY %1$s DESC",
+                LogbookSQLite.COLUMN_PLATFORM_TYPE,
+                LogbookSQLite.COLUMN_PLATFORM_VARIATION,
+                LogbookSQLite.TABLE_LOGBOOK);
+
+        Cursor cursor = database.rawQuery(query, null);
+        List<StringValuePair> values = new ArrayList<StringValuePair>(cursor.getCount());
+        Log.d("cursor Debug", DatabaseUtils.dumpCursorToString(cursor));
+        while (cursor.moveToNext()) {
+            StringValuePair typeVariationPair = new StringValuePair(cursor.getString(0), cursor.getString(1));
+            values.add(typeVariationPair);
         }
         cursor.close();
 

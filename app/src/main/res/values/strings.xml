@@ -154,6 +154,7 @@
     <!-- Reports Strings -->
     <string name="report_all_sessions">All Sessions</string>
     <string name="report_sessions_this_year">Sessions This Year</string>
+    <string name="report_sessions_per_platform">Sessions Per Platform</string>
     <string name="report_last_session_date">Last Session Date</string>
     <string name="report_hours_per_platform">Hours Per Platform</string>
     <string name="report_hours_per_location">Hours Per Location</string>
@@ -205,6 +206,7 @@
     <string name="alert_message_delete_sessions">This will Delete the %1$d selected rows,\nAre You Sure?</string>
     <string name="dialog_caa_report_year_selection_title">Select year</string>
     <string name="dialog_tag_selection_title">Select Tag</string>
+    <string name="dialog_platform_selection_title">Select Platform</string>
     <string name="sharing_file">Sharing File…</string>
     <string name="share_file">Share File</string>
     <string name="sharing_file_subject">UAV Logbook Table Export</string>

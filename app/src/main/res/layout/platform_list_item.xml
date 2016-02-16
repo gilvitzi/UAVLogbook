@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="200dp"
+              android:layout_height="?android:attr/listPreferredItemHeight"
+              android:orientation="vertical"
+              android:paddingBottom="2dip"
+              android:paddingTop="2dip"
+              android:paddingRight="6dip"
+              android:paddingLeft="6dip" >
+
+    <!-- Item Name -->
+    <TextView
+        android:id="@+id/first"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <!-- Actual Item Name Data -->
+    <TextView
+        android:id="@+id/second"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+</LinearLayout>

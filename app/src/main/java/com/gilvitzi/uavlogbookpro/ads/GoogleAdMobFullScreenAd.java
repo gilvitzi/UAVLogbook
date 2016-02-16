@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.gilvitzi.uavlogbookpro.R;
+import com.gilvitzi.uavlogbookpro.util.RandomBoolean;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -92,5 +93,23 @@ public class GoogleAdMobFullScreenAd {
     public void removeAdListener(AdListener listener)
     {
         mOnAdClosedListenersList.remove(listener);
+    }
+
+    public void startActionAfterRandomChanceAd(final Runnable reportOpener, float chanceOfShowingAd)
+    {
+        if (RandomBoolean.get(chanceOfShowingAd))
+        {
+            addAdListener(new AdListener() {
+                @Override
+                public void onAdClosed() {
+                    super.onAdClosed();
+                    reportOpener.run();
+                 }
+            });
+
+            show();
+        } else {
+            reportOpener.run();
+        }
     }
 }

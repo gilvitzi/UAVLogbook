@@ -21,6 +21,8 @@ import com.gilvitzi.uavlogbookpro.R;
 import com.gilvitzi.uavlogbookpro.ads.GoogleAdMobFullScreenAd;
 import com.gilvitzi.uavlogbookpro.database.LogbookReportQuery;
 import com.gilvitzi.uavlogbookpro.util.RandomBoolean;
+import com.gilvitzi.uavlogbookpro.util.StringValuePair;
+import com.gilvitzi.uavlogbookpro.view.PlatformSelectionDialog;
 import com.google.android.gms.ads.AdListener;
 
 import java.util.ArrayList;
@@ -33,7 +35,7 @@ public class ActivityReports extends DatabaseActivity {
     private static final int CUSTOM_TEXT_TAG = 0;
     public static final String EXTRA_QUERY = "query";
     public static final String EXTRA_TITLE = "title";
-    public static final double CHANCE_OF_FULL_SCREEN_AD = 0.4;
+    public static final float CHANCE_OF_FULL_SCREEN_AD = 0.6f;
     private int customTextInputType = 0;
     protected Context context;
 
@@ -81,20 +83,12 @@ public class ActivityReports extends DatabaseActivity {
     }
 
 	public void goToShowAllSessions(View view){
-        if (RandomBoolean.get(CHANCE_OF_FULL_SCREEN_AD))
-        {
-            fullScreenAd.addAdListener(new AdListener() {
-                @Override
-                public void onAdClosed() {
-                    super.onAdClosed();
-                    openAllSessionsReport();
-                }
-            });
-
-            fullScreenAd.show();
-        } else {
-            openAllSessionsReport();
-        }
+        fullScreenAd.startActionAfterRandomChanceAd(new Runnable() {
+            @Override
+            public void run() {
+                openAllSessionsReport();
+            }
+        }, CHANCE_OF_FULL_SCREEN_AD);
 	}
 
     private void openAllSessionsReport() {
@@ -107,20 +101,12 @@ public class ActivityReports extends DatabaseActivity {
     }
 
     public void goToSessionsThisYear(View view){
-        if (RandomBoolean.get(CHANCE_OF_FULL_SCREEN_AD))
-        {
-            fullScreenAd.addAdListener(new AdListener() {
-                @Override
-                public void onAdClosed() {
-                    super.onAdClosed();
-                    openSessionsThisYearReport();
-                }
-            });
-
-            fullScreenAd.show();
-        } else {
-            openSessionsThisYearReport();
-        }
+        fullScreenAd.startActionAfterRandomChanceAd(new Runnable() {
+            @Override
+            public void run() {
+                openSessionsThisYearReport();
+            }
+        }, CHANCE_OF_FULL_SCREEN_AD);
 	}
 
     private void openSessionsThisYearReport() {
@@ -129,6 +115,33 @@ public class ActivityReports extends DatabaseActivity {
         Intent intent = new Intent(this, ActivitySessionsTable.class);
         intent.putExtra(EXTRA_QUERY, query);
         intent.putExtra(EXTRA_TITLE, getResources().getString(R.string.report_sessions_this_year));
+        startActivity(intent);
+    }
+
+    public void goToSessionsPerPlatform(View view) {
+
+        PlatformSelectionDialog.OnSelectedPlatform openReportAction = new PlatformSelectionDialog.OnSelectedPlatform(){
+            @Override
+            public void selected(final StringValuePair selectedPlatform) {
+                fullScreenAd.startActionAfterRandomChanceAd(new Runnable() {
+                    @Override
+                    public void run() {
+                        openSessionsPerPlatformReport(selectedPlatform);
+                    }
+                }, CHANCE_OF_FULL_SCREEN_AD);
+            }
+        };
+
+        PlatformSelectionDialog platformSelectionDialog = new PlatformSelectionDialog(this, datasource, openReportAction);
+        platformSelectionDialog.show();
+    }
+
+    private void openSessionsPerPlatformReport(StringValuePair platformTypeAndVariation) {
+        String query = LogbookReportQuery.getSessionsPerPLatform(platformTypeAndVariation);
+
+        Intent intent = new Intent(this, ActivitySessionsTable.class);
+        intent.putExtra(EXTRA_QUERY, query);
+        intent.putExtra(EXTRA_TITLE, getResources().getString(R.string.report_sessions_per_platform));
         startActivity(intent);
     }
 
@@ -314,7 +327,7 @@ public class ActivityReports extends DatabaseActivity {
     	Intent intent = new Intent(this, ActivityAddSession.class);
     	startActivity(intent);
     }
-    
+
     private class GetAllTagsTask extends AsyncTask<String, String, Boolean> {
         private static final String LOG_TAG = "GetAllTagsTask";
         private List<String> tags_values_list = new ArrayList<String>();
@@ -368,4 +381,5 @@ public class ActivityReports extends DatabaseActivity {
         LinearLayout homeBtnContainer = (LinearLayout) findViewById(R.id.btn_reports_container);
         homeBtnContainer.setBackgroundColor(getResources().getColor(R.color.darker_red_style));
     }
+
 }

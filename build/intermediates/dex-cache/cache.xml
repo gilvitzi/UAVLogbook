@@ -2,487 +2,249 @@
 <items version="2" >
 
     <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wearable\7.5.0\jars\classes.jar"
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\libs\opencsv-1.7.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="69dd177337ead693c408c8dddc9546bb6f1244fa">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\classes-c271cbfae3ea24c9d9f1e825144dd346a2a58281.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\libs\gdata-base-1.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="b35c9037fe61f01872b05e5517e488aa3584eabf">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\gdata-base-1.0-0739bd02a39b92760730abc7f1b26b2ab471b71b.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\libs\gdata-client-1.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="1fb686d98aa8eee63a7bc4c4e00d04618409f284">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\gdata-client-1.0-7b541044fe5d5802ab63763ba0a2f658e366d8d7.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-fitness\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="a172852a35ff919e85b9b7f14bbc15c5bee25520">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\classes-30d2876410631c214fc5f78219648d2879663a1d.jar" />
-    </item>
-    <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\libs\gdata-base-1.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="b35c9037fe61f01872b05e5517e488aa3584eabf">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\gdata-base-1.0-128ec7c52ae6ae218cee3c3cfa87f3a1ebc86fe5.jar" />
-    </item>
-    <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-ads\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="29ebc7e04d877062317c8cc0e68b20f0c1fcda66">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\classes-1e36f7e4bf70909b2edac63c05c88875969d81b5.jar" />
-    </item>
-    <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\libs\gdata-appsforyourdomain-1.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="fb5f498bb2e5e36f303463120fb6e5e83fdf8070">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\gdata-appsforyourdomain-1.0-14763a05ad66b7dd52449c8f113552a8392f07e3.jar" />
-    </item>
-    <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-identity\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="d405025c600055237c171a0bbabaa49d69696573">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\classes-0cdf33d07796e63ca5a4116f3861a45874f71df1.jar" />
-    </item>
-    <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\libs\poi-3.8-20120326.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="552a7703d32c57adb611df084b45f7158e8653f3">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\poi-3.8-20120326-c7725217d4ae91e39603f14ab8d5edfbff69d7f6.jar" />
-    </item>
-    <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\classes-6411641d4d1c4ae8e306a8f5c591626e547a27d8.jar" />
-    </item>
-    <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-location\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="1e98ef3f124bb7a11f8575f9ff5dfea330b61b6f">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\classes-9515755bc39bdf97d6ce7234b01a881db47c93d5.jar" />
-    </item>
-    <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\22.0.0\jars\libs\internal_impl-22.0.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="ba3df4eb0a630d7de294f0e48d3f9267d279b784">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-2d7852f177f6da539374efbbd9e971859d261657.jar" />
-    </item>
-    <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-games\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="02bac2dc792d78241077861566f2c82da955e7fa">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\classes-583254587f952e5557f172427210d348be0393f7.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="06a42becc33232ec0ee125161da68c1829c9f8fd">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\classes-8c1201ed22723047ad7d446a9e1a5de8f2d21395.jar" />
-    </item>
-    <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\libs\gdata-client-1.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="1fb686d98aa8eee63a7bc4c4e00d04618409f284">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\gdata-client-1.0-e712573bb44eb810f7357c700f432f8741721246.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\libs\gdata-codesearch-1.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="4949eb8f37e629e62a1d3c56bcf2c52589770037">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\gdata-codesearch-1.0-d4fb304471a60843b2d3c0dfb3d8c354d6a3d5c2.jar" />
+        sha1="700dd9c8cf4753214384f1f26c976948ddcca5e8">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\opencsv-1.7-b37d0ca852fb877f49ce37e45df03ac947779cf3.jar" />
     </item>
     <item
         jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\7.5.0\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="f02127a85abd52a2cd526d4c2409f21969f80ee8">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\classes-7fd5be32a1316bd4654e0281949550614f429630.jar" />
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\classes-7fd5be32a1316bd4654e0281949550614f429630.jar" />
     </item>
     <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-panorama\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="ba207be21987c11b37d9f8faa08ed6e722569f30">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\classes-c943a06dbeee9cc0cc89f04234feb0e036caad74.jar" />
-    </item>
-    <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\jars\libs\internal_impl-22.0.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-402e0a92b7abf012e38c6ccc180f12285b83f9da.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\22.0.0\jars\libs\internal_impl-22.0.0.jar"
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\22.0.0\jars\libs\internal_impl-22.0.0.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="ba3df4eb0a630d7de294f0e48d3f9267d279b784">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-feb74c700e2047ff7bf930e3cd52ed9997ad64c1.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wallet\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="6836d188602ec5382d1967c58b00960eb8ff8773">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\classes-00257b7097a378822e9783ed97d29402605440bd.jar" />
-    </item>
-    <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="06a42becc33232ec0ee125161da68c1829c9f8fd">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\classes-ec2018175aaae008764ab70d1d0ed4278148a85f.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-gcm\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="8d736fefa22d896e84a268354b3ed48a42663150">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\classes-19b5f999abc76f2f4ae125e6780572ce4e65adb9.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\jars\libs\internal_impl-22.0.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-5565cae09407942bdd29d59bee2297c8a7ca9820.jar" />
-    </item>
-    <item
-        jar="D:\AndroidSDK\extras\android\m2repository\com\android\support\support-annotations\22.0.0\support-annotations-22.0.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\support-annotations-22.0.0-bd3cb8c1a85577fa47490bcd3ee855b23f87b15b.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\classes-1b8cd1d549d9b16f7835038ec6855ba7bf7cbca5.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-drive\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="f44d03c138cb6488fdbaa65e3a7e5878861a56d8">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\classes-810e94dcc7aeeb95ae3fdf38518854aa06df6a8d.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="f02127a85abd52a2cd526d4c2409f21969f80ee8">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\classes-0a25990eb084ef3a9d65504697ca0e42c0b2fba9.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\libs\gdata-calendar-1.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="b153b28a0632701b3d4bd47bea55a268c9d86de3">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\gdata-calendar-1.0-e5b2334c33d91f89a7f7e143cc949d48cf91424b.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-ads\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="29ebc7e04d877062317c8cc0e68b20f0c1fcda66">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\classes-d66a135413b3f2168b7877f3fbcd9e31804d1a18.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-plus\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="272bc5d7063f24bc3a33ea1d318cde8f31f5ec4c">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\classes-6704077b33c8da87a805d8c7494846677c70f8dc.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-safetynet\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="1a6411087ab88ce5542f593e63a2752b6b0d6f1a">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\classes-43ca5ec32b4563cdd3e320e566225b58f093c2c2.jar" />
-    </item>
-    <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-drive\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="f44d03c138cb6488fdbaa65e3a7e5878861a56d8">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\classes-cf546c891bbf4f3b3374c6b4e9c7ed0b1836c8f5.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wearable\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="69dd177337ead693c408c8dddc9546bb6f1244fa">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\classes-815b6308b536c78a0a19597ca74dcd4c478fe8c5.jar" />
-    </item>
-    <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="a78183f30e769a98ab4820794f597763088d3065">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\classes-532a843be3524b3e39de96922ec27fb363161234.jar" />
-    </item>
-    <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wallet\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="6836d188602ec5382d1967c58b00960eb8ff8773">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\classes-38c37dd61120fcfc66d5fc7c9e3c17fe687e2fea.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.0.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="d84409890828e07d344a3b9b1da545dba9897b51">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\classes-ca62ec8fe2c85c828748c0b3fc0ed8146cffedf5.jar" />
-    </item>
-    <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-analytics\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="e7b35244f50663b3f8d150714bca9ecd7a290da1">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\classes-117b28aa80b7a012022107341c1ce7b461cad81d.jar" />
-    </item>
-    <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-panorama\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="ba207be21987c11b37d9f8faa08ed6e722569f30">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\classes-23ae64821d22e5f300743088a603c4397f500c68.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="a78183f30e769a98ab4820794f597763088d3065">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\classes-68bcf5e2b71a3a05783090dd67a64e6c6ee856e6.jar" />
-    </item>
-    <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\libs\gdata-photos-1.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="3c43b4c072e175ae2b142136b5c22bfdc4cdcb12">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\gdata-photos-1.0-3ed92735352e989403257058ccb8cf518d113138.jar" />
-    </item>
-    <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-plus\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="272bc5d7063f24bc3a33ea1d318cde8f31f5ec4c">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\classes-bbb24b3d3d1f299e6d76353d34b541664945a74a.jar" />
-    </item>
-    <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-safetynet\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="1a6411087ab88ce5542f593e63a2752b6b0d6f1a">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\classes-b791ef0a8f05f8e7c03f7b248d8ef8357900b8d8.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\libs\gdata-appsforyourdomain-1.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="fb5f498bb2e5e36f303463120fb6e5e83fdf8070">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\gdata-appsforyourdomain-1.0-09cd5d46fed93cd1f6cd1630757a1b4baa28601d.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-games\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="02bac2dc792d78241077861566f2c82da955e7fa">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\classes-e72ed1420531e35a06ecf4ce3f535afeef960bb1.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-location\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="1e98ef3f124bb7a11f8575f9ff5dfea330b61b6f">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\classes-211244eaa58a91eb33d3db6fa3309ee132b2c712.jar" />
-    </item>
-    <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\libs\gdata-codesearch-1.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="4949eb8f37e629e62a1d3c56bcf2c52589770037">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\gdata-codesearch-1.0-b6c33e29f003d000ce5916eb4d4fc669a07eaa69.jar" />
-    </item>
-    <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\libs\gdata-spreadsheet-1.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="8d4ae64feb82e2ded69b726fcfe18f8324af702f">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\gdata-spreadsheet-1.0-2145e19aa8b94828e67f23002836dec628616f9b.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-cast\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="8e3a972f28b8bae817e382257ba177a31bcadbbc">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\classes-c07cc4bf68d6e50ba83d7ea9aeb0470e1226de61.jar" />
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\internal_impl-22.0.0-2d7852f177f6da539374efbbd9e971859d261657.jar" />
     </item>
     <item
         jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-cast\7.5.0\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="8e3a972f28b8bae817e382257ba177a31bcadbbc">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\classes-82edd431bf0d30b208b1e2a61e118161d0682536.jar" />
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\classes-82edd431bf0d30b208b1e2a61e118161d0682536.jar" />
     </item>
     <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-analytics\7.5.0\jars\classes.jar"
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="e7b35244f50663b3f8d150714bca9ecd7a290da1">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\classes-01a43af85f9aa778700932ea7797c2e71f33c180.jar" />
+        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\classes-6411641d4d1c4ae8e306a8f5c591626e547a27d8.jar" />
     </item>
     <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appinvite\7.5.0\jars\classes.jar"
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\jars\libs\internal_impl-22.0.0.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="63ec6e9f4fe5482a7447d0f3091b8e543a02554c">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\classes-f67dd28bcf3933acb1a56706f2182aaf10bce63c.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-nearby\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="6440e5e5cfe368f9bff3c537fb8988048069cb33">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\classes-c114bcce69991885e59b4ce6ef7aa04acc7b9c51.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\libs\opencsv-1.7.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="700dd9c8cf4753214384f1f26c976948ddcca5e8">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\opencsv-1.7-b49ac30a22066d92944f8d41db24096f7ed53726.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\22.0.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="a1372c17fccacca753d3951d3ad820571cbce075">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\classes-5bbf65cbee7f45fe958a29d0bd4130eb6593442d.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-identity\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="d405025c600055237c171a0bbabaa49d69696573">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\classes-11b79bec7541041607037aae5eabbeb5d3f2dff6.jar" />
-    </item>
-    <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-nearby\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="6440e5e5cfe368f9bff3c537fb8988048069cb33">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\classes-199483a5e7f0aa83c986df515d64125c96489ce9.jar" />
+        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\internal_impl-22.0.0-402e0a92b7abf012e38c6ccc180f12285b83f9da.jar" />
     </item>
     <item
         jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\22.0.0\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="a1372c17fccacca753d3951d3ad820571cbce075">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\classes-f62860c1b328ceba5d4217f30e9bcef8b29b17d8.jar" />
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\classes-f62860c1b328ceba5d4217f30e9bcef8b29b17d8.jar" />
     </item>
     <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\libs\opencsv-1.7.jar"
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-nearby\7.5.0\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="700dd9c8cf4753214384f1f26c976948ddcca5e8">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\opencsv-1.7-b37d0ca852fb877f49ce37e45df03ac947779cf3.jar" />
-    </item>
-    <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-gcm\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="8d736fefa22d896e84a268354b3ed48a42663150">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\classes-c7a5aa03370ea119f435969741aed9d0acd4d0d5.jar" />
-    </item>
-    <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appstate\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="68c140702c7242d914655bcb3164d9e8c45b84cb">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\classes-69f6deae779083725f2b8c2c3dd2e3f7365eb467.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appstate\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="68c140702c7242d914655bcb3164d9e8c45b84cb">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\classes-7b21b2aec23176f36b3d4f9fb1790341afecf8d0.jar" />
-    </item>
-    <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.0.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="d84409890828e07d344a3b9b1da545dba9897b51">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\classes-fc0f16d5ca38d318ac90bbe95de327b9b1286abc.jar" />
+        sha1="6440e5e5cfe368f9bff3c537fb8988048069cb33">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\classes-199483a5e7f0aa83c986df515d64125c96489ce9.jar" />
     </item>
     <item
         jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-fitness\7.5.0\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="a172852a35ff919e85b9b7f14bbc15c5bee25520">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\classes-831b4e99d0b8bc6c48bddea130f24ecd1e2de297.jar" />
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\classes-831b4e99d0b8bc6c48bddea130f24ecd1e2de297.jar" />
     </item>
     <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\libs\gdata-photos-1.0.jar"
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.0.0\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="3c43b4c072e175ae2b142136b5c22bfdc4cdcb12">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\gdata-photos-1.0-04ad83b2e1861b62ec249a35acb38564ffc84cc5.jar" />
+        sha1="d84409890828e07d344a3b9b1da545dba9897b51">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\classes-fc0f16d5ca38d318ac90bbe95de327b9b1286abc.jar" />
     </item>
     <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\libs\gdata-spreadsheet-1.0.jar"
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appstate\7.5.0\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="8d4ae64feb82e2ded69b726fcfe18f8324af702f">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\gdata-spreadsheet-1.0-020bd09cb347423cf01aa9593e19688aad6a5d2c.jar" />
-    </item>
-    <item
-        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appinvite\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="63ec6e9f4fe5482a7447d0f3091b8e543a02554c">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\classes-fc1fc84e167f3b0bffbb6c13d65eb0f1f2c67de3.jar" />
+        sha1="68c140702c7242d914655bcb3164d9e8c45b84cb">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\classes-69f6deae779083725f2b8c2c3dd2e3f7365eb467.jar" />
     </item>
     <item
         jar="D:\Source Control\Client\GitHub\UAVLogbook\app\libs\gdata-calendar-1.0.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="b153b28a0632701b3d4bd47bea55a268c9d86de3">
-        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\debug\gdata-calendar-1.0-757f5352d3c20a97314cfd09813d90852a2eac5b.jar" />
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\gdata-calendar-1.0-757f5352d3c20a97314cfd09813d90852a2eac5b.jar" />
     </item>
     <item
-        jar="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\libs\poi-3.8-20120326.jar"
+        jar="D:\AndroidSDK\extras\android\m2repository\com\android\support\support-annotations\22.0.0\support-annotations-22.0.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\support-annotations-22.0.0-bd3cb8c1a85577fa47490bcd3ee855b23f87b15b.jar" />
+    </item>
+    <item
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wearable\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="69dd177337ead693c408c8dddc9546bb6f1244fa">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\classes-c271cbfae3ea24c9d9f1e825144dd346a2a58281.jar" />
+    </item>
+    <item
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appinvite\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="63ec6e9f4fe5482a7447d0f3091b8e543a02554c">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\classes-fc1fc84e167f3b0bffbb6c13d65eb0f1f2c67de3.jar" />
+    </item>
+    <item
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-analytics\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="e7b35244f50663b3f8d150714bca9ecd7a290da1">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\classes-117b28aa80b7a012022107341c1ce7b461cad81d.jar" />
+    </item>
+    <item
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-location\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="1e98ef3f124bb7a11f8575f9ff5dfea330b61b6f">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\classes-9515755bc39bdf97d6ce7234b01a881db47c93d5.jar" />
+    </item>
+    <item
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a78183f30e769a98ab4820794f597763088d3065">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\classes-532a843be3524b3e39de96922ec27fb363161234.jar" />
+    </item>
+    <item
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\libs\gdata-appsforyourdomain-1.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="fb5f498bb2e5e36f303463120fb6e5e83fdf8070">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\gdata-appsforyourdomain-1.0-14763a05ad66b7dd52449c8f113552a8392f07e3.jar" />
+    </item>
+    <item
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-games\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="02bac2dc792d78241077861566f2c82da955e7fa">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\classes-583254587f952e5557f172427210d348be0393f7.jar" />
+    </item>
+    <item
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-ads\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="29ebc7e04d877062317c8cc0e68b20f0c1fcda66">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\classes-1e36f7e4bf70909b2edac63c05c88875969d81b5.jar" />
+    </item>
+    <item
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\libs\poi-3.8-20120326.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="552a7703d32c57adb611df084b45f7158e8653f3">
-        <dex dex="C:\Users\Gil\StudioProjects\UAVLogbook V2\app\build\intermediates\pre-dexed\debug\poi-3.8-20120326-40b4317708583d2cb2b167d403d7991d5d90477d.jar" />
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\poi-3.8-20120326-c7725217d4ae91e39603f14ab8d5edfbff69d7f6.jar" />
+    </item>
+    <item
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\libs\gdata-base-1.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="b35c9037fe61f01872b05e5517e488aa3584eabf">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\gdata-base-1.0-128ec7c52ae6ae218cee3c3cfa87f3a1ebc86fe5.jar" />
+    </item>
+    <item
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-drive\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="f44d03c138cb6488fdbaa65e3a7e5878861a56d8">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\classes-cf546c891bbf4f3b3374c6b4e9c7ed0b1836c8f5.jar" />
+    </item>
+    <item
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="06a42becc33232ec0ee125161da68c1829c9f8fd">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\classes-ec2018175aaae008764ab70d1d0ed4278148a85f.jar" />
+    </item>
+    <item
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wallet\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="6836d188602ec5382d1967c58b00960eb8ff8773">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\classes-38c37dd61120fcfc66d5fc7c9e3c17fe687e2fea.jar" />
+    </item>
+    <item
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\libs\gdata-photos-1.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="3c43b4c072e175ae2b142136b5c22bfdc4cdcb12">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\gdata-photos-1.0-3ed92735352e989403257058ccb8cf518d113138.jar" />
+    </item>
+    <item
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-gcm\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="8d736fefa22d896e84a268354b3ed48a42663150">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\classes-c7a5aa03370ea119f435969741aed9d0acd4d0d5.jar" />
+    </item>
+    <item
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-plus\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="272bc5d7063f24bc3a33ea1d318cde8f31f5ec4c">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\classes-bbb24b3d3d1f299e6d76353d34b541664945a74a.jar" />
+    </item>
+    <item
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-identity\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="d405025c600055237c171a0bbabaa49d69696573">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\classes-0cdf33d07796e63ca5a4116f3861a45874f71df1.jar" />
+    </item>
+    <item
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-panorama\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="ba207be21987c11b37d9f8faa08ed6e722569f30">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\classes-23ae64821d22e5f300743088a603c4397f500c68.jar" />
+    </item>
+    <item
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\libs\gdata-client-1.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="1fb686d98aa8eee63a7bc4c4e00d04618409f284">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\gdata-client-1.0-e712573bb44eb810f7357c700f432f8741721246.jar" />
+    </item>
+    <item
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\libs\gdata-codesearch-1.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="4949eb8f37e629e62a1d3c56bcf2c52589770037">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\gdata-codesearch-1.0-b6c33e29f003d000ce5916eb4d4fc669a07eaa69.jar" />
+    </item>
+    <item
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\libs\gdata-spreadsheet-1.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="8d4ae64feb82e2ded69b726fcfe18f8324af702f">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\gdata-spreadsheet-1.0-2145e19aa8b94828e67f23002836dec628616f9b.jar" />
+    </item>
+    <item
+        jar="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-safetynet\7.5.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="1a6411087ab88ce5542f593e63a2752b6b0d6f1a">
+        <dex dex="D:\Source Control\Client\GitHub\UAVLogbook\app\build\intermediates\pre-dexed\release\classes-b791ef0a8f05f8e7c03f7b248d8ef8357900b8d8.jar" />
     </item>
 
 </items>

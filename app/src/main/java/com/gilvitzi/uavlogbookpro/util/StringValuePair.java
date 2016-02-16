@@ -14,4 +14,10 @@ public class StringValuePair extends ValuePair<String, String> {
         first = "";
         second = "";
     }
+
+    @Override
+    public String toString()
+    {
+        return first + " " + second;
+    }
 }

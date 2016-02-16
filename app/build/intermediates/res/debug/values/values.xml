@@ -586,6 +586,7 @@
     <string name="description_sync_with_google_drive">With Google Drive Sync, now you Can:</string>
     <string name="dialog_caa_report_year_selection_title">Select year</string>
     <string name="dialog_exporting_table">Exporting Table…</string>
+    <string name="dialog_platform_selection_title">Select Platform</string>
     <string name="dialog_tag_selection_title">Select Tag</string>
     <string name="error_date_not_specified">Date is Required, touch to select</string>
     <string name="error_date_wrong_format">Date wrong format \n correct format is dd/mm/yyyy</string>
@@ -701,6 +702,7 @@
     <string name="report_hours_per_year">Hours Per Year</string>
     <string name="report_last_session_date">Last Session Date</string>
     <string name="report_search_by_tag">Search By TAG</string>
+    <string name="report_sessions_per_platform">Sessions Per Platform</string>
     <string name="report_sessions_this_year">Sessions This Year</string>
     <string name="report_yearly_caa_report">Yearly CAA Report</string>
     <string name="save">Save</string>
