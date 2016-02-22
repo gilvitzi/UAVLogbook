@@ -126,7 +126,7 @@ public class LogbookReportQuery {
         query.append(" WHERE " + LogbookSQLite.COLUMN_PLATFORM_TYPE + "= '" + platformType + "'");
         query.append(" AND ");
         query.append(LogbookSQLite.COLUMN_PLATFORM_VARIATION + "= '" + platformVariation + "'");
-
+        query.append(String.format(" ORDER BY %1$s DESC",LogbookSQLite.COLUMN_DATE));
         return query.toString();
     }
 

@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.gilvitzi.uavlogbookpro.R;
 import com.gilvitzi.uavlogbookpro.ads.GoogleAdMobBanner;
+import com.gilvitzi.uavlogbookpro.database.LogbookSQLite;
 import com.gilvitzi.uavlogbookpro.export.ShareTableAsExcelFileTask;
 import com.gilvitzi.uavlogbookpro.model.Session;
 import com.gilvitzi.uavlogbookpro.util.Duration;
@@ -129,8 +130,30 @@ public class ActivitySessionsTable extends DatabaseActivity {
 	}
 
     private void shareMenuItemClicked() {
-        ShareTableAsExcelFileTask shareTask = new ShareTableAsExcelFileTask(this, datasource, query, title);
+        String shareQuery;
+        if (!selectedRows.isEmpty())
+            shareQuery = buildQueryFromSelectedRecords();
+        else
+            shareQuery = query;
+
+        ShareTableAsExcelFileTask shareTask = new ShareTableAsExcelFileTask(this, datasource, shareQuery, title);
         shareTask.execute();
+    }
+
+    private String buildQueryFromSelectedRecords() {
+        StringBuilder queryBuilder = new StringBuilder();
+        queryBuilder.append("SELECT * FROM logbook WHERE ");
+
+        for (Integer recordId : selectedRows)
+            queryBuilder.append(String.format(" %1$s = %2$s OR", LogbookSQLite.COLUMN_ID, recordId));
+
+        queryBuilder.delete(queryBuilder.length() - 2,queryBuilder.length()-0); // delete last "OR"
+        return queryBuilder.toString();
+    }
+
+    private int getRecordIdFromRowNumber(Integer row) {
+
+        return 0;
     }
 
     private void editMenuItemClicked() {
@@ -165,7 +188,6 @@ public class ActivitySessionsTable extends DatabaseActivity {
     }
 
     public void menu_deleteSessions(){
-
         String messageFormat = getResources().getString(R.string.alert_message_delete_sessions);
         String message = String.format(messageFormat, selectedRows.size());
         String str_no = getResources().getString(R.string.no);
@@ -183,7 +205,7 @@ public class ActivitySessionsTable extends DatabaseActivity {
 			    	delSessionTask.execute();
 			    }
 			})
-		    .show();
+                .show();
 	}
 
 	@Override

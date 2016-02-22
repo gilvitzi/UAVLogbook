@@ -178,7 +178,7 @@ public class ActivityTableView extends DatabaseActivity {
     }
 
     private void onDataReadyToShare(String data) {
-        String subject = String.format(getString(R.string.action_share_subject),title);
+        String subject = String.format(getString(R.string.action_share_subject), title);
         sendEmailSharingIntent(subject, data);
     }
 
@@ -207,7 +207,7 @@ public class ActivityTableView extends DatabaseActivity {
 		protected Boolean doInBackground(String... params) {
 			try{
                 datasource.open();
-				cursor = getDatasource().database.rawQuery(query,null);
+				cursor = getDatasource().database.rawQuery(query, null);
 
 	    		columnNames = cursor.getColumnNames();
 
