@@ -510,7 +510,7 @@
     <string name="app_name">UAV Logbook</string>
     <string name="app_splash_screen_copyrights">UAV Logbook \u00A9 2014</string>
     <string name="app_splash_screen_title">UAV Operator \n Flight Logbook Pro</string>
-    <string name="app_version">2.1.0</string>
+    <string name="app_version">2.1.1</string>
     <!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.5.0/res/values/auth_strings.xml -->
     <eat-comment/>
     <string name="auth_google_play_services_client_facebook_display_name">Facebook</string>
@@ -686,6 +686,7 @@
     <!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="msg_not_implemented">Not implemented yet</string>
+    <string name="new_in_2_1_1_description">Share specific Session, and new Sessions Per Platform report</string>
     <string name="no">No</string>
     <string name="ok">OK</string>
     <string name="picker_date_title">Date:</string>
@@ -754,6 +755,8 @@
     <string name="title_activity_splash_screen"/>
     <string name="title_activity_table_view">ActivityTableView</string>
     <string name="title_activity_whats_new">What\'s New ?</string>
+    <string name="title_new_in_version_2_1_0">New in 2.10</string>
+    <string name="title_new_in_version_2_1_1">New in 2.1.1</string>
     <string name="title_share_table_button_feature">Share Table Feature</string>
     <string name="title_sync_with_google_drive">Syncing your Logbook with Google Drive:</string>
     <string name="title_yearly_caa_report__feature">Yearly CAA Report</string>

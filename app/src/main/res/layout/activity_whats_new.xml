@@ -119,24 +119,13 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"/>
 
-		<TextView
-		    android:id="@+id/share_table_feature_title"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-            android:text="@string/title_share_table_button_feature"
-		    android:textColor="#0FABFF"
-		    android:textSize="22sp"
-            android:layout_alignTop="@+id/share_table_feature_image"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
-
-		<ImageView
+        <ImageView
 		    android:id="@+id/share_table_feature_image"
 		    android:layout_width="170dp"
 		    android:layout_height="170dp"
             android:contentDescription="@string/whats_new_feature_image_desc"
 		    android:src="@drawable/whats_new_share_feature"
-            android:layout_above="@+id/title_yearly_caa_report__feature"
+            android:layout_below="@+id/textView"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"/>
 
@@ -159,8 +148,7 @@
             android:textColor="#0FABFF"
             android:textSize="22sp"
             android:layout_above="@+id/yearly_caa_report_feature_desc"
-            android:layout_alignLeft="@+id/share_table_feature_title"
-            android:layout_alignStart="@+id/share_table_feature_title"/>
+            />
 
         <TextView
             android:id="@+id/yearly_caa_report_feature_desc"
