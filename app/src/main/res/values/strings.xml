@@ -217,6 +217,9 @@
     <string name="share_table_feature_desc">Easily Share any table as Excel File by Email, Add to Cloud, and many more options!</string>
     <string name="title_yearly_caa_report__feature">Yearly CAA Report</string>
     <string name="yearly_caa_report_feature_desc">Now you can get a Civial Aviation Yearly Report availabel on the Repors Page</string>
+    <string name="title_new_in_version_2_1_0">New in 2.10</string>
+    <string name="title_new_in_version_2_1_1">New in 2.1.1</string>
+    <string name="new_in_2_1_1_description">Share specific Session, and new Sessions Per Platform report</string>
 
     <!-- Version V2 -->
 
