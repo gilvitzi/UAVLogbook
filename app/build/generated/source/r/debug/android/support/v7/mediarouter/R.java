@@ -313,7 +313,7 @@ public final class R {
 		public static final int dialog_fixed_width_minor = 0x7f0b000a;
 		public static final int disabled_alpha_material_dark = 0x7f0b0038;
 		public static final int disabled_alpha_material_light = 0x7f0b0039;
-		public static final int mr_media_route_controller_art_max_height = 0x7f0b000b;
+		public static final int mr_media_route_controller_art_max_height = 0x7f0b000d;
 	}
 	public static final class drawable {
 		public static final int abc_ab_share_pack_mtrl_alpha = 0x7f020000;

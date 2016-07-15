@@ -44,7 +44,10 @@ public class Duration {
     }
 
     public void setString(String duration){
-        String[] temp = duration.split(":");
+        String[] removedYear = duration.split(" ");
+        String stringDuration = (removedYear.length > 1) ? removedYear[1] : removedYear[0];
+
+        String[] temp = stringDuration.split(":");
         long hours = (long)(Integer.valueOf(temp[0]) * 60 * 60 * 1000.0);
         long minutes = (long)(Integer.valueOf(temp[1]) * 60 * 1000.0);
         this.millis =  hours + minutes;

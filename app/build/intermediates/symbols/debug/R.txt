@@ -523,7 +523,7 @@ int dimen abc_text_size_title_material_toolbar 0x7f0b0004
 int dimen activity_horizontal_margin 0x7f0b0010
 int dimen activity_vertical_margin 0x7f0b0034
 int dimen add_session_layout_max_width 0x7f0b000e
-int dimen add_session_layout_width 0x7f0b000c
+int dimen add_session_layout_width 0x7f0b000b
 int dimen aerodrome_dropdown_icao_text_size 0x7f0b0035
 int dimen aerodrome_dropdown_name_text_size 0x7f0b0036
 int dimen button_max_width 0x7f0b0037
@@ -535,8 +535,8 @@ int dimen disabled_alpha_material_dark 0x7f0b0038
 int dimen disabled_alpha_material_light 0x7f0b0039
 int dimen form_row_frame_max_width 0x7f0b003a
 int dimen form_row_frame_width 0x7f0b000f
-int dimen form_row_frame_width2 0x7f0b000d
-int dimen mr_media_route_controller_art_max_height 0x7f0b000b
+int dimen form_row_frame_width2 0x7f0b000c
+int dimen mr_media_route_controller_art_max_height 0x7f0b000d
 int drawable abc_ab_share_pack_mtrl_alpha 0x7f020000
 int drawable abc_btn_check_material 0x7f020001
 int drawable abc_btn_check_to_on_mtrl_000 0x7f020002

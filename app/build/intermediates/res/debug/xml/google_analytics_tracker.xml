@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-  <!--Replace placeholder ID with your tracking ID:  UA-43257514-1  -->
-  <string name="ga_trackingId">UA-43257514-1</string> <!--TODO: remove DEBUG from tracking_ID analytics.xml -->"
-
-</resources><!-- From: file:/D:/Source%20Control/Client/GitHub/UAVLogbook/app/src/main/res/xml/google_analytics_tracker.xml -->

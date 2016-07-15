@@ -146,7 +146,7 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
                 row = sheet.getRow((short) rowNum);
                 //try getting next row FirstCellValue
                 try{
-                    firstCellValue = (long) row.getCell(0).getNumericCellValue();
+                    firstCellValue = Long.parseLong(getCellValue(row, 0));
                 }catch(Exception e){
                     Log.e(LOG_TAG,"firstCellValue Failed: " + e);
                     firstCellValue = 0;
@@ -191,17 +191,17 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
 	private int getRowCount(HSSFSheet sheet) {
 		//Check Row Count
 		HSSFRow row = sheet.getRow(0);
-		long firstCellValue = -1;
+        String firstCellValue = "-";
 		int rowCount = 0;
-		while (firstCellValue != 0){
+		while (firstCellValue != ""){
             row = sheet.getRow((short) 1+rowCount);
             try{
-                firstCellValue = (long) row.getCell(0).getNumericCellValue();
-                if (firstCellValue!=0){
+                firstCellValue = getCellValue(row, 0);
+                if (firstCellValue != ""){
                     rowCount++;
                 }
             }catch(Exception e){
-                firstCellValue = 0;
+                firstCellValue = "";
             }
         }
 		return rowCount;
@@ -214,12 +214,12 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
 
 		int cellIndex = 0;
 		
-		try{
+		try {
 		    // catch Duration / Date String / int Errors.
 		    //ID
     		cell = row.getCell(cellIndex++);
-    		session.setId((long) cell.getNumericCellValue());
 
+            getId(session, cell);
             getDate(row, session, cellIndex++);
 			getDuration(row, session, cellIndex++);
 			getPlatformType(row, session, cellIndex++);
@@ -228,8 +228,8 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
 			getTailNumber(row, session, cellIndex++);
 			getIcaoCode(row, session, cellIndex++);
 			getAerodromeName(row, session, cellIndex++);
-			getSimOrActual(row, session, cellIndex++);
 			getDayOrNight(row, session, cellIndex++);
+            getSimOrActual(row, session, cellIndex++);
 			getCommand(row, session, cellIndex++);
 			getSeat(row, session, cellIndex++);
 			getFlightType(row, session, cellIndex++);
@@ -238,9 +238,8 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
 			getLandings(row, session, cellIndex++);
 			getGoArounds(row, session, cellIndex++);
 			getRemarks(row, session, cellIndex++);
-    		
 
-		}catch(Exception e){
+		} catch(Exception e){
 
 			//Google Analytics
 			mTracker.send(new HitBuilders.ExceptionBuilder()
@@ -253,6 +252,12 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
 		}
         return true;
 	}
+
+    private void getId(Session session, HSSFCell cell) {
+        String stringValue = getCellValue(cell.getRow(), 0);
+        long id = Long.parseLong(stringValue);
+        session.setId(id);
+    }
 
     private String getCellValue(HSSFRow row,int cellIndex)
             throws ArrayIndexOutOfBoundsException {
@@ -287,6 +292,7 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
             return "";
         }catch (ExcelCellTypeError | ExcelCellTypeIsFormula excelCellError) {
             errors.add(excelCellError);
+            throw new RuntimeException(excelCellError.getMessage());
         }
         return value;
     }
@@ -443,7 +449,7 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
         }
 	}
 
-	private void getDayOrNight(HSSFRow row, Session session, int cellIndex) {
+	private void getDayOrNight(HSSFRow row, Session session, int cellIndex) throws ExcelParserException {
 		HSSFCell cell = row.getCell(cellIndex);
 
         if (cell != null && cell.getCellType() == HSSFCell.CELL_TYPE_STRING){
@@ -457,12 +463,13 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
             }else if (value.isEmpty()){
                 session.setDayNight("");
             }else{
-
-                errors.add(new ExcelParserException(row.getRowNum(),
+                ExcelParserException ex = new ExcelParserException(row.getRowNum(),
                         "Day / Night",
                         String.valueOf(cell.getStringCellValue()),
-                        Log.WARN,"Day / Night is in wrong format - only '" + day + "' Or '" + night + "' are allowed")
-                );
+                        Log.WARN,"Day / Night is in wrong format - only '" + day + "' Or '" + night + "' are allowed");
+
+                errors.add(ex);
+                throw ex;
             }
         }else{
             session.setDayNight("");
@@ -596,7 +603,7 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
 		HSSFCell cell = row.getCell(cellIndex);
 		if (cell != null && cell.getCellType() == HSSFCell.CELL_TYPE_STRING){
             session.setPlatformType(cell.getStringCellValue());
-        }else{
+        } else {
             errors.add(new ExcelParserException(row.getRowNum(),
                     "Platform Type",
                     String.valueOf(cell.getNumericCellValue()),
@@ -608,13 +615,15 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
 	private void getDate(HSSFRow row, Session session, int cellIndex) {
 		HSSFCell cell = row.getCell(cellIndex);
 		try{
-            session.setDateFromString(getCellValue(row,cellIndex));
+            String cellStringValue = getCellValue(row,cellIndex);
+            session.setDate(cellStringValue);
         }catch(Exception e){
             errors.add(new ExcelParserException(row.getRowNum(),
                     "Date",
                     "",
                     Log.ERROR,e.toString())
             );
+            throw e;
         }
 	}
 
@@ -631,6 +640,7 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
                         "",
                         Log.ERROR,
                         e.toString()));
+                throw e;
             }
         }else{
             try{
@@ -645,6 +655,7 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
                         "",
                         Log.ERROR,
                         e.toString()));
+                throw e;
             }
         }
 	}

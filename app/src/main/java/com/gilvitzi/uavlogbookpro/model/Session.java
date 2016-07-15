@@ -94,7 +94,7 @@ public class Session {
 	}
 	
 	public void setDateFromString(String date){
-		this.date = DateTimeConverter.format(date,DateTimeConverter.DATE_DEFAULT,DateTimeConverter.ISO8601);
+		this.date = DateTimeConverter.format(date, DateTimeConverter.ISO8601, DateTimeConverter.ISO8601);
 	}
 	
 	//DURATION ( ONLY IN MILLISECONDS)

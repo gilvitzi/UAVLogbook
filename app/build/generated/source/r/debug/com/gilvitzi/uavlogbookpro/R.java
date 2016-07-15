@@ -1845,7 +1845,7 @@ containing a value of this type.
         public static final int activity_horizontal_margin=0x7f0b0010;
         public static final int activity_vertical_margin=0x7f0b0034;
         public static final int add_session_layout_max_width=0x7f0b000e;
-        public static final int add_session_layout_width=0x7f0b000c;
+        public static final int add_session_layout_width=0x7f0b000b;
         public static final int aerodrome_dropdown_icao_text_size=0x7f0b0035;
         public static final int aerodrome_dropdown_name_text_size=0x7f0b0036;
         public static final int button_max_width=0x7f0b0037;
@@ -1857,8 +1857,8 @@ containing a value of this type.
         public static final int disabled_alpha_material_light=0x7f0b0039;
         public static final int form_row_frame_max_width=0x7f0b003a;
         public static final int form_row_frame_width=0x7f0b000f;
-        public static final int form_row_frame_width2=0x7f0b000d;
-        public static final int mr_media_route_controller_art_max_height=0x7f0b000b;
+        public static final int form_row_frame_width2=0x7f0b000c;
+        public static final int mr_media_route_controller_art_max_height=0x7f0b000d;
     }
     public static final class drawable {
         public static final int abc_ab_share_pack_mtrl_alpha=0x7f020000;
