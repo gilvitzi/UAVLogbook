@@ -65,7 +65,15 @@
 	    style="@style/reports_page_button"
 	    android:text="@string/report_hours_per_location"
 	    android:onClick="goToHoursPerLocation" />
+<!--
+    TODO: THE WUERY IS NOT READY, REMOVE WHEN IS READY
+    <Button
+        android:id="@+id/btn_hours_per_tag"
+        style="@style/reports_page_button"
+        android:text="@string/report_hours_per_tag"
+        android:onClick="goToHoursPerTag" />
 
+-->
 	<!--
 	<Button
 	    android:id="@+id/btn_counted_activities"

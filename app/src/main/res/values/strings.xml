@@ -158,6 +158,7 @@
     <string name="report_last_session_date">Last Session Date</string>
     <string name="report_hours_per_platform">Hours Per Platform</string>
     <string name="report_hours_per_location">Hours Per Location</string>
+    <string name="report_hours_per_tag">Hours Per Tag</string>
     <string name="report_hours_per_year">Hours Per Year</string>
     <string name="report_counted_activities">Counted Activities</string>
     <string name="report_caa_report">CAA Report</string>
@@ -220,6 +221,13 @@
     <string name="title_new_in_version_2_1_0">New in 2.10</string>
     <string name="title_new_in_version_2_1_1">New in 2.1.1</string>
     <string name="new_in_2_1_1_description">Share specific Session, and new Sessions Per Platform report</string>
+    <string name="title_new_in_version_2_1_4">Version 2.1.4</string>
+    <string name="new_in_2_1_4_description">Import missing dates bug fixed</string>
+    <string name="new_in_2_1_4_notice">When was the last time you exported your data?
+        \n\n
+        The data in UAV Logbook is personal and saved in the local device. if your device fails, or if you uninstall the app, your data will be lost.
+        \n\n
+        Please remember to export your data to excel and save it every once in  a while.</string>
 
     <!-- Version V2 -->
 

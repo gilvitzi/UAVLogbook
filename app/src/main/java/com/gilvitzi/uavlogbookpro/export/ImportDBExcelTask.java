@@ -146,7 +146,7 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
                 row = sheet.getRow((short) rowNum);
                 //try getting next row FirstCellValue
                 try{
-                    firstCellValue = Long.parseLong(getCellValue(row, 0));
+                    firstCellValue = (long)Double.parseDouble(getCellValue(row, 0));
                 }catch(Exception e){
                     Log.e(LOG_TAG,"firstCellValue Failed: " + e);
                     firstCellValue = 0;
@@ -228,9 +228,9 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
 			getTailNumber(row, session, cellIndex++);
 			getIcaoCode(row, session, cellIndex++);
 			getAerodromeName(row, session, cellIndex++);
-			getDayOrNight(row, session, cellIndex++);
             getSimOrActual(row, session, cellIndex++);
-			getCommand(row, session, cellIndex++);
+            getDayOrNight(row, session, cellIndex++);
+            getCommand(row, session, cellIndex++);
 			getSeat(row, session, cellIndex++);
 			getFlightType(row, session, cellIndex++);
 			getTags(row, session, cellIndex++);
@@ -255,7 +255,7 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
 
     private void getId(Session session, HSSFCell cell) {
         String stringValue = getCellValue(cell.getRow(), 0);
-        long id = Long.parseLong(stringValue);
+        long id = (long)Double.parseDouble(stringValue);
         session.setId(id);
     }
 
@@ -614,9 +614,28 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
 
 	private void getDate(HSSFRow row, Session session, int cellIndex) {
 		HSSFCell cell = row.getCell(cellIndex);
+        String isoFormattedDate = "";
 		try{
             String cellStringValue = getCellValue(row,cellIndex);
-            session.setDate(cellStringValue);
+            if (cellStringValue.matches("\\d{2}.\\d{2}.\\d{2,4}"))
+            {
+                isoFormattedDate = DateTimeConverter.format(cellStringValue, DateTimeConverter.DATE_DOTTED, DateTimeConverter.ISO8601);
+            }
+            else if (cellStringValue.matches("\\d{2}/\\d{2}/\\d{2,4}"))
+            {
+                isoFormattedDate = DateTimeConverter.format(cellStringValue, DateTimeConverter.DATE_SLASHED, DateTimeConverter.ISO8601);
+            }
+            else
+            {
+                isoFormattedDate = cellStringValue;
+                errors.add(new ExcelParserException(row.getRowNum(),
+                        "Date",
+                        isoFormattedDate,
+                        Log.WARN,
+                        "Could not determine format of date " + isoFormattedDate + " only " + DateTimeConverter.DATE_DOTTED + " or " + DateTimeConverter.DATE_SLASHED + " are accepted")
+                );
+            }
+            session.setDate(isoFormattedDate);
         }catch(Exception e){
             errors.add(new ExcelParserException(row.getRowNum(),
                     "Date",

@@ -154,4 +154,15 @@ public class LogbookReportQuery {
 
         return query;
     }
+
+    public static String getHoursPerTag() {
+        String query = "SELECT distinct tags, " +
+                "COUNT(distinct " + LogbookSQLite.COLUMN_ID + ") AS sessions, " +
+                "SUM(distinct " + LogbookSQLite.COLUMN_ID + ") AS hours " +
+                "FROM logbook " +
+                "GROUP BY tags " +
+                "ORDER BY sessions DESC";
+
+        return query;
+    }
 }

@@ -288,38 +288,38 @@ public class LogbookDataSource {
     }
 
     public List<String> getDistinctTags(){
-      ArrayList<String> values = new ArrayList<String>();
+        ArrayList<String> values = new ArrayList<String>();
 
-      String query = "SELECT DISTINCT " +  LogbookSQLite.COLUMN_TAGS +
+        String query = "SELECT DISTINCT " +  LogbookSQLite.COLUMN_TAGS +
                 " FROM " +  LogbookSQLite.TABLE_LOGBOOK +
                 " ORDER BY " +  LogbookSQLite.COLUMN_ID + " DESC";
 
-      Cursor  cursor = database.rawQuery(query,null);
-      try {
+        Cursor  cursor = database.rawQuery(query,null);
+        try {
           // looping through all rows and adding values to list
 
-          if (cursor.moveToFirst()) {
-              do {
-                String item = cursor.getString(0);
-                if (item!=null){
-                    for (String tag : item.split(";") ){
-                        if ( !tag.equals("") && !values.contains(tag) ){
-                            values.add(tag);
+            if (cursor.moveToFirst()) {
+                do {
+                    String item = cursor.getString(0);
+                    if (item!=null){
+                        for (String tag : item.split(";") ){
+                            if ( !tag.equals("") && !values.contains(tag) ){
+                                values.add(tag);
+                            }
                         }
                     }
-                }
-              } while (cursor.moveToNext());
-          }
+                } while (cursor.moveToNext());
+            }
 
-      } finally {
+        } finally {
           try {
             cursor.close();
             return values;
 
           } catch (Exception ignore) {}
-      }
-    cursor.moveToNext();
-    return values;
+        }
+        cursor.moveToNext();
+        return values;
     }
 
     public int countRecords(){
@@ -553,5 +553,9 @@ public class LogbookDataSource {
         cursor.close();
 
         return values;
+    }
+
+    public void createTagsTable() {
+
     }
 }

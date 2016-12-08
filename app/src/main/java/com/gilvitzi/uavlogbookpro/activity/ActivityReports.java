@@ -181,7 +181,16 @@ public class ActivityReports extends DatabaseActivity {
 		intent.putExtra(EXTRA_TITLE, getResources().getString(R.string.report_hours_per_location));
     	startActivity(intent);
 	}
-	
+
+    public void goToHoursPerTag(View view){
+        String query = LogbookReportQuery.getHoursPerTag();
+
+        Intent intent = new Intent(this, ActivityTableView.class);
+        intent.putExtra(EXTRA_QUERY, query);
+        intent.putExtra(EXTRA_TITLE, getResources().getString(R.string.report_hours_per_tag));
+        startActivity(intent);
+    }
+
 	public void goToHoursPerYear(View view){
 		String query = LogbookReportQuery.getHoursPerYear();
 		
