@@ -123,12 +123,15 @@ public class ActivityReports extends DatabaseActivity {
         PlatformSelectionDialog.OnSelectedPlatform openReportAction = new PlatformSelectionDialog.OnSelectedPlatform(){
             @Override
             public void selected(final StringValuePair selectedPlatform) {
-                fullScreenAd.startActionAfterRandomChanceAd(new Runnable() {
-                    @Override
-                    public void run() {
-                        openSessionsPerPlatformReport(selectedPlatform);
-                    }
-                }, CHANCE_OF_FULL_SCREEN_AD);
+                if (selectedPlatform != null) {
+                    // NullPointerExceptions in version 20
+                    fullScreenAd.startActionAfterRandomChanceAd(new Runnable() {
+                        @Override
+                        public void run() {
+                            openSessionsPerPlatformReport(selectedPlatform);
+                        }
+                    }, CHANCE_OF_FULL_SCREEN_AD);
+                }
             }
         };
 
@@ -137,7 +140,7 @@ public class ActivityReports extends DatabaseActivity {
     }
 
     private void openSessionsPerPlatformReport(StringValuePair platformTypeAndVariation) {
-        String query = LogbookReportQuery.getSessionsPerPLatform(platformTypeAndVariation);
+        String query = LogbookReportQuery.getSessionsPerPlatform(platformTypeAndVariation);
 
         Intent intent = new Intent(this, ActivitySessionsTable.class);
         intent.putExtra(EXTRA_QUERY, query);

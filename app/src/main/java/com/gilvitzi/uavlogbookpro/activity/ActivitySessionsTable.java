@@ -158,6 +158,13 @@ public class ActivitySessionsTable extends DatabaseActivity {
 
     private void editMenuItemClicked() {
         Intent intent = new Intent(this, ActivityAddSession.class);
+        if (selectedRows.size() == 0) {
+            // IndexOutOfBounds Exception in version 20
+            // edit was clicked but no row was selected
+            Log.w(LOG_TAG, String.format("edit was clicked but no row was selected"));
+            return;
+        }
+
         int id = selectedRows.get(FIRST_ROW_INDEX);
         intent.putExtra(EXTRA_KEY_SESSION_ID, id);
         Log.i(LOG_TAG, String.format("Sending Record ID %1$d To Editing", id));
@@ -204,8 +211,7 @@ public class ActivitySessionsTable extends DatabaseActivity {
 					DeleteSessionTask delSessionTask = new DeleteSessionTask();
 			    	delSessionTask.execute();
 			    }
-			})
-                .show();
+			}).show();
 	}
 
 	@Override
