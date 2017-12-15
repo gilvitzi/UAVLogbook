@@ -715,7 +715,7 @@ public class ActivityAddSession extends DatabaseActivity {
 						if (qs_duration != 0){
 							duration_et.setText(durationToHM(qs_duration));
 						}else{
-							Duration d = new Duration();
+							Duration d = new Duration(thisActivity);
 							d.setISO8601(lastSession.getDuration());
 							String duration = d.getString();
 							duration_et.setText(duration);
@@ -1439,7 +1439,7 @@ public class ActivityAddSession extends DatabaseActivity {
         private String getDuration() {
             String durationString = duration_et.getText().toString();
 
-            Duration d = new Duration();
+            Duration d = new Duration(thisActivity);
             d.setString(durationString);
             return d.getISO8601();
         }

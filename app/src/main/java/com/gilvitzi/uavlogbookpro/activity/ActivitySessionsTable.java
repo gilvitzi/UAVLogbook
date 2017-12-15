@@ -361,7 +361,7 @@ public class ActivitySessionsTable extends DatabaseActivity {
             tv_date.setText(session.getDateStringShort());
 
             TextView tv_duration = (TextView) tr.findViewWithTag("duration");
-            Duration d = new Duration();
+            Duration d = new Duration(context);
             d.setISO8601(session.getDuration());
             tv_duration.setText(d.getString());
 

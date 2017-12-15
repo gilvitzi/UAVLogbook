@@ -116,7 +116,7 @@ public class LogbookReportQuery {
         return query;
     }
 
-    public static String getSessionsPerPLatform(StringValuePair platformTypeAndVariation) {
+    public static String getSessionsPerPlatform(StringValuePair platformTypeAndVariation) {
         String platformType = platformTypeAndVariation.getFirst();
         String platformVariation = platformTypeAndVariation.getSecond();
 

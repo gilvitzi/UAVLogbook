@@ -33,17 +33,20 @@ public class LogbookSQLite extends SQLiteOpenHelper {
 	public static final String COLUMN_COMMENTS = "comments";
 	
     //Common query Parameters
-    public static final String DURATION_SUM_HOURS = "(" +
-            "(SUM(strftime('%s', duration))/60/60)" +
-            "|| ':' ||" +
-            "CASE WHEN " +
-            "(CAST((SUM(strftime('%s', duration))/60)-(SUM(strftime('%s', duration))/60/60*60) AS INTEGER)) >= 10 " +
-            "THEN " +
-            "(CAST((SUM(strftime('%s', duration))/60)-(SUM(strftime('%s', duration))/60/60*60) AS INTEGER)) " +
-            "ELSE " +
-            " '0' ||(CAST((SUM(strftime('%s', duration))/60)-(SUM(strftime('%s', duration))/60/60*60) AS INTEGER)) " + 
-            " END " +
-            ")";
+//    public static final String DURATION_SUM_HOURS = "(" +
+//            "(SUM(strftime('%s', duration))/60/60)" +
+//            "|| ':' ||" +
+//            "CASE WHEN " +
+//            "(CAST((SUM(strftime('%s', duration))/60)-(SUM(strftime('%s', duration))/60/60*60) AS INTEGER)) >= 10 " +
+//            "THEN " +
+//            "(CAST((SUM(strftime('%s', duration))/60)-(SUM(strftime('%s', duration))/60/60*60) AS INTEGER)) " +
+//            "ELSE " +
+//            " '0' ||(CAST((SUM(strftime('%s', duration))/60)-(SUM(strftime('%s', duration))/60/60*60) AS INTEGER)) " +
+//            " END " +
+//            ")";
+
+	public static final String DURATION_SUM_HOURS = "(SUM(duration))";
+
     public static final String DURATION_HOURS = "(" +
             "((strftime('%s', duration))/60/60)" +
             "|| ':' ||" +

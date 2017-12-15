@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    buildToolsVersion '26.0.2'
 
     compileOptions {
         encoding "UTF-8"
@@ -10,10 +10,11 @@ android {
 
     defaultConfig {
         applicationId "com.gilvitzi.uavlogbookpro"
-        minSdkVersion 10
+        minSdkVersion 15
         targetSdkVersion 22
-        versionCode 18
-        versionName "2.1.2"
+        versionCode 19
+        versionName "2.2"
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
@@ -24,7 +25,11 @@ android {
     }
 }
 
+
 dependencies {
+    //implementation 'com.android.support:support-v4:22.2.1'
+    //implementation 'com.android.support:support-vector-drawable:22.+'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile files('libs/opencsv-1.7.jar')
     compile files('libs/poi-3.8-20120326.jar')
     compile 'com.android.support:appcompat-v7:22.0+'

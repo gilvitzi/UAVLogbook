@@ -631,7 +631,7 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
 		HSSFCell cell = row.getCell(cellIndex);
 		if (cell != null && cell.getCellType() == HSSFCell.CELL_TYPE_STRING){
             try{
-                Duration d = new Duration();
+                Duration d = new Duration(context);
                 d.setString(cell.getStringCellValue());
                 session.setDuration(d.getISO8601());
             }catch(Exception e){
@@ -646,7 +646,7 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
             try{
                 String duration = DateTimeConverter.parseExcerlDuration((double) cell.getNumericCellValue());
                 Log.v(LOG_TAG,"Duration Numeric Format Found, value: " + duration);
-                Duration d = new Duration();
+                Duration d = new Duration(context);
                 d.setExcel(cell.getNumericCellValue());
                 session.setDuration(d.getISO8601());
             }catch(Exception e){

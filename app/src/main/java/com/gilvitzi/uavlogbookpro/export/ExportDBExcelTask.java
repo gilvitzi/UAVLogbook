@@ -129,7 +129,7 @@ public class ExportDBExcelTask extends AsyncTask<String, Void, Boolean> {
 	    
 	    cell = row.createCell(i++);
 		cell.setCellType(Cell.CELL_TYPE_STRING);
-		Duration d = new Duration();
+		Duration d = new Duration(context);
 		d.setISO8601(session.getDuration());
 	    cell.setCellValue(d.getString());
 	    

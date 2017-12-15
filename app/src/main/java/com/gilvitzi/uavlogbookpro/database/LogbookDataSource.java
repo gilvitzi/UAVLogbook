@@ -333,13 +333,13 @@ public class LogbookDataSource {
       return counter;
     }
 
-    public String getTotalHours(){
+    public int getTotalHours(){
         String query = "SELECT " +  LogbookSQLite.DURATION_SUM_HOURS + " AS 'Hours' "+ " FROM " +  LogbookSQLite.TABLE_LOGBOOK;
         Cursor cursor = database.rawQuery(query,null);
-        String duration = "";
+        int duration = 0;
         try {
             if (cursor.moveToFirst()) {
-               duration = cursor.getString(0);
+               duration = Integer.parseInt(cursor.getString(0));
             }
         } finally {
             try {

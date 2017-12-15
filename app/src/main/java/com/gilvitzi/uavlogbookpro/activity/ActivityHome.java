@@ -74,7 +74,11 @@ public class ActivityHome extends DatabaseActivity {
 //		    case R.id.action_google_drive_sync:
 //		    	menu_GoogleDriveSync();
 //		    	return true;
-		    case R.id.about:
+            case R.id.settings:
+                menu_GoToSettings();
+                return true;
+
+            case R.id.about:
                 menu_GoToAbout();
                 return true;
 
@@ -82,7 +86,7 @@ public class ActivityHome extends DatabaseActivity {
 		        return super.onOptionsItemSelected(item);
 	    }
 	}
-	
+
     @SuppressWarnings("unchecked")
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -226,7 +230,12 @@ public class ActivityHome extends DatabaseActivity {
         fileDialog.showDialog();         
             
     }
-    
+
+    private void menu_GoToSettings() {
+        Intent intent = new Intent(this, ActivitySettings.class);
+        startActivity(intent);
+    }
+
     public void menu_GoToAbout(){
         Intent intent = new Intent(this, ActivityAbout.class);
         startActivity(intent);
@@ -246,18 +255,16 @@ public class ActivityHome extends DatabaseActivity {
     }
 
     private class HomePageData extends AsyncTask<List<NameValuePair>, String, Boolean> {
-    	private String totalHours = "00:00";
+    	private Duration totalHours = new Duration(context);
     	private int totalSessions = 0;
     	
 		@Override
 		protected Boolean doInBackground(List<NameValuePair>... params) {
 			try{
                 datasource.open();
-				totalHours = datasource.getTotalHours();
+                int seconds = datasource.getTotalHours();
+				totalHours.setMillis(seconds * 1000);
                 lastSession = datasource.getLastSession();
-                if (totalHours == null){
-				    totalHours = "00:00";
-				}
 				totalSessions = getDatasource().countRecords();
 			} catch(Exception e) {
 				Log.e("HomePageData","Error: " + e);
@@ -276,11 +283,11 @@ public class ActivityHome extends DatabaseActivity {
 		}
 
         private void updateHoursAndSessionsViews() {
-            String hoursText = String.format(context.getResources().getString(R.string.home_page_flight_hours_text), totalHours);
+            String hoursText = String.format(context.getResources().getString(R.string.home_page_flight_hours_text), totalHours.getString());
             TextView tv_flight_hours = (TextView) findViewById(R.id.total_flight_hours);
             tv_flight_hours.setText(hoursText);
 
-            String sessionsText = String.format(context.getResources().getString(R.string.home_page_sessions_count_text), totalSessions);
+            String sessionsText = String.format(context.getResources().getString(R.string.home_page_sessions_count_text), String.valueOf(totalSessions));
             TextView tv_sessions = (TextView) findViewById(R.id.total_sessions);
             tv_sessions.setText(sessionsText);
         }
@@ -300,7 +307,7 @@ public class ActivityHome extends DatabaseActivity {
             TextView bottomLeftTv = ((TextView) findViewById(R.id.session_list_item_platform_type_and_variation));
             String sim_or_nothing = (lastSession.getSimActual().equalsIgnoreCase("simulator"))?"(SIM)":"";
             bottomLeftTv.setText(lastSession.getPlatformType() + " " + lastSession.getPlatformVariation() + sim_or_nothing);
-            Duration duration = new Duration();
+            Duration duration = new Duration(context);
             duration.setISO8601(lastSession.getDuration());
             ((TextView) findViewById(R.id.session_list_item_Duration)).setText(duration.getString());
         }

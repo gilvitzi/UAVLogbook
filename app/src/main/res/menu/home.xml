@@ -18,6 +18,14 @@
     </item>
     <!--<item android:id="@+id/action_google_drive_sync" android:title="@string/action_google_drive_sync" android:orderInCategory="31" android:showAsAction="collapseActionView"></item>-->
     <item
+        android:id="@+id/settings"
+        android:title="@string/settings"
+        android:orderInCategory="45"
+        app:showAsAction="collapseActionView">
+
+    </item>
+
+    <item
         android:id="@+id/about"
         android:title="@string/about"
         android:orderInCategory="50"

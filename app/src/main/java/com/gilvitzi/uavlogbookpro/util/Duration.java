@@ -1,6 +1,8 @@
 package com.gilvitzi.uavlogbookpro.util;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,19 +13,23 @@ import java.util.TimeZone;
  * Created by Gil on 17/10/2015.
  */
 public class Duration {
+
     public static final String ISO8601 = "yyyy-MM-dd HH:mm:ss";
 
+    private boolean minutesAsDecimal;
     private long millis = 0;
-
 
     private static final int DECIMAL = 0;
     private static final int MILLISECONDS = 1;
     private static final int STRING = 2;
     private static final int EXCEL = 3;
 
-    public Duration(){}
+    public Duration(Context context){
+        SharedPreferences settings = context.getSharedPreferences("UserInfo", 0);
+        minutesAsDecimal = settings.getBoolean("hours_fraction_format", false);
+    }
 
-    public Duration(long millis){
+    public Duration(Context context, long millis){
         this.millis = millis;
     }
 
@@ -68,13 +74,18 @@ public class Duration {
             strHours = hours + "";
         }
 
-        if (minutes<10){
-            strMinutes = "0" + minutes;
-        }else{
-            strMinutes = minutes + "";
-        }
+        if (minutesAsDecimal) {
+            strMinutes = String.format("%02d", Math.round(minutes / 60.0 * 100));
+            return strHours + "." + strMinutes;
+        } else {
+            if (minutes<10){
+                strMinutes = "0" + minutes;
+            }else{
+                strMinutes = minutes + "";
+            }
 
-        return strHours + ":" + strMinutes;
+            return strHours + ":" + strMinutes;
+        }
     }
 
     @SuppressLint("SimpleDateFormat")
