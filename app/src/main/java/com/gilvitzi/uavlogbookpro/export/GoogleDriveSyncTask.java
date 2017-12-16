@@ -234,11 +234,6 @@ public class GoogleDriveSyncTask
         return false;
     }
 
-
-
-
-
-
     public static void fetchSpreasheets()
             throws MalformedURLException, IOException,ServiceException {
 

@@ -305,6 +305,7 @@
     <string name="analytics_event_report_loaded">report</string>
     <string name="analytics_event_report_loaded_format">Report Loaded %1$s</string>
     <string name="analytics_event_settings_changed">settings_changed</string>
+    <string name="privacy_policy_link"><a href="https://sites.google.com/site/uavoprlogbook/home/privacy-policy">Privacy Policy</a></string>
 
     <!-- Version V2 -->
 

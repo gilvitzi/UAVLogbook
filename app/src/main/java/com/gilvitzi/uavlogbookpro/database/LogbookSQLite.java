@@ -45,7 +45,7 @@ public class LogbookSQLite extends SQLiteOpenHelper {
 //            " END " +
 //            ")";
 
-	public static final String DURATION_SUM_HOURS = "(SUM(duration))";
+	public static final String DURATION_SUM_HOURS = "SUM(strftime('%s', duration))";
 
     public static final String DURATION_HOURS = "(" +
             "((strftime('%s', duration))/60/60)" +

@@ -2,10 +2,12 @@
 package com.gilvitzi.uavlogbookpro.activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.widget.TextView;
 
 import com.gilvitzi.uavlogbookpro.R;
 import com.google.android.gms.analytics.HitBuilders;
@@ -21,7 +23,10 @@ public class ActivityAbout extends DatabaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        
+
+        TextView privacyPolicyLink = (TextView) findViewById(R.id.privacy_policy_link);
+        privacyPolicyLink.setMovementMethod(LinkMovementMethod.getInstance());
+
         try {
             ViewConfiguration config = ViewConfiguration.get(this);
             Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");

@@ -40,8 +40,18 @@
         android:textColor="@color/black"
         android:gravity="center"
         android:text="@string/app_version" />
-    
-    
+
+	<TextView
+		android:id="@+id/privacy_policy_link"
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:layout_gravity="center_horizontal"
+		android:layout_marginTop="15dp"
+		android:textSize="18sp"
+		android:textColor="@color/Blue"
+		android:gravity="center"
+		android:text="@string/privacy_policy_link" />
+
   	<Button
 	    android:id="@+id/btn_skip"
 	    android:layout_width="match_parent"

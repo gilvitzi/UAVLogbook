@@ -133,15 +133,15 @@ public final class R {
         public static final int monochrome = 0x7f0800ab;
         public static final int none = 0x7f0800ad;
         public static final int normal = 0x7f0800ae;
-        public static final int production = 0x7f0800b5;
-        public static final int sandbox = 0x7f0800c4;
-        public static final int satellite = 0x7f0800c5;
-        public static final int selectionDetails = 0x7f0800d1;
-        public static final int slide = 0x7f0800db;
-        public static final int strict_sandbox = 0x7f0800e2;
-        public static final int terrain = 0x7f0800f1;
-        public static final int test = 0x7f0800f2;
-        public static final int wrap_content = 0x7f080101;
+        public static final int production = 0x7f0800b6;
+        public static final int sandbox = 0x7f0800c5;
+        public static final int satellite = 0x7f0800c6;
+        public static final int selectionDetails = 0x7f0800d2;
+        public static final int slide = 0x7f0800dc;
+        public static final int strict_sandbox = 0x7f0800e3;
+        public static final int terrain = 0x7f0800f2;
+        public static final int test = 0x7f0800f3;
+        public static final int wrap_content = 0x7f080102;
     }
     public static final class integer {
         public static final int google_play_services_version = 0x7f090003;
@@ -191,9 +191,9 @@ public final class R {
         public static final int create_calendar_message = 0x7f0d0068;
         public static final int create_calendar_title = 0x7f0d0069;
         public static final int decline = 0x7f0d006d;
-        public static final int store_picture_message = 0x7f0d0105;
-        public static final int store_picture_title = 0x7f0d0106;
-        public static final int wallet_buy_button_place_holder = 0x7f0d012a;
+        public static final int store_picture_message = 0x7f0d0106;
+        public static final int store_picture_title = 0x7f0d0107;
+        public static final int wallet_buy_button_place_holder = 0x7f0d012b;
     }
     public static final class style {
         public static final int Theme_IAPTheme = 0x7f0e00c3;
