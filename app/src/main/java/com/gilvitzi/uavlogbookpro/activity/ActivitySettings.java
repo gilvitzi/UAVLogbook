@@ -109,8 +109,7 @@ public class ActivitySettings extends AnalyticsActivity {
     private void sendSettingsAnalyticsEvent(String setting, String newValue) {
         // send analytics event
         String category = getResources().getString(R.string.analytics_event_settings_changed);
-        String actionFormat = "$1 set to $2";
-        String action = String.format(actionFormat, setting, newValue);
+        String action = String.format("%1$s set to %2$s", setting, newValue);
 
         mTracker.send(new HitBuilders.EventBuilder()
                 .setCategory(category)
