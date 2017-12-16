@@ -29,13 +29,38 @@
             android:text="@string/hours_fraction_format"
             android:visibility="visible" />
 
-<!--        <Switch
-            android:id="@+id/switch_remove_ads"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="top"
-            android:text="@string/remove_ads"
-            android:visibility="visible" />-->
+            android:text="Unlock Ads free using a Coupon Code"/>
+
+        <LinearLayout
+            android:id="@+id/remove_ads_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/remove_ads_coupon_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Enter Code Here"/>
+
+            <Button
+                android:id="@+id/remove_ads_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Go"/>
+
+        </LinearLayout>
+
+        <!--<Switch-->
+            <!--android:id="@+id/switch_show_ads"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="top"-->
+            <!--android:text="@string/remove_ads"-->
+            <!--android:visibility="visible" />-->
 
     </LinearLayout>
 

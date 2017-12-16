@@ -18,11 +18,11 @@ public class ActivityWhatsNew extends Activity {
 	private final String LOG_TAG = "ActivityWhatsNew";
 	private static final String screen_name = "Whats New";
 
-    //Google Analytics
+	//Google Analytics
     private Tracker mTracker;
 
     private int page;
-    final static int MAX_PAGES = 2;
+    final static int MAX_PAGES = 1;
     private View page1;
     private View page2;
     private Button btn;
@@ -42,11 +42,10 @@ public class ActivityWhatsNew extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_whats_new);
-		
+
 		page1 = findViewById(R.id.page1);
-		page2 = findViewById(R.id.page2);
 		btn = (Button) findViewById(R.id.whats_new_skip_button);
-		page = 2; //set to page 2 so that the first page (containing google drive features) will not be visible
+		page = 1; //set to page 2 so that the first page (containing google drive features) will not be visible
 
 		//Google Analytics:
 		mTracker = AnalyticsApplication.getDefaultTracker(this);
@@ -74,7 +73,8 @@ public class ActivityWhatsNew extends Activity {
 		page1.setVisibility(View.GONE);
 		page2.setVisibility(View.VISIBLE);
 		page++;
-		btn.setText(R.string.whats_new_skip_button);
+		if (page == MAX_PAGES)
+			btn.setText(R.string.whats_new_skip_button);
 		
 	}
 }

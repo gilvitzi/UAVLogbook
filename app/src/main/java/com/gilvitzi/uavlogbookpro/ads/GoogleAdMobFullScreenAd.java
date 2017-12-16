@@ -1,6 +1,7 @@
 package com.gilvitzi.uavlogbookpro.ads;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
 import com.gilvitzi.uavlogbookpro.R;
@@ -22,9 +23,13 @@ public class GoogleAdMobFullScreenAd {
     private InterstitialAd mInterstitialAd = null;
     private Context context;
     private List<AdListener> mOnAdClosedListenersList;
+    private boolean showAds;
 
     public GoogleAdMobFullScreenAd(Context context) {
         this.context = context;
+
+        SharedPreferences settings = context.getSharedPreferences("UserInfo", 0);
+        showAds = settings.getBoolean("show_ads", true);
 
         mOnAdClosedListenersList = new LinkedList<AdListener>();
 
@@ -97,7 +102,7 @@ public class GoogleAdMobFullScreenAd {
 
     public void startActionAfterRandomChanceAd(final Runnable reportOpener, float chanceOfShowingAd)
     {
-        if (RandomBoolean.get(chanceOfShowingAd))
+        if (showAds && RandomBoolean.get(chanceOfShowingAd))
         {
             addAdListener(new AdListener() {
                 @Override

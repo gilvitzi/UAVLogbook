@@ -22,7 +22,6 @@ import android.widget.TextView;
 import com.gilvitzi.uavlogbookpro.R;
 import com.gilvitzi.uavlogbookpro.database.AerodromesDataSource;
 import com.gilvitzi.uavlogbookpro.database.LogbookReportQuery;
-import com.gilvitzi.uavlogbookpro.export.GoogleDriveSyncTask;
 import com.gilvitzi.uavlogbookpro.export.ImportDBExcelTask;
 import com.gilvitzi.uavlogbookpro.export.ShareDBAsExcelFileTask;
 import com.gilvitzi.uavlogbookpro.model.Session;
@@ -71,9 +70,6 @@ public class ActivityHome extends DatabaseActivity {
 		    case R.id.action_import:
 		    	menu_importFromExcel();
 		    	return true;
-//		    case R.id.action_google_drive_sync:
-//		    	menu_GoogleDriveSync();
-//		    	return true;
             case R.id.settings:
                 menu_GoToSettings();
                 return true;
@@ -104,11 +100,7 @@ public class ActivityHome extends DatabaseActivity {
 	    //Get Total Hours & Sessions
 		homePageData = new HomePageData();
 		homePageData.execute();
-        
-		//GoogleDriveSync Task
-		GoogleDriveSyncTask googleDriveSyncTask = new GoogleDriveSyncTask(this, this.getDatasource(), null);
-		//googleDriveSyncTask.execute();
-		
+
 		qsButton = (QuickStartButton)findViewById(R.id.btn_quick_start);
 		
         showMessageIfExists();
@@ -240,19 +232,6 @@ public class ActivityHome extends DatabaseActivity {
         Intent intent = new Intent(this, ActivityAbout.class);
         startActivity(intent);
     }
-    
-    public void menu_GoogleDriveSync(){
-    	try {
-	    	Intent intent = new Intent(this, ActivityGoogleDriveSync.class);
-	    	//String ACTION_DRIVE_OPEN = "com.google.android.apps.drive.DRIVE_OPEN";
-	    	//intent.setAction(ACTION_DRIVE_OPEN);
-	    	startActivity(intent);
-    	}
-    	catch(Exception e)
-    	{
-    		Log.e("GoogleDriveSync", "Activity Sync Start Failed with error:\n" + e);
-    	}
-    }
 
     private class HomePageData extends AsyncTask<List<NameValuePair>, String, Boolean> {
     	private Duration totalHours = new Duration(context);
@@ -324,7 +303,6 @@ public class ActivityHome extends DatabaseActivity {
     {
     	long millis = 0;
     	try{
-
     		SharedPreferences settings = getSharedPreferences("UserInfo", 0);
     		millis = settings.getLong("quick_start_time", 0L);
 
@@ -360,15 +338,28 @@ public class ActivityHome extends DatabaseActivity {
     		last_version_shown = settings.getString("whats_new_screen_shown", last_version_shown);
         	
     		//if was not_shown -> show screen
-    		if (!last_version_shown.equals(getResources().getText(R.string.app_version)))
-    			showWhatsNewScreen();
+    		if (!last_version_shown.equals(getResources().getText(R.string.app_version))) {
+                showWhatsNewScreen();
+
+                doVersionInitializations();
+            }
     		
     	}catch(Exception e){
     		Log.e("ActivityHome","showWhatsNew get from Preferences Failed: " + e);
     		showWhatsNewScreen();
     	}
     }
-    
+
+    private void doVersionInitializations() {
+        SharedPreferences settings = getSharedPreferences("UserInfo", 0);
+
+        if (!settings.contains("show_ads")) {
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putBoolean("show_ads", true);
+            editor.commit();
+        }
+    }
+
     private void showWhatsNewScreen()
     {
 		try

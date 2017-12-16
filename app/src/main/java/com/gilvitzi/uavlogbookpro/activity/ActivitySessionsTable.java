@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -57,6 +58,8 @@ public class ActivitySessionsTable extends DatabaseActivity {
 
 	//Google AdMob Ads Banner
 	GoogleAdMobBanner adBottomBanner;
+    private boolean showAds;
+
     private TableLayout tableLayout;
     private String title;
 
@@ -70,7 +73,11 @@ public class ActivitySessionsTable extends DatabaseActivity {
         context = this;
         thisActivity = this;
 
-        initGoogleAdMob();
+        SharedPreferences settings = context.getSharedPreferences("UserInfo", 0);
+        showAds = settings.getBoolean("show_ads", true);
+
+        if (showAds)
+            initGoogleAdMob();
 
         selectedRows = new ArrayList<Integer>();
 
@@ -216,7 +223,8 @@ public class ActivitySessionsTable extends DatabaseActivity {
 
 	@Override
     public void onPause() {
-        adBottomBanner.pause();
+        if (showAds)
+            adBottomBanner.pause();
         super.onPause();
     }
 
@@ -224,7 +232,8 @@ public class ActivitySessionsTable extends DatabaseActivity {
 		super.onResume();
 
         //GoogleAdMob
-        adBottomBanner.resume();
+        if (showAds)
+            adBottomBanner.resume();
 
         //Database
 		if (getSessionsTask!=null){
@@ -244,7 +253,8 @@ public class ActivitySessionsTable extends DatabaseActivity {
 
 	@Override
 	protected void onDestroy() {
-        adBottomBanner.destroy();
+        if (showAds)
+            adBottomBanner.destroy();
 	    super.onDestroy();
 	}
 
@@ -301,8 +311,8 @@ public class ActivitySessionsTable extends DatabaseActivity {
                     tr = createTableRow(tl, i, session.getId());
                     populateRowViews(tr, session);
                 }
-
-                adBottomBanner.show();
+                if (showAds)
+                    adBottomBanner.show();
                 progressDialog.dismiss();
 			}else{
 			    progressDialog.dismiss();

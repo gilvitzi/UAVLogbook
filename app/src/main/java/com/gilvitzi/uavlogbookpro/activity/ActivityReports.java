@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -82,7 +83,7 @@ public class ActivityReports extends DatabaseActivity {
         this.finish();
     }
 
-	public void goToShowAllSessions(View view){
+    public void goToShowAllSessions(View view) {
         fullScreenAd.startActionAfterRandomChanceAd(new Runnable() {
             @Override
             public void run() {
@@ -235,19 +236,12 @@ public class ActivityReports extends DatabaseActivity {
 	}
 
 	public void goToCAAReport(View view){
-        if (RandomBoolean.get(CHANCE_OF_FULL_SCREEN_AD)) {
-            fullScreenAd.addAdListener(new AdListener() {
-                @Override
-                public void onAdClosed() {
-                    super.onAdClosed();
-                    openCAAReport();
-                }
-            });
-
-            fullScreenAd.show();
-        } else {
-            openCAAReport();
-        }
+        fullScreenAd.startActionAfterRandomChanceAd(new Runnable() {
+            @Override
+            public void run() {
+                openCAAReport();
+            }
+        }, CHANCE_OF_FULL_SCREEN_AD);
 	}
 
     private void openCAAReport() {

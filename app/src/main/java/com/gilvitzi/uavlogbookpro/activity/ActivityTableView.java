@@ -3,6 +3,7 @@ package com.gilvitzi.uavlogbookpro.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -46,6 +47,7 @@ public class ActivityTableView extends DatabaseActivity {
 
 	//Google AdMob Ads
     GoogleAdMobBanner adBottomBannerManager;
+    private boolean showAds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,17 +57,32 @@ public class ActivityTableView extends DatabaseActivity {
         context = this;
         thisActivity = this;
 
-        initGoogleAdMob();
+        SharedPreferences settings = context.getSharedPreferences("UserInfo", 0);
+        showAds = settings.getBoolean("show_ads", true);
+
+        if (showAds)
+            initGoogleAdMob();
 
         selectedRows = new ArrayList<Integer>();
         row_count = 0;
 
         getActivityExtras();
-
+        sendAnalyticsEventReportLoaded();
         refreshTable();
     }
 
-	@Override
+    private void sendAnalyticsEventReportLoaded() {
+        String category = getResources().getString(R.string.analytics_event_report_loaded);
+        String actionFormat = getResources().getString(R.string.analytics_event_report_loaded_format);
+        String action = String.format(actionFormat, title);
+
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory(category)
+                .setAction(action)
+                .build());
+    }
+
+    @Override
 	public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
 
@@ -92,7 +109,8 @@ public class ActivityTableView extends DatabaseActivity {
     public void onResume(){
 		super.onResume();
         refreshTableIfNeeded();
-        adBottomBannerManager.resume();
+        if (showAds)
+            adBottomBannerManager.resume();
 	}
 
     private void refreshTableIfNeeded() {
@@ -107,13 +125,15 @@ public class ActivityTableView extends DatabaseActivity {
 
 	@Override
 	public void onPause() {
-        adBottomBannerManager.pause();
+        if (showAds)
+            adBottomBannerManager.pause();
 	    super.onPause();
 	}
 
 	@Override
 	protected void onDestroy() {
-        adBottomBannerManager.destroy();
+        if (showAds)
+            adBottomBannerManager.destroy();
 	    super.onDestroy();
 	}
 
@@ -153,7 +173,8 @@ public class ActivityTableView extends DatabaseActivity {
             //delete last table if exist
             TableLayout tl = (TableLayout) findViewById(R.id.tbl_view);
             tl.removeAllViews();
-            adBottomBannerManager.show();
+            if (showAds)
+                adBottomBannerManager.show();
 	    }catch(Exception ignore){}
 
 	    //Please Wait... message
@@ -343,14 +364,15 @@ public class ActivityTableView extends DatabaseActivity {
        }
 
        private void whenFinishedTask() {
-           progressDialog.dismiss();
-           if (contextMenu != null)
-           {
+            progressDialog.dismiss();
+            if (contextMenu != null)
+            {
                contextMenu.getItem(0).setVisible(true);
                Log.d(LOG_TAG, "contextMenu is Null in " + LOG_TAG);
-           }
+            }
 
-           adBottomBannerManager.show();
+            if (showAds)
+                adBottomBannerManager.show();
        }
    }
 }

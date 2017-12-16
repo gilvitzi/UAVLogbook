@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gilvitzi.uavlogbookpro"
     android:versionCode="18"
-    android:versionName="2.1.2">
+    android:versionName="2.2">
 
     <uses-sdk
         android:minSdkVersion="10"
@@ -15,7 +15,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
-    <!-- <uses-permission android:name="android.permission.GET_ACCOUNTS" /> -->
     <application
         android:name=".UAVLogbookApplication"
         android:allowBackup="true"

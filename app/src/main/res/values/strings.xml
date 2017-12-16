@@ -296,7 +296,15 @@
     <string name="settings">Settings</string>
     <string name="hours_fraction_format_summary">display hours fractions as decimal (165.50 Hours) instead of the default Hours:Minutes format (165:30)</string>
     <string name="hours_fraction_format">Hours Fractions as Decimal</string>
-    <string name="remove_ads">Remove Ads</string>
+    <string name="remove_ads">Show Ads</string>
+    <string name="title_new_in_version_2_2">New in 2.2</string>
+    <string name="feature_decimal_hours_format">Choose between Decimal hours format (12.56 Hours) and hours:minutes format (12:34)</string>
+    <string name="feature_some_bug_fixes">Some bug fixes</string>
+    <string name="analytics_event_report">report</string>
+    <string name="analytics_action_report_laoded">loaded</string>
+    <string name="analytics_event_report_loaded">report</string>
+    <string name="analytics_event_report_loaded_format">Report Loaded %1$s</string>
+    <string name="analytics_event_settings_changed">settings_changed</string>
 
     <!-- Version V2 -->
 
