@@ -11,8 +11,8 @@ public class LogbookReportQuery {
 
     public static String getYearlyCAAReport(int year) {
         String query =  "SELECT " +
-                "strftime('%d.%m.%Y',date) AS 'Date'," +
-                "strftime('%s', duration)" + " AS 'Hours', "+
+                "date AS 'Date^Date'," +
+                "strftime('%s', duration)" + " AS 'Duration^Hours', "+
                 "(platform_type || ' ' || platform_variation) AS 'Platform',"+
                 "icao AS 'Location',"+
                 "registration AS 'Reg.',"+
@@ -36,8 +36,8 @@ public class LogbookReportQuery {
 
     public static String getCaaReport() {
         String query = "SELECT " +
-                "strftime('%d.%m.%Y',date) AS 'Date'," +
-                "strftime('%s', duration)" + " AS 'Hours', "+
+                "date AS 'Date^Date'," +
+                "strftime('%s', duration)" + " AS 'Duration^Hours', "+
                 "(platform_type || ' ' || platform_variation) AS 'Platform',"+
                 "icao AS 'Location',"+
                 "registration AS 'Reg.',"+
@@ -61,7 +61,7 @@ public class LogbookReportQuery {
     public static String getHoursPerYear() {
         String query = "SELECT " +
                 "strftime('%Y',date) AS 'Year'," +
-                LogbookSQLite.DURATION_SUM_HOURS + " AS 'Hours', "+
+                LogbookSQLite.DURATION_SUM_HOURS + " AS 'Duration^Hours', "+
                 "COUNT(*) AS 'Sessions'" +
                 "FROM logbook " +
                 "GROUP BY strftime('%Y',date) " +
@@ -72,7 +72,7 @@ public class LogbookReportQuery {
     public static String getHoursPerLocation() {
         String query = "SELECT " +
                 "( aerodrome_name || ' (' || icao || ')') AS 'Aerodrome'," +
-                LogbookSQLite.DURATION_SUM_HOURS + " AS 'Hours', "+
+                LogbookSQLite.DURATION_SUM_HOURS + " AS 'Duration^Hours', "+
                 "COUNT(*) AS 'Sessions'" +
                 "FROM logbook " +
                 "GROUP BY icao,aerodrome_name " +
@@ -85,7 +85,7 @@ public class LogbookReportQuery {
         String query = "SELECT " +
                 "(platform_type || ' ' || platform_variation) AS 'Platform', " +
 
-                LogbookSQLite.DURATION_SUM_HOURS + " AS 'Hours', "+
+                LogbookSQLite.DURATION_SUM_HOURS + " AS 'Duration^Hours', "+
 
                 "COUNT(*) AS 'Sessions'" +
                 "FROM logbook " +
@@ -98,7 +98,7 @@ public class LogbookReportQuery {
     public static String getSessionDatePerPlatform() {
         String query = "SELECT " +
                 "(platform_type || ' ' || platform_variation) AS 'Platform'," +
-                "strftime('%d.%m.%Y',MAX(date)) AS 'Last Session Date' " +
+                "MAX(date) AS 'Date^Last Session Date' " +
                 "FROM logbook " +
                 "GROUP BY platform_type,platform_variation " +
                 "ORDER BY MAX(date) DESC";

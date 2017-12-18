@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.Html;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,10 +23,14 @@ import android.widget.TextView;
 import com.gilvitzi.uavlogbookpro.R;
 import com.gilvitzi.uavlogbookpro.ads.GoogleAdMobBanner;
 import com.gilvitzi.uavlogbookpro.export.ShareTableAsExcelFileTask;
+import com.gilvitzi.uavlogbookpro.util.DateTimeConverter;
 import com.gilvitzi.uavlogbookpro.util.Duration;
 import com.google.android.gms.analytics.HitBuilders;
 
+import java.security.KeyPair;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 
@@ -223,7 +228,7 @@ public class ActivityTableView extends DatabaseActivity {
     */
 	private class GetTableValues extends AsyncTask<String, String, Boolean> {
 		Cursor cursor;
-		String[] columnNames;
+        List<ColumnNameType> columns = new ArrayList<ColumnNameType>();
 		List<List<String>> rows;
 		@Override
 		protected Boolean doInBackground(String... params) {
@@ -231,8 +236,7 @@ public class ActivityTableView extends DatabaseActivity {
                 datasource.open();
 				cursor = getDatasource().database.rawQuery(query, null);
 
-	    		columnNames = cursor.getColumnNames();
-
+                getColumnNamesAndTypes(cursor.getColumnNames());
 	    		//Iteration
 	    		rows = new ArrayList<List<String>>();
 	    		List<String> row;
@@ -248,6 +252,12 @@ public class ActivityTableView extends DatabaseActivity {
             }
             return true;
 		}
+
+        private void getColumnNamesAndTypes(String[] columnNamesArray) {
+            for (String columnName : columnNamesArray) {
+                columns.add(new ColumnNameType(columnName));
+            }
+        }
 
         private void getAllDataRows() {
             List<String> row;
@@ -322,9 +332,9 @@ public class ActivityTableView extends DatabaseActivity {
            tr.setTag("header");
            tl.addView(tr);
 
-           for (String columnName : columnNames) {
+           for (ColumnNameType column : columns) {
                TextView tv = (TextView) View.inflate(context, R.layout.table_view_header_cell, null);
-               tv.setText(columnName);
+               tv.setText(column.Name);
                tr.addView(tv);
            }
        }
@@ -359,19 +369,34 @@ public class ActivityTableView extends DatabaseActivity {
            for (int j=0;j<row.size();j++){
                TextView tv_cell = (TextView) View.inflate(context, R.layout.table_view_row_cell, null);
 
-               String value;
-               if (columnNames[j].equals("Hours") || columnNames[j].equals("Duration")) {
-                   try {
+               String value = "";
+               String columnName = columns.get(j).Name;
+               String columnType = columns.get(j).Type;
+
+               switch(columnType) {
+                   case "Duration":
                        String secondsString = row.get(j);
                        int seconds = Integer.parseInt(secondsString);
                        value = new Duration(context, seconds * 1000).getString();
-                   } catch (java.lang.NumberFormatException ex) {
+                       break;
+                   case "Date":
+                       try {
+                           String valueString = row.get(j);
+                           Date prasedDate = DateTimeConverter.parseDate(valueString, DateTimeConverter.ISO8601);
+                           value = DateTimeConverter.getFormattedDate(context, prasedDate);
+                       } catch (Exception e) {
+                           value = row.get(j);
+                       }
+                       break;
+                   case "String":
                        value = row.get(j);
-                   }
-               } else
-                   value = row.get(j);
+                       break;
+                   default:
+                       Log.e(LOG_TAG,"Unknown columnType " + columnType);
+               }
+
                tv_cell.setText(value);
-               tv_cell.setTag(columnNames[j]);
+               tv_cell.setTag(columns.get(j).Name);
                tr.addView(tv_cell);
            }
        }
@@ -386,6 +411,22 @@ public class ActivityTableView extends DatabaseActivity {
 
             if (showAds)
                 adBottomBannerManager.show();
+       }
+   }
+
+   private class ColumnNameType {
+       private String Name;
+       private String Type;
+
+       ColumnNameType(String SQLColumnName) {
+           if (SQLColumnName.contains("^")) {
+               String[] parts = SQLColumnName.split("\\^");
+               Type = parts[0];
+               Name = parts[1];
+           } else {
+               Type = "String";
+               Name = SQLColumnName;
+           }
        }
    }
 }
