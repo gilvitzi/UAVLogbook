@@ -1,12 +1,16 @@
 package com.gilvitzi.uavlogbookpro.model;
 
 import android.content.ContentValues;
+import android.content.Context;
 
 import com.gilvitzi.uavlogbookpro.database.LogbookSQLite;
 import com.gilvitzi.uavlogbookpro.util.DateTimeConverter;
 import com.gilvitzi.uavlogbookpro.util.NameValuePair;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -82,12 +86,14 @@ public class Session {
 	    return this.date;
 	}
 	
-	public String getDateString() {
-	    return DateTimeConverter.format(this.date, DateTimeConverter.ISO8601, DateTimeConverter.DATE_DEFAULT);
+	public String getDateString(Context context) {
+	    //return DateTimeConverter.format(this.date, DateTimeConverter.ISO8601, DateTimeConverter.DATE_DEFAULT);
+		Date prasedDate = DateTimeConverter.parseDate(this.date, DateTimeConverter.ISO8601);
+		return DateTimeConverter.getFormattedDate(context, prasedDate);
 	}
-	public String getDateStringShort() {
-	    return DateTimeConverter.format(this.date,DateTimeConverter.ISO8601,DateTimeConverter.DATE_DEFAULT_SHORT);
-	}
+//	public String getDateStringShort() {
+//	    return DateTimeConverter.format(this.date,DateTimeConverter.ISO8601,DateTimeConverter.DATE_DEFAULT_SHORT);
+//	}
 	
 	public void setDate(String date) {
 		this.date = date;
@@ -314,33 +320,33 @@ public class Session {
 		}
 		return list;
 	}
-	
-	public String[] toStringArray(){
-		HashMap<String, String> map = this.getMap();
-		String[] strArr = new String[map.size()];
-		int i = 0;
-		
-		strArr[i++] = String.valueOf(this.getId());
-		strArr[i++] = this.getDateString();
-		strArr[i++] = String.valueOf(this.getDuration());
-		strArr[i++] = this.getPlatformType();
-		strArr[i++] = this.getPlatformVariation();
-		strArr[i++] = this.getRegistration();
-		strArr[i++] = this.getTailNumber();
-		strArr[i++] = this.getICAO();
-		strArr[i++] = this.getAerodromeName();
-		strArr[i++] = this.getDayNight();
-		strArr[i++] = this.getSimActual();
-		strArr[i++] = this.getCommand();
-		strArr[i++] = this.getSeat();
-		strArr[i++] = this.getFlightType();
-		strArr[i++] = this.getTags();
-		strArr[i++] = String.valueOf(this.getTakeoffs());
-		strArr[i++] = String.valueOf(this.getLandings());
-		strArr[i++] = String.valueOf(this.getGoArounds());
-		strArr[i++] = this.getComments();
-
-		return strArr;
-	}
+//
+//	public String[] toStringArray(){
+//		HashMap<String, String> map = this.getMap();
+//		String[] strArr = new String[map.size()];
+//		int i = 0;
+//
+//		strArr[i++] = String.valueOf(this.getId());
+//		strArr[i++] = this.getDateString();
+//		strArr[i++] = String.valueOf(this.getDuration());
+//		strArr[i++] = this.getPlatformType();
+//		strArr[i++] = this.getPlatformVariation();
+//		strArr[i++] = this.getRegistration();
+//		strArr[i++] = this.getTailNumber();
+//		strArr[i++] = this.getICAO();
+//		strArr[i++] = this.getAerodromeName();
+//		strArr[i++] = this.getDayNight();
+//		strArr[i++] = this.getSimActual();
+//		strArr[i++] = this.getCommand();
+//		strArr[i++] = this.getSeat();
+//		strArr[i++] = this.getFlightType();
+//		strArr[i++] = this.getTags();
+//		strArr[i++] = String.valueOf(this.getTakeoffs());
+//		strArr[i++] = String.valueOf(this.getLandings());
+//		strArr[i++] = String.valueOf(this.getGoArounds());
+//		strArr[i++] = this.getComments();
+//
+//		return strArr;
+//	}
 }
 

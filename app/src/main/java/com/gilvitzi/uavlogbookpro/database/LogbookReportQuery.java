@@ -12,7 +12,7 @@ public class LogbookReportQuery {
     public static String getYearlyCAAReport(int year) {
         String query =  "SELECT " +
                 "strftime('%d.%m.%Y',date) AS 'Date'," +
-                LogbookSQLite.DURATION_HOURS + " AS 'Hours', "+
+                "strftime('%s', duration)" + " AS 'Hours', "+
                 "(platform_type || ' ' || platform_variation) AS 'Platform',"+
                 "icao AS 'Location',"+
                 "registration AS 'Reg.',"+
@@ -37,7 +37,7 @@ public class LogbookReportQuery {
     public static String getCaaReport() {
         String query = "SELECT " +
                 "strftime('%d.%m.%Y',date) AS 'Date'," +
-                LogbookSQLite.DURATION_HOURS + " AS 'Hours', "+
+                "strftime('%s', duration)" + " AS 'Hours', "+
                 "(platform_type || ' ' || platform_variation) AS 'Platform',"+
                 "icao AS 'Location',"+
                 "registration AS 'Reg.',"+

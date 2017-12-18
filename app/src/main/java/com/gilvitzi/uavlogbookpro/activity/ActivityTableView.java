@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.gilvitzi.uavlogbookpro.R;
 import com.gilvitzi.uavlogbookpro.ads.GoogleAdMobBanner;
 import com.gilvitzi.uavlogbookpro.export.ShareTableAsExcelFileTask;
+import com.gilvitzi.uavlogbookpro.util.Duration;
 import com.google.android.gms.analytics.HitBuilders;
 
 import java.util.ArrayList;
@@ -357,7 +358,19 @@ public class ActivityTableView extends DatabaseActivity {
        private void populateRowViews(TableRow tr, List<String> row) {
            for (int j=0;j<row.size();j++){
                TextView tv_cell = (TextView) View.inflate(context, R.layout.table_view_row_cell, null);
-               tv_cell.setText(row.get(j));
+
+               String value;
+               if (columnNames[j].equals("Hours") || columnNames[j].equals("Duration")) {
+                   try {
+                       String secondsString = row.get(j);
+                       int seconds = Integer.parseInt(secondsString);
+                       value = new Duration(context, seconds * 1000).getString();
+                   } catch (java.lang.NumberFormatException ex) {
+                       value = row.get(j);
+                   }
+               } else
+                   value = row.get(j);
+               tv_cell.setText(value);
                tv_cell.setTag(columnNames[j]);
                tr.addView(tv_cell);
            }

@@ -125,7 +125,7 @@ public class ExportDBExcelTask extends AsyncTask<String, Void, Boolean> {
 	    
 	    cell = row.createCell(i++);
 		cell.setCellType(Cell.CELL_TYPE_STRING);
-	    cell.setCellValue(session.getDateString());
+	    cell.setCellValue(session.getDateString(context));
 	    
 	    cell = row.createCell(i++);
 		cell.setCellType(Cell.CELL_TYPE_STRING);

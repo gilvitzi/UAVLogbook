@@ -33,6 +33,8 @@ import com.google.android.gms.analytics.HitBuilders;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -281,7 +283,7 @@ public class ActivityHome extends DatabaseActivity {
         }
 
         private void setSessionDataInViews() {
-            ((TextView) findViewById(R.id.session_list_item_date)).setText(lastSession.getDateString());
+            ((TextView) findViewById(R.id.session_list_item_date)).setText(lastSession.getDateString(context));
             ((TextView) findViewById(R.id.session_list_item_icao)).setText(lastSession.getICAO());
             TextView bottomLeftTv = ((TextView) findViewById(R.id.session_list_item_platform_type_and_variation));
             String sim_or_nothing = (lastSession.getSimActual().equalsIgnoreCase("simulator"))?"(SIM)":"";

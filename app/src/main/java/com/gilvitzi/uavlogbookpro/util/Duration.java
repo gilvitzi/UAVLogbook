@@ -25,14 +25,18 @@ public class Duration {
     private static final int EXCEL = 3;
 
     public Duration(Context context){
-        SharedPreferences settings = context.getSharedPreferences("UserInfo", 0);
-        minutesAsDecimal = settings.getBoolean("hours_fraction_format", false);
+        getUserFormat(context);
     }
 
     public Duration(Context context, long millis){
+        this(context);
         this.millis = millis;
     }
 
+    private void getUserFormat(Context context) {
+        SharedPreferences settings = context.getSharedPreferences("UserInfo", 0);
+        minutesAsDecimal = settings.getBoolean("hours_fraction_format", false);
+    }
     public void setMillis(long millis){
         this.millis = millis;
     }

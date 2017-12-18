@@ -1,6 +1,7 @@
 package com.gilvitzi.uavlogbookpro.util;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.util.Log;
 
 import java.text.ParseException;
@@ -41,53 +42,53 @@ public class DateTimeConverter {
 	
 	public static final Locale LOCAL_DEFAULT = Locale.ENGLISH;
 	
+//
+//    public static String dateFormat(String date,String inputFormat,String outputFormat){
+//		//Date String format converter
+//		String newDate = null;
+//	    try{
+//
+//	        SimpleDateFormat sdf_in = new SimpleDateFormat(inputFormat);
+//	        SimpleDateFormat sdf_out = new SimpleDateFormat(outputFormat);
+//
+//	        Date dt_obj = sdf_in.parse(date);
+//	        Calendar cal = Calendar.getInstance();
+//	        cal.setTime(dt_obj);
+//
+//	        newDate = sdf_out.format(cal.getTime());
+//	    }catch(Exception e){
+//	    	Log.e("DateTime Converter","Date parsing failed: " + e);
+//	    }
+//
+//	    return newDate;
+//	}
 	
-    public static String dateFormat(String date,String inputFormat,String outputFormat){
-		//Date String format converter
-		String newDate = null;
-	    try{
-
-	        SimpleDateFormat sdf_in = new SimpleDateFormat(inputFormat);
-	        SimpleDateFormat sdf_out = new SimpleDateFormat(outputFormat);
-	        
-	        Date dt_obj = sdf_in.parse(date);
-	        Calendar cal = Calendar.getInstance();
-	        cal.setTime(dt_obj);
-	        
-	        newDate = sdf_out.format(cal.getTime());			
-	    }catch(Exception e){
-	    	Log.e("DateTime Converter","Date parsing failed: " + e);
-	    }
-	    
-	    return newDate;
-	}
-	
-	public static String durationPTHMFToTime(String duration){
-		//Converts HTML5 Duration String (PT00H00M) to (HH:mm)
-
-		String hours = duration.substring(2,4);
-		String minutes = duration.substring(5,7);
-		return hours + ":" + minutes;
-	}
-	
-	/*
-	 * Converts Time String 
-	 */
-	public static String timeToDurationPTHMFormat(String time){
-		String[] separated = time.split(":");
-		String hours = separated[0];
-		String minutes = separated[1];
-		
-		if (hours.length() < 2){
-			hours = "0" + hours;
-		}
-		
-		if (minutes.length() < 2){
-			minutes = "0" + minutes;
-		}
-		return "PT" + hours + "H" + minutes + "M";
-	}
-	
+//	public static String durationPTHMFToTime(String duration){
+//		//Converts HTML5 Duration String (PT00H00M) to (HH:mm)
+//
+//		String hours = duration.substring(2,4);
+//		String minutes = duration.substring(5,7);
+//		return hours + ":" + minutes;
+//	}
+//
+//	/*
+//	 * Converts Time String
+//	 */
+//	public static String timeToDurationPTHMFormat(String time){
+//		String[] separated = time.split(":");
+//		String hours = separated[0];
+//		String minutes = separated[1];
+//
+//		if (hours.length() < 2){
+//			hours = "0" + hours;
+//		}
+//
+//		if (minutes.length() < 2){
+//			minutes = "0" + minutes;
+//		}
+//		return "PT" + hours + "H" + minutes + "M";
+//	}
+//
 	/*
 	 * Parses Excel Duration numeric Value 
 	 * (1 = 24 hours)
@@ -123,27 +124,27 @@ public class DateTimeConverter {
 	     return formatter.format(calendar.getTime());
 	}
 	
-	public static String dateMilisToString(long date){
-	    SimpleDateFormat sdf = new SimpleDateFormat(DATE_DOTTED);
-	    //sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-	    String s = sdf.format(new Date(date));
-		return s;
-	}
+//	public static String dateMilisToString(long date){
+//		SimpleDateFormat sdf = new SimpleDateFormat(DATE_DOTTED);
+//	    //sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+//	    String s = sdf.format(new Date(date));
+//		return s;
+//	}
 	
-	public static long dateStringToMilis(String date){
-		//Parse String to Date
-		Date dt;
-		SimpleDateFormat sdf = new SimpleDateFormat(DATE_DOTTED);
-		//sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-		try {
-			//Check the type of format (for example test split of '.', and split of '/'
-			dt = sdf.parse(date);
-			return dt.getTime();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return 0;
-	}
+//	public static long dateStringToMilis(String date){
+//		//Parse String to Date
+//		Date dt;
+//		SimpleDateFormat sdf = new SimpleDateFormat(DATE_DOTTED);
+//		//sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+//		try {
+//			//Check the type of format (for example test split of '.', and split of '/'
+//			dt = sdf.parse(date);
+//			return dt.getTime();
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+//		return 0;
+//	}
 	
 	@SuppressLint("SimpleDateFormat")
 	public static String format(String date, String inFormat, String outFormat){
@@ -202,6 +203,26 @@ public class DateTimeConverter {
 	    return "";
 	}
 
+	public static String getFormattedDate(Context context, Date date) {
+		java.text.DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
+		String s = dateFormat.format(date);
+		return s;
+	}
 
+	public static String getDateDBFormat(Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat(DateTimeConverter.ISO8601);
+		String s = sdf.format(date);
+		return s;
+	}
 
+	public static Date parseDate(String dateString, String dateFormat) {
+		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+		Date date = null;
+		try {
+			date = sdf.parse(dateString);
+		} catch (ParseException e) {
+			// handle exception here !
+		}
+		return date;
+	}
 }

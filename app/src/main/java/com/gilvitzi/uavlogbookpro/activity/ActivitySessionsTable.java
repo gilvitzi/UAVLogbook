@@ -368,7 +368,7 @@ public class ActivitySessionsTable extends DatabaseActivity {
             CheckBox cb;//Populate Row Views:
             //Date
             TextView tv_date = (TextView) tr.findViewWithTag("date");
-            tv_date.setText(session.getDateStringShort());
+            tv_date.setText(session.getDateString(context));
 
             TextView tv_duration = (TextView) tr.findViewWithTag("duration");
             Duration d = new Duration(context);
