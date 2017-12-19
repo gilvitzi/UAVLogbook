@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,8 +20,12 @@ import com.gilvitzi.uavlogbookpro.R;
 import com.gilvitzi.uavlogbookpro.export.BackupDB;
 import com.gilvitzi.uavlogbookpro.export.ExportDBToCSV;
 import com.gilvitzi.uavlogbookpro.export.ExportTable;
+import com.gilvitzi.uavlogbookpro.export.ImportDBExcelTask;
+import com.gilvitzi.uavlogbookpro.export.ImportDBFromCSV;
+import com.gilvitzi.uavlogbookpro.view.FileDialog;
 import com.google.android.gms.analytics.HitBuilders;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
@@ -126,5 +131,28 @@ public class ActivitySettings extends AnalyticsActivity {
     public void backupDB(View view) {
         BackupDB buTask = new BackupDB(this);
         buTask.start();
+    }
+
+    public void restoreDB(View view) {
+        File mPath = new File(Environment.getExternalStorageDirectory() +"//");
+        FileDialog fileDialog = new FileDialog(this, mPath);
+        fileDialog.setFileEndsWith(".csv");
+        fileDialog.addFileListener(new FileDialog.FileSelectedListener() {
+            public void fileSelected(File file) {
+                String path = file.toString();
+                ImportDBFromCSV importTask =  new ImportDBFromCSV((Activity)context, path);
+                importTask.execute();
+
+                Log.d(getClass().getName(), "selected file " + file.toString());
+                Log.v("ImportExport", "Importing Data From CSV");
+
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("ImportExport")
+                        .setAction("DB Import")
+                        .build());
+            }
+        });
+        fileDialog.setSelectDirectoryOption(false);
+        fileDialog.showDialog();
     }
 }

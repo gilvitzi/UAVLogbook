@@ -68,6 +68,15 @@
             android:text="Backup DB to file"
             style="@style/reports_page_button"
             android:onClick="backupDB"/>
+
+        <Button
+            android:id="@+id/restore_db"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Restore DB from file"
+            style="@style/reports_page_button"
+            android:onClick="restoreDB"/>
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
