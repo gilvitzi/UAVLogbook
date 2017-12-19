@@ -1,10 +1,9 @@
 package com.gilvitzi.uavlogbookpro.export;
 
+import android.app.Activity;
 import com.gilvitzi.uavlogbookpro.R;
-import com.gilvitzi.uavlogbookpro.activity.ActivityTableView;
 import com.gilvitzi.uavlogbookpro.database.LogbookDataSource;
 import com.google.android.gms.analytics.HitBuilders;
-
 import java.util.List;
 
 /*
@@ -17,7 +16,7 @@ public class ExportTableToCSV extends ExportTable {
     private static final String NEW_LINE = System.getProperty("line.separator");
     private final String LOG_TAG = "ExportTableToCSV";
 
-	public ExportTableToCSV(ActivityTableView activity, LogbookDataSource datasource, String query) {
+    public ExportTableToCSV(Activity activity, LogbookDataSource datasource, String query) {
         super(activity, datasource, query);
 	}
 
@@ -56,20 +55,4 @@ public class ExportTableToCSV extends ExportTable {
 	    }
         builder.append(NEW_LINE);
 	}
-
-    protected void sendExportSuccessfulHit()
-    {
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory(context.getString(R.string.analytics_event_category_export))
-                .setAction(context.getString(R.string.analytics_event_action_export_csv_successful))
-                .build());
-    }
-
-    protected void sendExportFailedHit()
-    {
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory(context.getString(R.string.analytics_event_category_export))
-                .setAction(context.getString(R.string.analytics_event_action_export_csv_failed))
-                .build());
-    }
 }

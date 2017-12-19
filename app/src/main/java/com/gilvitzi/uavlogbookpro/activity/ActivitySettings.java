@@ -2,6 +2,7 @@ package com.gilvitzi.uavlogbookpro.activity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
@@ -15,8 +16,13 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.gilvitzi.uavlogbookpro.R;
+import com.gilvitzi.uavlogbookpro.export.BackupDB;
+import com.gilvitzi.uavlogbookpro.export.ExportDBToCSV;
+import com.gilvitzi.uavlogbookpro.export.ExportTable;
 import com.google.android.gms.analytics.HitBuilders;
 
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 public class ActivitySettings extends AnalyticsActivity {
@@ -115,5 +121,10 @@ public class ActivitySettings extends AnalyticsActivity {
                 .setCategory(category)
                 .setAction(action)
                 .build());
+    }
+
+    public void backupDB(View view) {
+        BackupDB buTask = new BackupDB(this);
+        buTask.start();
     }
 }

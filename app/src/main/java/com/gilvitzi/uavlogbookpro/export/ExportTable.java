@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.gilvitzi.uavlogbookpro.AnalyticsApplication;
 import com.gilvitzi.uavlogbookpro.R;
 import com.gilvitzi.uavlogbookpro.database.LogbookDataSource;
+import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
@@ -38,7 +39,6 @@ public abstract class ExportTable extends AsyncTask<String, String, Boolean> {
     private String[] columnNames;
     private List<List<String>> records;
 
-
     public void setOnDataReadyHandler(OnDataReadyHandler handler)
     {
         onDataReadyHandler = handler;
@@ -53,8 +53,6 @@ public abstract class ExportTable extends AsyncTask<String, String, Boolean> {
     }
 
     protected abstract void createDataObject();
-    protected abstract void sendExportSuccessfulHit();
-    protected abstract void sendExportFailedHit();
 
     protected String[] getColumnNames() {
         return columnNames;
@@ -65,7 +63,7 @@ public abstract class ExportTable extends AsyncTask<String, String, Boolean> {
     }
 
     /* Internal Implementation */
-    public ExportTable(Activity activity,LogbookDataSource  datasource,String query) {
+    public ExportTable(Activity activity, LogbookDataSource datasource, String query) {
         this.context = activity;
         this.datasource = datasource;
         this.query = query;
@@ -87,7 +85,7 @@ public abstract class ExportTable extends AsyncTask<String, String, Boolean> {
             datasource.open();
             cursor = datasource.database.rawQuery(query, null);
             columnNames = cursor.getColumnNames();
-            records = new ArrayList<List<String>>(records.size());
+            records = new ArrayList<List<String>>(cursor.getCount());
             List<String> record;
             String value = "";
 
@@ -142,18 +140,24 @@ public abstract class ExportTable extends AsyncTask<String, String, Boolean> {
     }
 
     protected void onPostExecute(final Boolean success){
-        if (this.dialog.isShowing()){
+        if (this.dialog.isShowing())
             this.dialog.dismiss();
-        }
-        if (success){
-            sendExportSuccessfulHit();
-            onDataReadyHandler.onDataReady(data.toString());
 
-        }else{
-            sendExportFailedHit();
+        sendAnalyticsEvent(success);
+
+        if (success)
+            onDataReadyHandler.onDataReady(data.toString());
+        else{
             Toast.makeText(context, R.string.ERROR_TOAST_SHARE_EXPORT_FAILED, Toast.LENGTH_SHORT).show();
         }
     }
 
-
+    protected void sendAnalyticsEvent(boolean success)
+    {
+        String action = (success) ? context.getString(R.string.analytics_event_action_export_csv_failed) : context.getString(R.string.analytics_event_action_export_csv_failed);
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory(context.getString(R.string.analytics_event_category_export))
+                .setAction(action)
+                .build());
+    }
 }

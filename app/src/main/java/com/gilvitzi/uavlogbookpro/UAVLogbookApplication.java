@@ -7,25 +7,29 @@ import android.content.pm.PackageManager;
  * Created by Gil on 20/10/2015.
  */
 public class UAVLogbookApplication extends AnalyticsApplication {
-    private PackageInfo packageInfo;
 
     public UAVLogbookApplication() {
-        parsePackageInfo();
-    }
-
-    private void parsePackageInfo() {
-        try {
-            packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-        }catch (PackageManager.NameNotFoundException ex) {
-            // do nothing
-        }
     }
 
     public String getVersionName(){
-        return packageInfo.versionName;
+        String versionName = "";
+        try {
+            versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+         return versionName;
     }
 
     public int getVersionCode() {
-        return packageInfo.versionCode;
+        int versionCode = 0;
+        try {
+            versionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return versionCode;
     }
 }

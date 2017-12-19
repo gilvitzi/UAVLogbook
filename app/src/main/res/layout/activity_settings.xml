@@ -61,7 +61,13 @@
             <!--android:gravity="top"-->
             <!--android:text="@string/remove_ads"-->
             <!--android:visibility="visible" />-->
-
+        <Button
+            android:id="@+id/backup_db"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Backup DB to file"
+            style="@style/reports_page_button"
+            android:onClick="backupDB"/>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

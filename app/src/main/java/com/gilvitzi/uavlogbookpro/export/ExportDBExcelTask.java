@@ -237,8 +237,6 @@ public class ExportDBExcelTask extends AsyncTask<String, Void, Boolean> {
 	        this.dialog.dismiss();
 	    }
 	    if (success){
-//	        Toast.makeText(context, "Logbook Exported Successfully", Toast.LENGTH_SHORT).show();
-//	        Toast.makeText(context, "File Saved: " + outFilePath, Toast.LENGTH_LONG).show();
 	        
             //Google Analytics
 	        mTracker.send(new HitBuilders.EventBuilder()
@@ -246,11 +244,6 @@ public class ExportDBExcelTask extends AsyncTask<String, Void, Boolean> {
 	        .setAction("Export Successful")
 	        .build());
 
-//	        mActivity.finish();
-//            Intent intent = new Intent(context, ActivityHome.class);
-//            intent.putExtra("title", "Export To Excel");
-//            intent.putExtra("message", "Logbook Exported Successfully" + "\n" + "File Saved: " + outFilePath);
-//            context.startActivity(intent);
 	    }else{
 	        Toast.makeText(context, "Export Failed", Toast.LENGTH_SHORT).show();
             //Google Analytics
