@@ -32,14 +32,14 @@
         android:text="@string/app_splash_screen_title" />
     
     <TextView
+		android:id="@+id/versionName"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp"
         android:textSize="20sp"
         android:textColor="@color/black"
-        android:gravity="center"
-        android:text="@string/app_version" />
+        android:gravity="center" />
 
 	<TextView
 		android:id="@+id/privacy_policy_link"

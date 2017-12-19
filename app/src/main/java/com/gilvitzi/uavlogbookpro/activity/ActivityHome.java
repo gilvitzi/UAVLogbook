@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gilvitzi.uavlogbookpro.R;
+import com.gilvitzi.uavlogbookpro.UAVLogbookApplication;
 import com.gilvitzi.uavlogbookpro.database.AerodromesDataSource;
 import com.gilvitzi.uavlogbookpro.database.LogbookReportQuery;
 import com.gilvitzi.uavlogbookpro.export.ImportDBExcelTask;
@@ -340,9 +341,9 @@ public class ActivityHome extends DatabaseActivity {
     		last_version_shown = settings.getString("whats_new_screen_shown", last_version_shown);
         	
     		//if was not_shown -> show screen
-    		if (!last_version_shown.equals(getResources().getText(R.string.app_version))) {
+            UAVLogbookApplication app = (UAVLogbookApplication) getApplication();
+    		if (!last_version_shown.equals(app.getVersionName())) {
                 showWhatsNewScreen();
-
                 doVersionInitializations();
             }
     		
@@ -372,7 +373,8 @@ public class ActivityHome extends DatabaseActivity {
         	//set screen was shown
     		SharedPreferences settings = getSharedPreferences("UserInfo", 0);
     		SharedPreferences.Editor editor = settings.edit();
-    		editor.putString("whats_new_screen_shown",(String)getResources().getText(R.string.app_version));
+    		UAVLogbookApplication app = (UAVLogbookApplication) getApplication();
+    		editor.putString("whats_new_screen_shown", app.getVersionName());
     		editor.commit();
 		}
 		catch(Exception e)
