@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.gilvitzi.uavlogbookpro.R;
 import com.gilvitzi.uavlogbookpro.database.LogbookDataSource;
+import com.gilvitzi.uavlogbookpro.view.ShareFileDialog;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -19,12 +20,6 @@ import java.util.Date;
  * Created by Gil on 28/01/2016.
  */
 public class ShareDBAsExcelFileTask {
-    private static final String FILE_MIME_TYPE = "application/excel";
-    private static final String FILE_EXTENTION_XLS = ".xls";
-    private static final String FILE_NAME_PREFIX = "UAV Logbook - ";
-    private static final String FILE_PROVIDER_DOMAIN = "com.gilvitzi.fileprovider";
-    private static final String TEMP_CACHE_FOLDER = "excel_files";
-    private static final String FILE_PATH_PREFIX = "file://";
     public static final String LOG_TAG = "ShareDBAsExcelFileTask";
 
     private ExportDBExcelTask mExportTask;
@@ -56,37 +51,12 @@ public class ShareDBAsExcelFileTask {
         mExportTask.addListnener(new ExportDBExcelTask.Listener() {
             @Override
             public void onTaskCompleted() {
-                showShareFileDialog(filePath);
+                new ShareFileDialog(mContext, filePath).show();
             }
         });
     }
 
     public void execute() {
         mExportTask.execute();
-    }
-
-    private void showShareFileDialog(String filePath) {
-
-        File fileWithinMyDir = new File(filePath);
-        String sharingFileString = mContext.getResources().getString(R.string.sharing_file);
-        String sharingFileSubject = mContext.getResources().getString(R.string.sharing_file_subject);
-        String shareFileString = mContext.getResources().getString(R.string.share_file);
-
-        Uri contentUri = FileProvider.getUriForFile(mContext, FILE_PROVIDER_DOMAIN, new File(filePath));
-
-        Intent intentShareFile = new Intent(Intent.ACTION_SEND);
-
-        if(fileWithinMyDir.exists()) {
-            intentShareFile.setType(FILE_MIME_TYPE);
-            intentShareFile.putExtra(Intent.EXTRA_STREAM, contentUri);
-
-            intentShareFile.putExtra(Intent.EXTRA_SUBJECT, sharingFileSubject);
-            intentShareFile.putExtra(Intent.EXTRA_TEXT, sharingFileString);
-
-            mContext.startActivity(Intent.createChooser(intentShareFile, shareFileString));
-        } else {
-            Toast.makeText(mContext,"File was not found. Share action cancelled",Toast.LENGTH_LONG);
-            Log.e(LOG_TAG, String.format("File %1$s was not found for share",fileWithinMyDir.getPath()));
-        }
     }
 }

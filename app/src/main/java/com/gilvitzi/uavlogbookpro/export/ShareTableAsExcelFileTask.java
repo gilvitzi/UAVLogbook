@@ -8,6 +8,7 @@ import android.support.v4.content.FileProvider;
 
 import com.gilvitzi.uavlogbookpro.R;
 import com.gilvitzi.uavlogbookpro.database.LogbookDataSource;
+import com.gilvitzi.uavlogbookpro.view.ShareFileDialog;
 
 import java.io.File;
 
@@ -45,7 +46,7 @@ public class ShareTableAsExcelFileTask {
         mExportTask.addListnener(new ExportTableToExcelTask.Listener() {
             @Override
             public void onTaskCompleted() {
-                showShareFileDialog(filePath);
+                new ShareFileDialog(mContext, filePath).show();
             }
         });
     }
@@ -54,25 +55,4 @@ public class ShareTableAsExcelFileTask {
         mExportTask.execute();
     }
 
-    private void showShareFileDialog(String filePath) {
-
-        File fileWithinMyDir = new File(filePath);
-        String sharingFileString = mContext.getResources().getString(R.string.sharing_file);
-        String sharingFileSubject = mContext.getResources().getString(R.string.sharing_file_subject);
-        String shareFileString = mContext.getResources().getString(R.string.share_file);
-
-        Uri contentUri = FileProvider.getUriForFile(mContext, FILE_PROVIDER_DOMAIN, new File(filePath));
-
-        Intent intentShareFile = new Intent(Intent.ACTION_SEND);
-
-        if(fileWithinMyDir.exists()) {
-            intentShareFile.setType(MIME_APPLICATION_XSL);
-            intentShareFile.putExtra(Intent.EXTRA_STREAM, contentUri);
-
-            intentShareFile.putExtra(Intent.EXTRA_SUBJECT, sharingFileSubject);
-            intentShareFile.putExtra(Intent.EXTRA_TEXT, sharingFileString);
-
-            mContext.startActivity(Intent.createChooser(intentShareFile, shareFileString));
-        }
-    }
 }
