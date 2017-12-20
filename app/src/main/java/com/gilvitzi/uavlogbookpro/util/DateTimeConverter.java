@@ -25,7 +25,9 @@ public class DateTimeConverter {
 	public static final String DATE_TIME = "yyyy-MM-dd HH:mm:ss";
 	public static final String DATE_DOTTED = "dd.MM.yyyy";
 	public static final String DATE_SLASHED = "dd/MM/yyyy";
-	
+	public static final String DATE_SLASHED_SHORT = "dd/MM/yy";
+	private static final String DATE_US_SLASHED_SHORT = "MM/dd/yy";
+
 	public static final String DATE_US = "MM/dd/yyyy";
 	public static final String DATE_DEFAULT = "dd.MM.yyyy";
 	public static final String DATE_DEFAULT_SHORT = "d.M.yy";
@@ -41,6 +43,7 @@ public class DateTimeConverter {
 	public static final int NUMERIC_JULIAN_DAY = 1; //the number of days since noon in Greenwich on November 24, 4714 B.C. according to the proleptic Gregorian calendar
 	
 	public static final Locale LOCAL_DEFAULT = Locale.ENGLISH;
+
 
 	/*
 	 * Parses Excel Duration numeric Value 
@@ -154,6 +157,12 @@ public class DateTimeConverter {
 		} catch (ParseException e) {
 			// handle exception here !
 		}
+		return date;
+	}
+
+	public static Date parseDateLocal(Context context, String dateString) throws ParseException {
+		java.text.DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
+		Date date = dateFormat.parse(dateString);
 		return date;
 	}
 }

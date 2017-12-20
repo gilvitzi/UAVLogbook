@@ -26,6 +26,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -146,7 +147,7 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
                 row = sheet.getRow((short) rowNum);
                 //try getting next row FirstCellValue
                 try{
-                    firstCellValue = Long.parseLong(getCellValue(row, 0));
+                    firstCellValue = (long)Double.parseDouble(getCellValue(row, 0));
                 }catch(Exception e){
                     Log.e(LOG_TAG,"firstCellValue Failed: " + e);
                     firstCellValue = 0;
@@ -207,7 +208,6 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
 		return rowCount;
 	}
 
-	@SuppressLint("DefaultLocale")
     private boolean getSessionFromExcelRow(HSSFRow row,Session session){
 	    String LOG_TAG = "Excel Parser"; //LOG_TAG
 		HSSFCell cell;
@@ -228,8 +228,8 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
 			getTailNumber(row, session, cellIndex++);
 			getIcaoCode(row, session, cellIndex++);
 			getAerodromeName(row, session, cellIndex++);
-			getDayOrNight(row, session, cellIndex++);
             getSimOrActual(row, session, cellIndex++);
+			getDayOrNight(row, session, cellIndex++);
 			getCommand(row, session, cellIndex++);
 			getSeat(row, session, cellIndex++);
 			getFlightType(row, session, cellIndex++);
@@ -255,7 +255,8 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
 
     private void getId(Session session, HSSFCell cell) {
         String stringValue = getCellValue(cell.getRow(), 0);
-        long id = Long.parseLong(stringValue);
+        double num = Double.parseDouble(stringValue);
+        long id = (long)num;
         session.setId(id);
     }
 
@@ -616,14 +617,15 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
 		HSSFCell cell = row.getCell(cellIndex);
 		try{
             String cellStringValue = getCellValue(row,cellIndex);
-            session.setDate(cellStringValue);
+            Date dt = DateTimeConverter.parseDateLocal(context, cellStringValue);
+            String parsedDate = DateTimeConverter.getDateDBFormat(dt);
+            session.setDate(parsedDate);
         }catch(Exception e){
             errors.add(new ExcelParserException(row.getRowNum(),
                     "Date",
                     "",
                     Log.ERROR,e.toString())
             );
-            throw e;
         }
 	}
 

@@ -29,11 +29,11 @@ public class ExportTableToCSV extends ExportTable {
     }
 
     private void appendHeaders(StringBuilder csvOutput) {
-
-        for (String column : getColumnNames())
-        {
-            csvOutput.append(column);
-            csvOutput.append(VALUE_SEPERATOR);
+        String[] headers = getColumnNames();
+        for (int i = 0;i < headers.length;i++) {
+            csvOutput.append(headers[i]);
+            if (i < headers.length - 1)
+                csvOutput.append(VALUE_SEPERATOR);
         }
         csvOutput.append(NEW_LINE);
     }
@@ -51,7 +51,8 @@ public class ExportTableToCSV extends ExportTable {
     private void appendSessionAsCommaSeperatedRow(StringBuilder builder, List<String> record){
 	    for (int i = 0;i < record.size();i++){
             builder.append(record.get(i));
-            builder.append(VALUE_SEPERATOR);
+            if (i < record.size()-1)
+                builder.append(VALUE_SEPERATOR);
 	    }
         builder.append(NEW_LINE);
 	}

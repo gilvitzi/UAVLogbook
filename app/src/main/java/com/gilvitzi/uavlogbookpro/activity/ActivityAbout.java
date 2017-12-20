@@ -20,7 +20,6 @@ public class ActivityAbout extends DatabaseActivity {
 
 	final static String LOG_TAG = "ActivityAbout";
 	final static String screen_name = "About";
-    private String appVersionName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +48,7 @@ public class ActivityAbout extends DatabaseActivity {
         String versionName = app.getVersionName();
 
         TextView versionNameTv = (TextView) findViewById(R.id.versionName);
-        versionNameTv.setText(appVersionName);
+        versionNameTv.setText(versionName);
     }
 
     @Override

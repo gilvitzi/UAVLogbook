@@ -66,7 +66,6 @@ public class Session {
 		this.comments = comments;
 		
 	}
-
 	
 	public Session(){
 		
@@ -91,9 +90,6 @@ public class Session {
 		Date prasedDate = DateTimeConverter.parseDate(this.date, DateTimeConverter.ISO8601);
 		return DateTimeConverter.getFormattedDate(context, prasedDate);
 	}
-//	public String getDateStringShort() {
-//	    return DateTimeConverter.format(this.date,DateTimeConverter.ISO8601,DateTimeConverter.DATE_DEFAULT_SHORT);
-//	}
 	
 	public void setDate(String date) {
 		this.date = date;
@@ -130,7 +126,6 @@ public class Session {
 		this.sim_actual = sim_actual;
 	}
 
-	
 	//PLATFORM_TYPE
 	public String getPlatformType() {
 	    return this.platform_type;
@@ -320,33 +315,5 @@ public class Session {
 		}
 		return list;
 	}
-//
-//	public String[] toStringArray(){
-//		HashMap<String, String> map = this.getMap();
-//		String[] strArr = new String[map.size()];
-//		int i = 0;
-//
-//		strArr[i++] = String.valueOf(this.getId());
-//		strArr[i++] = this.getDateString();
-//		strArr[i++] = String.valueOf(this.getDuration());
-//		strArr[i++] = this.getPlatformType();
-//		strArr[i++] = this.getPlatformVariation();
-//		strArr[i++] = this.getRegistration();
-//		strArr[i++] = this.getTailNumber();
-//		strArr[i++] = this.getICAO();
-//		strArr[i++] = this.getAerodromeName();
-//		strArr[i++] = this.getDayNight();
-//		strArr[i++] = this.getSimActual();
-//		strArr[i++] = this.getCommand();
-//		strArr[i++] = this.getSeat();
-//		strArr[i++] = this.getFlightType();
-//		strArr[i++] = this.getTags();
-//		strArr[i++] = String.valueOf(this.getTakeoffs());
-//		strArr[i++] = String.valueOf(this.getLandings());
-//		strArr[i++] = String.valueOf(this.getGoArounds());
-//		strArr[i++] = this.getComments();
-//
-//		return strArr;
-//	}
 }
 

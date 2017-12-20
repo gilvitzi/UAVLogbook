@@ -61,11 +61,18 @@
             <!--android:gravity="top"-->
             <!--android:text="@string/remove_ads"-->
             <!--android:visibility="visible" />-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="Create Database Backup file"/>
+
         <Button
             android:id="@+id/backup_db"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Backup DB to file"
+            android:text="Backup DB"
             style="@style/reports_page_button"
             android:onClick="backupDB"/>
 
@@ -73,9 +80,10 @@
             android:id="@+id/restore_db"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Restore DB from file"
+            android:text="Restore DB"
             style="@style/reports_page_button"
-            android:onClick="restoreDB"/>
+            android:onClick="restoreDB"
+            android:visibility="invisible"/>
 
     </LinearLayout>
 

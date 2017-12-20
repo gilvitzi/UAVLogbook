@@ -103,7 +103,6 @@ public class ImportDBFromCSV extends AsyncTask<String, Integer, Boolean> {
 
         sessions = new LinkedList<Session>();
         try {
-
             FileInputStream inputFile = new FileInputStream(filePath);
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputFile));
             String headers = reader.readLine();

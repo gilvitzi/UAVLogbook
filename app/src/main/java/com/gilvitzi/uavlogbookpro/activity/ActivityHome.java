@@ -245,7 +245,7 @@ public class ActivityHome extends DatabaseActivity {
 		protected Boolean doInBackground(List<NameValuePair>... params) {
 			try{
                 datasource.open();
-                int seconds = datasource.getTotalHours();
+                long seconds = datasource.getTotalHours();
 				totalHours.setMillis(seconds * 1000);
                 lastSession = datasource.getLastSession();
 				totalSessions = getDatasource().countRecords();
@@ -317,7 +317,6 @@ public class ActivityHome extends DatabaseActivity {
     	return new Date(millis);
     }
 
-
     @SuppressLint("DefaultLocale")
 	private String durationToHMS(long millis)
     {
@@ -326,7 +325,6 @@ public class ActivityHome extends DatabaseActivity {
 		long seconds = TimeUnit.MILLISECONDS.toSeconds(millis) % TimeUnit.MINUTES.toSeconds(1);
 		return String.format("%02d:%02d:%02d",hours , minutes, seconds );
     }
-
 
     private void checkWhatsNew()
     {
