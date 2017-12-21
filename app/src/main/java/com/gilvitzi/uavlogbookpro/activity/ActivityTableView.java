@@ -376,7 +376,7 @@ public class ActivityTableView extends DatabaseActivity {
                switch(columnType) {
                    case "Duration":
                        String secondsString = row.get(j);
-                       int seconds = Integer.parseInt(secondsString);
+                       long seconds = Integer.parseInt(secondsString);
                        value = new Duration(context, seconds * 1000).getString();
                        break;
                    case "Date":
