@@ -29,14 +29,13 @@ import com.gilvitzi.uavlogbookpro.export.ShareDBAsExcelFileTask;
 import com.gilvitzi.uavlogbookpro.model.Session;
 import com.gilvitzi.uavlogbookpro.util.Duration;
 import com.gilvitzi.uavlogbookpro.util.NameValuePair;
+import com.gilvitzi.uavlogbookpro.util.OnResult;
 import com.gilvitzi.uavlogbookpro.view.FileDialog;
 import com.gilvitzi.uavlogbookpro.view.QuickStartButton;
 import com.google.android.gms.analytics.HitBuilders;
 
 import java.io.File;
 import java.lang.reflect.Field;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,15 +43,12 @@ import java.util.concurrent.TimeUnit;
 
 public class ActivityHome extends DatabaseActivity {
 
-    protected LinearLayout content_view = null;
 
 	private static final String LOG_TAG = "ActivityHome";
 
 	public HomePageData homePageData;
-	public ArrayList<NameValuePair> pageData;
-	
+
 	private FileDialog fileDialog;
-    private FileDialog folderDialog;
 
 	private QuickStartButton qsButton;
     private Session lastSession;
@@ -211,6 +207,13 @@ public class ActivityHome extends DatabaseActivity {
         fileDialog.addFileListener(new FileDialog.FileSelectedListener() {
             public void fileSelected(File file) {
                 ImportDBExcelTask importTask =  new ImportDBExcelTask((Activity)ActivityHome.this,file.toString());
+                importTask.onFinished = new OnResult() {
+                    @Override
+                    public void onResult(boolean success, String message) {
+                        refreshHomePageData();
+                    }
+                };
+
                 importTask.execute();
 
                 Log.d(getClass().getName(), "selected file " + file.toString());

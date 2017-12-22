@@ -3,8 +3,10 @@ package com.gilvitzi.uavlogbookpro.export;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -26,6 +28,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,7 +40,7 @@ import java.util.regex.Pattern;
 public class ImportDBFromCSV extends AsyncTask<String, Integer, Boolean> {
 
 
-    public static final int NUM_OF_SESSIONS_PER_BLOCK = 20;
+    public static final int NUM_OF_SESSIONS_PER_BLOCK = 100;
 
     private final String LOG_TAG = "RestoreDB";
     private final ProgressDialog dialog;
@@ -45,7 +48,7 @@ public class ImportDBFromCSV extends AsyncTask<String, Integer, Boolean> {
     private Activity mActivity;
     private LogbookDataSource datasource;
 
-    private String filePath = "";
+    private Uri filePath;
 
     private int sessionsCount = 0;
     private int sessionsFailedCount = 0;
@@ -79,17 +82,17 @@ public class ImportDBFromCSV extends AsyncTask<String, Integer, Boolean> {
 
     ;
 
-    public ImportDBFromCSV(Activity activity, String filePath) {
+    public ImportDBFromCSV(Activity activity, Uri fileUri) {
         this.context = activity;
         mActivity = activity;
-        this.filePath = filePath;
-        this.dialog = new ProgressDialog(context);
+        this.filePath = fileUri;
+        this.dialog = new ProgressDialog(mActivity);
         datasource = new LogbookDataSource(context);
     }
 
     @Override
     protected void onPreExecute() {
-        this.dialog.setMessage(context.getResources().getString(R.string.progress_importing_from_csv));
+        this.dialog.setMessage("Restoring DB from file");
         this.dialog.show();
 
         errors = new LinkedList<String>();
@@ -103,13 +106,14 @@ public class ImportDBFromCSV extends AsyncTask<String, Integer, Boolean> {
 
         sessions = new LinkedList<Session>();
         try {
-            FileInputStream inputFile = new FileInputStream(filePath);
+            InputStream inputFile = context.getContentResolver().openInputStream(filePath);
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputFile));
             String headers = reader.readLine();
 
             String line = reader.readLine();
             while (line != null) {
-                processLine(line);
+                if (!line.isEmpty())
+                    processLine(line);
 
                 //in-Case of many Sessions - FreeUp Memory
                 if (sessions.size() >= NUM_OF_SESSIONS_PER_BLOCK) {
@@ -150,7 +154,6 @@ public class ImportDBFromCSV extends AsyncTask<String, Integer, Boolean> {
         session.setDate(dt);
 
         session.setDuration(cols[FieldName.DURATION.ordinal()]);
-
 
         session.setPlatformType(cols[FieldName.PLATFORM_TYPE.ordinal()]);
         session.setPlatformVariation(cols[FieldName.PLATFORM_VARIATION.ordinal()]);

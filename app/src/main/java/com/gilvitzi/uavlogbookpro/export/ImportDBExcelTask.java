@@ -1,6 +1,5 @@
 package com.gilvitzi.uavlogbookpro.export;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -16,6 +15,7 @@ import com.gilvitzi.uavlogbookpro.database.LogbookDataSource;
 import com.gilvitzi.uavlogbookpro.model.Session;
 import com.gilvitzi.uavlogbookpro.util.DateTimeConverter;
 import com.gilvitzi.uavlogbookpro.util.Duration;
+import com.gilvitzi.uavlogbookpro.util.OnResult;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
@@ -23,6 +23,7 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.formula.functions.Function;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
@@ -55,6 +56,7 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
 	public ArrayList<ExcelParserException> errors;
 	//Google Analytics
     private Tracker mTracker;
+    public OnResult onFinished;
 
     private enum FieldName{
         DATE,
@@ -663,54 +665,60 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
 	}
 
 	@Override
-	protected void onPostExecute(final Boolean success){
-	    super.onPostExecute(success);
-	    if (this.dialog.isShowing()){
-	        this.dialog.dismiss();
-	        
-	    }
-	    if (success){
-	        String message = sessionsCount + " " + context.getResources().getString(R.string.toast_sessions_imported_successfuly);
+	protected void onPostExecute(final Boolean success) {
+        super.onPostExecute(success);
+        if (this.dialog.isShowing()) {
+            this.dialog.dismiss();
 
-	        mTracker.send(new HitBuilders.EventBuilder()
-	        .setCategory("Import")
-	        .setAction("Import Successful")
-	        .setValue(sessionsCount)
-	        .build());
-	        
-	        if (sessionsFailedCount!=0){
-	            message += "\n" + sessionsFailedCount + " " + context.getResources().getString(R.string.toast_sessions_failed);
+        }
 
-		        mTracker.send(new HitBuilders.EventBuilder()
-		        .setCategory("Import")
-		        .setAction("Import With Failed Records")
-		        .setValue(sessionsFailedCount)
-		        .build());
-	            Toast.makeText(context,message, Toast.LENGTH_SHORT).show();
-	        }
-	        if(errors.size() > 0){
-	            String full_message = message + "\n";
-	            
-	            for (ExcelParserException error : errors){
-	                full_message += "\n" + error.userMessage();
-	            }
-	            Log.v(LOG_TAG,full_message);
-	            mActivity.finish();
-	            Intent intent = new Intent(context, ActivityHome.class);
-	            intent.putExtra("message", full_message);
-	            intent.putExtra("title", "Importing Failures");
-	            context.startActivity(intent);
-	        }
-	        
-	    }else{
-	        Toast.makeText(context, context.getResources().getString(R.string.warning_importing_failed), Toast.LENGTH_SHORT).show();
+        String message = "";
+        if (success) {
+            message = sessionsCount + " " + context.getResources().getString(R.string.toast_sessions_imported_successfuly);
 
-	        mTracker.send(new HitBuilders.EventBuilder()
-	        .setCategory("Import")
-	        .setAction("Import Failed")
-	        .build());
-	    }
-	}
+            mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("Import")
+                    .setAction("Import Successful")
+                    .setValue(sessionsCount)
+                    .build());
+
+            if (sessionsFailedCount != 0) {
+                message += "\n" + sessionsFailedCount + " " + context.getResources().getString(R.string.toast_sessions_failed);
+
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Import")
+                        .setAction("Import With Failed Records")
+                        .setValue(sessionsFailedCount)
+                        .build());
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+            }
+            if (errors.size() > 0) {
+                String full_message = message + "\n";
+
+                for (ExcelParserException error : errors) {
+                    full_message += "\n" + error.userMessage();
+                }
+                Log.v(LOG_TAG, full_message);
+                mActivity.finish();
+                Intent intent = new Intent(context, ActivityHome.class);
+                intent.putExtra("message", full_message);
+                intent.putExtra("title", "Importing Failures");
+                context.startActivity(intent);
+            }
+
+        } else {
+            Toast.makeText(context, context.getResources().getString(R.string.warning_importing_failed), Toast.LENGTH_SHORT).show();
+
+            mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("Import")
+                    .setAction("Import Failed")
+                    .build());
+        }
+
+        if (onFinished != null) {
+            onFinished.onResult(success, message);
+        }
+    }
 
 	@Override
     protected void onProgressUpdate(Integer... values) {

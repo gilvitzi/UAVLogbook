@@ -1,7 +1,9 @@
 package com.gilvitzi.uavlogbookpro.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -28,10 +30,12 @@ import com.google.android.gms.analytics.HitBuilders;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.net.URI;
 import java.util.ArrayList;
 
 public class ActivitySettings extends AnalyticsActivity {
     private static final String LOG_TAG = "ActivitySettings";
+    private static final int SELECT_FILE_TO_IMPORT = 600;
     private Context context;
     SharedPreferences settings;
     SharedPreferences.Editor editor;
@@ -134,25 +138,20 @@ public class ActivitySettings extends AnalyticsActivity {
     }
 
     public void restoreDB(View view) {
-        File mPath = new File(Environment.getExternalStorageDirectory() +"//");
-        FileDialog fileDialog = new FileDialog(this, mPath);
-        fileDialog.setFileEndsWith(".csv");
-        fileDialog.addFileListener(new FileDialog.FileSelectedListener() {
-            public void fileSelected(File file) {
-                String path = file.toString();
-                ImportDBFromCSV importTask =  new ImportDBFromCSV((Activity)context, path);
-                importTask.execute();
+        Intent intent = new Intent()
+                .setType("*/*")
+                .setAction(Intent.ACTION_GET_CONTENT);
 
-                Log.d(getClass().getName(), "selected file " + file.toString());
-                Log.v("ImportExport", "Importing Data From CSV");
+        startActivityForResult(Intent.createChooser(intent, "Select a file"), SELECT_FILE_TO_IMPORT);
+    }
 
-                mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("ImportExport")
-                        .setAction("DB Import")
-                        .build());
-            }
-        });
-        fileDialog.setSelectDirectoryOption(false);
-        fileDialog.showDialog();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==SELECT_FILE_TO_IMPORT && resultCode==RESULT_OK) {
+            Uri selectedfile = data.getData(); //The uri with the location of the file
+            ImportDBFromCSV importTask =  new ImportDBFromCSV((Activity)context, selectedfile);
+            importTask.execute();
+        }
     }
 }

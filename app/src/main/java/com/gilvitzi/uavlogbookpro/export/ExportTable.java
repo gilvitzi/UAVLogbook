@@ -38,6 +38,7 @@ public abstract class ExportTable extends AsyncTask<String, String, Boolean> {
     private Cursor cursor;
     private String[] columnNames;
     private List<List<String>> records;
+    protected String dialogMessage = "Exporting Table";
 
     public void setOnDataReadyHandler(OnDataReadyHandler handler)
     {
@@ -73,7 +74,7 @@ public abstract class ExportTable extends AsyncTask<String, String, Boolean> {
 
     @Override
     protected void onPreExecute(){
-        dialog.setMessage(context.getString(R.string.dialog_exporting_table));
+        dialog.setMessage(dialogMessage);
         dialog.show();
 
         mTracker = AnalyticsApplication.getDefaultTracker(context);
@@ -133,7 +134,7 @@ public abstract class ExportTable extends AsyncTask<String, String, Boolean> {
     protected void onProgressUpdate(String... values) {
         super.onProgressUpdate(values);
 
-        String message = String.format(context.getString(R.string.exporting_progress_dialog_message),values[0],values[1]);
+        String message = String.format("%s  %d / %d", dialogMessage, values[0], values[1]);
         this.dialog.setMessage(message);
 
         Log.i(LOG_TAG, message);

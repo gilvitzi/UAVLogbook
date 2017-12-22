@@ -58,7 +58,7 @@ public class BackupDB {
     private String buildFileName() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String dateStr = sdf.format(new Date());
-        String fileName = String.format("UAVLogbook_Backup_%1$s.csv", dateStr);
+        String fileName = String.format("UAVLogbook_Backup_%1$s.uav", dateStr);
         return fileName;
     }
 

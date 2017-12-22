@@ -68,7 +68,7 @@ public class ShareFileDialog {
             case "json":
                 return "application/json";
             default:
-                return "";
+                return "*/*";
         }
     }
 }

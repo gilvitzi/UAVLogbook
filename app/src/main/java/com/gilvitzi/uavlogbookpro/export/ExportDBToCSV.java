@@ -11,9 +11,8 @@ import com.gilvitzi.uavlogbookpro.database.LogbookReportQuery;
  */
 
 public class ExportDBToCSV extends ExportTableToCSV{
-
     public ExportDBToCSV(Activity activity) {
         super(activity, new LogbookDataSource(activity), LogbookReportQuery.getAllSessions());
+        dialogMessage = "Building Backup";
     }
-
 }
