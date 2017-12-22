@@ -54,14 +54,6 @@
 
         </LinearLayout>
 
-        <!--<Switch-->
-            <!--android:id="@+id/switch_show_ads"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:gravity="top"-->
-            <!--android:text="@string/remove_ads"-->
-            <!--android:visibility="visible" />-->
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -83,7 +75,7 @@
             android:text="Restore DB"
             style="@style/reports_page_button"
             android:onClick="restoreDB"
-            android:visibility="invisible"/>
+            android:visibility="visible"/>
 
     </LinearLayout>
 
