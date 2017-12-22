@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -23,9 +24,9 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.formula.functions.Function;
 
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
@@ -34,22 +35,14 @@ import java.util.ListIterator;
 
 public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
 
-
     public static final int NUM_OF_SESSIONS_PER_BLOCK = 20;
-    /*
-            TODO: i wrote a new getCellValue Generic Function that should be able to deal with all of excel interpetations Errors, and stract the string value of the field.
-            TODO: now still need to replace old getPlatformType, getICAO type of functions with this generic method.
-
-             */
-    //
     private final String LOG_TAG = "ImportTask";
 	private final ProgressDialog dialog;
 	private Context context;
 	private Activity mActivity;
 	private LogbookDataSource datasource;
 	
-	private String filePath = "";
-	
+	private Uri excelFileUri;
 	private int sessionsCount = 0;
 	private int sessionsFailedCount = 0;
 
@@ -79,10 +72,10 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
         REMARKS
     };
     
-	public ImportDBExcelTask(Activity activity,String filePath){
+	public ImportDBExcelTask(Activity activity,Uri excelFileUri){
 		this.context = activity;
 		mActivity = activity;
-		this.filePath = filePath;
+		this.excelFileUri = excelFileUri;
 		this.dialog = new ProgressDialog(context);
         datasource = new LogbookDataSource(context);
 
@@ -105,11 +98,9 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
 
 	    List<Session> sessions = new LinkedList<Session>();
 	    try{
-	    	
-	    	FileInputStream inputFile = new FileInputStream(filePath);
-//            datasource.open();
+            InputStream fileInputStream = context.getContentResolver().openInputStream(excelFileUri);
 
-			HSSFWorkbook hwb = new HSSFWorkbook(inputFile);
+			HSSFWorkbook hwb = new HSSFWorkbook(fileInputStream);
 	    	HSSFSheet sheet = hwb.getSheet("logbook");
 			int rowCount = getRowCount(sheet);
 			HSSFRow row;
@@ -171,7 +162,6 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
         {
             datasource.close();
         }
-	    
 	}
 
     private void addSessionsBlockToDatabase(List<Session> sessions) {

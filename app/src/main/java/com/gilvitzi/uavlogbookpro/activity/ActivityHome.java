@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import com.gilvitzi.uavlogbookpro.database.AerodromesDataSource;
 import com.gilvitzi.uavlogbookpro.database.LogbookReportQuery;
 import com.gilvitzi.uavlogbookpro.export.BackupDB;
 import com.gilvitzi.uavlogbookpro.export.ImportDBExcelTask;
+import com.gilvitzi.uavlogbookpro.export.ImportDBFromCSV;
 import com.gilvitzi.uavlogbookpro.export.ShareDBAsExcelFileTask;
 import com.gilvitzi.uavlogbookpro.model.Session;
 import com.gilvitzi.uavlogbookpro.util.Duration;
@@ -45,8 +47,9 @@ public class ActivityHome extends DatabaseActivity {
 
 
 	private static final String LOG_TAG = "ActivityHome";
+    private static final int SELECT_FILE_TO_IMPORT = 100;
 
-	public HomePageData homePageData;
+    public HomePageData homePageData;
 
 	private FileDialog fileDialog;
 
@@ -199,35 +202,40 @@ public class ActivityHome extends DatabaseActivity {
                 .setAction("DB Export")
                 .build());
     }
-    
-    public void menu_importFromExcel(){
-        File mPath = new File(Environment.getExternalStorageDirectory() +"//");
-        fileDialog = new FileDialog(this, mPath);
-        fileDialog.setFileEndsWith(".xls");
-        fileDialog.addFileListener(new FileDialog.FileSelectedListener() {
-            public void fileSelected(File file) {
-                ImportDBExcelTask importTask =  new ImportDBExcelTask((Activity)ActivityHome.this,file.toString());
-                importTask.onFinished = new OnResult() {
-                    @Override
-                    public void onResult(boolean success, String message) {
-                        refreshHomePageData();
-                    }
-                };
 
-                importTask.execute();
+    public void menu_importFromExcel() {
+        Intent intent = new Intent()
+                .setType("*/*")
+                .setAction(Intent.ACTION_GET_CONTENT);
 
-                Log.d(getClass().getName(), "selected file " + file.toString());
-                Log.v("ImportExport", "Importing Data From Excel");
+        startActivityForResult(Intent.createChooser(intent, "Select a file"), SELECT_FILE_TO_IMPORT);
+    }
 
-                mTracker.send(new HitBuilders.EventBuilder()
-	   	        .setCategory("ImportExport")
-	   	        .setAction("DB Import")
-	   	        .build());
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==SELECT_FILE_TO_IMPORT && resultCode==RESULT_OK) {
+            Uri selectedfile = data.getData(); //The uri with the location of the file
+            importExcelFromUri(selectedfile);
+        }
+    }
+
+    private void importExcelFromUri(Uri selectedFile) {
+        ImportDBExcelTask importTask =  new ImportDBExcelTask((Activity)ActivityHome.this, selectedFile);
+        importTask.onFinished = new OnResult() {
+            @Override
+            public void onResult(boolean success, String message) {
+                refreshHomePageData();
             }
-        });
-        fileDialog.setSelectDirectoryOption(false);
-        fileDialog.showDialog();         
-            
+        };
+
+        importTask.execute();
+
+        Log.v("ImportExport", "Importing Data From Excel");
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("ImportExport")
+                .setAction("DB Import")
+                .build());
     }
 
     private void menu_GoToSettings() {
