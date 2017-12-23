@@ -1,157 +1,283 @@
 package com.gilvitzi.uavlogbookpro.activity;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
-import android.app.Activity;
-import android.os.Environment;
-import android.util.Log;
+import android.preference.ListPreference;
+import android.preference.Preference;
+import android.preference.PreferenceActivity;
+import android.app.ActionBar;
+import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
+import android.preference.RingtonePreference;
+import android.text.TextUtils;
+import android.view.MenuItem;
+import android.support.v4.app.NavUtils;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.gilvitzi.uavlogbookpro.R;
 import com.gilvitzi.uavlogbookpro.export.BackupDB;
-import com.gilvitzi.uavlogbookpro.export.ExportDBToCSV;
-import com.gilvitzi.uavlogbookpro.export.ExportTable;
-import com.gilvitzi.uavlogbookpro.export.ImportDBExcelTask;
 import com.gilvitzi.uavlogbookpro.export.ImportDBFromCSV;
-import com.gilvitzi.uavlogbookpro.view.FileDialog;
-import com.google.android.gms.analytics.HitBuilders;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.net.URI;
-import java.util.ArrayList;
+import java.util.List;
 
-public class ActivitySettings extends AnalyticsActivity {
-    private static final String LOG_TAG = "ActivitySettings";
-    private static final int SELECT_FILE_TO_IMPORT = 600;
-    private Context context;
-    SharedPreferences settings;
-    SharedPreferences.Editor editor;
-    Switch hoursFractionFormatSwitch;
-    Button removeAdsBtn;
-    EditText removeAdsCodeEditText;
-    LinearLayout removeAdsLayout;
+/**
+ * A {@link PreferenceActivity} that presents a set of application settings. On
+ * handset devices, settings are presented as a single list. On tablets,
+ * settings are split by category, with category headers shown to the left of
+ * the list of settings.
+ * <p>
+ * See <a href="http://developer.android.com/design/patterns/settings.html">
+ * Android Design: Settings</a> for design guidelines and the <a
+ * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
+ * API Guide</a> for more information on developing a Settings UI.
+ */
+public class ActivitySettings extends PreferenceActivity {
+
+    /**
+     * A preference value change listener that updates the preference's summary
+     * to reflect its new value.
+     */
+    private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
+        @Override
+        public boolean onPreferenceChange(Preference preference, Object value) {
+            String stringValue = value.toString();
+
+            if (preference instanceof ListPreference) {
+                // For list preferences, look up the correct display value in
+                // the preference's 'entries' list.
+                ListPreference listPreference = (ListPreference) preference;
+                int index = listPreference.findIndexOfValue(stringValue);
+
+                // Set the summary to reflect the new value.
+                preference.setSummary(
+                        index >= 0
+                                ? listPreference.getEntries()[index]
+                                : null);
+
+            } else if (preference instanceof RingtonePreference) {
+                // For ringtone preferences, look up the correct display value
+                // using RingtoneManager.
+                if (TextUtils.isEmpty(stringValue)) {
+                    // Empty values correspond to 'silent' (no ringtone).
+                    preference.setSummary(R.string.pref_ringtone_silent);
+
+                } else {
+                    Ringtone ringtone = RingtoneManager.getRingtone(
+                            preference.getContext(), Uri.parse(stringValue));
+
+                    if (ringtone == null) {
+                        // Clear the summary if there was a lookup error.
+                        preference.setSummary(null);
+                    } else {
+                        // Set the summary to reflect the new ringtone display
+                        // name.
+                        String name = ringtone.getTitle(preference.getContext());
+                        preference.setSummary(name);
+                    }
+                }
+
+            } else {
+                // For all other preferences, set the summary to the value's
+                // simple string representation.
+                preference.setSummary(stringValue);
+            }
+            return true;
+        }
+    };
+
+    /**
+     * Helper method to determine if the device has an extra-large screen. For
+     * example, 10" tablets are extra-large.
+     */
+    private static boolean isXLargeTablet(Context context) {
+        return (context.getResources().getConfiguration().screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;
+    }
+
+    /**
+     * Binds a preference's summary to its value. More specifically, when the
+     * preference's value is changed, its summary (line of text below the
+     * preference title) is updated to reflect the value. The summary is also
+     * immediately updated upon calling this method. The exact display format is
+     * dependent on the type of preference.
+     *
+     * @see #sBindPreferenceSummaryToValueListener
+     */
+    private static void bindPreferenceSummaryToValue(Preference preference) {
+        // Set the listener to watch for value changes.
+        preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
+
+        // Trigger the listener immediately with the preference's
+        // current value.
+        sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
+                PreferenceManager
+                        .getDefaultSharedPreferences(preference.getContext())
+                        .getString(preference.getKey(), ""));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
-        context = this;
-
-        settings = getSharedPreferences("UserInfo", 0);
-        editor = settings.edit();
-
-        hoursFractionFormatSwitch = (Switch) findViewById(R.id.switch_hours_fraction_format);
-        removeAdsBtn = (Button) findViewById(R.id.remove_ads_button);
-        removeAdsCodeEditText = (EditText) findViewById(R.id.remove_ads_coupon_code);
-        removeAdsLayout = (LinearLayout) findViewById(R.id.remove_ads_layout);
-
-        initValues();
-        setChangeListeners();
+        setupActionBar();
     }
 
-    private void setChangeListeners() {
-
-        hoursFractionFormatSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                editor.putBoolean("hours_fraction_format", isChecked);
-                editor.commit();
-                sendSettingsAnalyticsEvent("hours_fraction_format", String.valueOf(isChecked));
-            }
-        });
-
-        removeAdsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String code = removeAdsCodeEditText.getText().toString();
-                String[] correctCodes = getResources().getStringArray(R.array.coupon_codes);
-                boolean found = false;
-
-                for (String correctCode : correctCodes) {
-                    if (code.equals(correctCode)) {
-                        found = true;
-                        break;
-                    }
-                }
-
-                if (found) {
-                    editor.putBoolean("show_ads", false);
-                    editor.commit();
-                    disableAdsCouponLayout();
-
-                    String message = "Ads successfully removed!";
-                    Log.e(LOG_TAG, message);
-                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-
-                    sendSettingsAnalyticsEvent("ads_removed", code);
-                } else {
-                    String message = "Wrong Coupon Code";
-                    Log.e(LOG_TAG, message);
-                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
-
-    private void disableAdsCouponLayout() {
-        removeAdsCodeEditText.setEnabled(false);
-        removeAdsBtn.setEnabled(false);
-        removeAdsLayout.setEnabled(false);
-    }
-
-    private void initValues() {
-        Boolean hoursFractionFormat = settings.getBoolean("hours_fraction_format", false);
-        hoursFractionFormatSwitch.setChecked(hoursFractionFormat);
-        boolean adsAlreadyRemoved = !settings.getBoolean("show_ads", true);
-
-        if (adsAlreadyRemoved) {
-            disableAdsCouponLayout();
+    /**
+     * Set up the {@link android.app.ActionBar}, if the API is available.
+     */
+    private void setupActionBar() {
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            // Show the Up button in the action bar.
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
 
-    private void sendSettingsAnalyticsEvent(String setting, String newValue) {
-        // send analytics event
-        String category = getResources().getString(R.string.analytics_event_settings_changed);
-        String action = String.format("%1$s set to %2$s", setting, newValue);
-
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory(category)
-                .setAction(action)
-                .build());
-    }
-
-    public void backupDB(View view) {
-        BackupDB buTask = new BackupDB(this);
-        buTask.start();
-    }
-
-    public void restoreDB(View view) {
-        Intent intent = new Intent()
-                .setType("*/*")
-                .setAction(Intent.ACTION_GET_CONTENT);
-
-        startActivityForResult(Intent.createChooser(intent, "Select a file"), SELECT_FILE_TO_IMPORT);
-    }
-
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==SELECT_FILE_TO_IMPORT && resultCode==RESULT_OK) {
-            Uri selectedfile = data.getData(); //The uri with the location of the file
-            ImportDBFromCSV importTask =  new ImportDBFromCSV((Activity)context, selectedfile);
-            importTask.execute();
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            if (!super.onMenuItemSelected(featureId, item)) {
+                NavUtils.navigateUpFromSameTask(this);
+            }
+            return true;
+        }
+        return super.onMenuItemSelected(featureId, item);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean onIsMultiPane() {
+        return isXLargeTablet(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public void onBuildHeaders(List<Header> target) {
+        loadHeadersFromResource(R.xml.pref_headers, target);
+    }
+
+    /**
+     * This method stops fragment injection in malicious applications.
+     * Make sure to deny any unknown fragments here.
+     */
+    protected boolean isValidFragment(String fragmentName) {
+        return PreferenceFragment.class.getName().equals(fragmentName)
+                || GeneralPreferenceFragment.class.getName().equals(fragmentName)
+                || BackupAndRestorePreferenceFragment.class.getName().equals(fragmentName);    }
+
+    /**
+     * This fragment shows general preferences only. It is used when the
+     * activity is showing a two-pane settings UI.
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class GeneralPreferenceFragment extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.pref_general);
+            setHasOptionsMenu(true);
+
+            bindPreferenceSummaryToValue(findPreference("duration_format"));
+            bindPreferenceSummaryToValue(findPreference("date_format"));
+        }
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            int id = item.getItemId();
+            if (id == android.R.id.home) {
+                startActivity(new Intent(getActivity(), ActivitySettings.class));
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /**
+     * This fragment shows data and sync preferences only. It is used when the
+     * activity is showing a two-pane settings UI.
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class BackupAndRestorePreferenceFragment extends PreferenceFragment {
+        private static final int SELECT_FILE_TO_IMPORT = 123;
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.pref_backup_and_restore);
+            setHasOptionsMenu(true);
+            final Activity activity = (Activity)this.getActivity();
+
+            Preference createBackupButton = findPreference(getString(R.string.create_backup));
+            createBackupButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Toast.makeText(activity, String.format("%s Clicked",preference.getTitle()), Toast.LENGTH_LONG);
+                    BackupDB buTask = new BackupDB(activity);
+                    buTask.start();
+                    return true;
+                }
+            });
+
+            Preference restoreFromBackupButton = findPreference(getString(R.string.restore_data_from_backup_key));
+            restoreFromBackupButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Toast.makeText(activity, String.format("%s Clicked",preference.getTitle()), Toast.LENGTH_LONG);
+                    restoreDB();
+                    return true;
+                }
+            });
+
+            Preference importOldExcelFormatButton = findPreference(getString(R.string.import_old_excel_format));
+            importOldExcelFormatButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Toast.makeText(activity, String.format("%s Clicked",preference.getTitle()), Toast.LENGTH_LONG);
+                    return true;
+                }
+            });
+        }
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            int id = item.getItemId();
+            if (id == android.R.id.home) {
+                startActivity(new Intent(getActivity(), ActivitySettings.class));
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
+        }
+
+        public void restoreDB() {
+            Intent intent = new Intent()
+                    .setType("*/*")
+                    .setAction(Intent.ACTION_GET_CONTENT);
+
+            startActivityForResult(Intent.createChooser(intent, "Select a file"), SELECT_FILE_TO_IMPORT);
+        }
+
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+            if(requestCode==SELECT_FILE_TO_IMPORT && resultCode==RESULT_OK) {
+                Uri selectedfile = data.getData(); //The uri with the location of the file
+                ImportDBFromCSV importTask =  new ImportDBFromCSV(getActivity(), selectedfile);
+                importTask.execute();
+            }
         }
     }
 }

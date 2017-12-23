@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,9 +23,7 @@ import com.gilvitzi.uavlogbookpro.R;
 import com.gilvitzi.uavlogbookpro.UAVLogbookApplication;
 import com.gilvitzi.uavlogbookpro.database.AerodromesDataSource;
 import com.gilvitzi.uavlogbookpro.database.LogbookReportQuery;
-import com.gilvitzi.uavlogbookpro.export.BackupDB;
 import com.gilvitzi.uavlogbookpro.export.ImportDBExcelTask;
-import com.gilvitzi.uavlogbookpro.export.ImportDBFromCSV;
 import com.gilvitzi.uavlogbookpro.export.ShareDBAsExcelFileTask;
 import com.gilvitzi.uavlogbookpro.model.Session;
 import com.gilvitzi.uavlogbookpro.util.Duration;
@@ -36,9 +33,7 @@ import com.gilvitzi.uavlogbookpro.view.FileDialog;
 import com.gilvitzi.uavlogbookpro.view.QuickStartButton;
 import com.google.android.gms.analytics.HitBuilders;
 
-import java.io.File;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -70,9 +65,9 @@ public class ActivityHome extends DatabaseActivity {
 		    case R.id.action_export:
 		    	menu_exportToExcel();
 		    	return true;
-		    case R.id.action_import:
-		    	menu_importFromExcel();
-		    	return true;
+//		    case R.id.action_import:
+//		    	menu_importFromExcel();
+//		    	return true;
             case R.id.settings:
                 menu_GoToSettings();
                 return true;

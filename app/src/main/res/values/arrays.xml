@@ -32,5 +32,22 @@
         <item >@string/field_day</item>
         <item >@string/field_night</item>
     </string-array>
-    
+    <string-array name="pref_duration_format">
+    <item>Hours with Minutes (135:45)</item>
+    <item>Hours Decimal (135.75)</item>
+</string-array>
+    <string-array name="pref_duration_format_list_values">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="pref_date_format">
+        <item>Auto</item>
+        <item>D/M/YY</item>
+        <item>M/D/Y</item>
+    </string-array>
+    <string-array name="pref_date_format_list_values">
+        <item>Auto</item>
+        <item>D/M/YY</item>
+        <item>M/D/Y</item>
+    </string-array>
 </resources>

@@ -1,0 +1,13 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference android:title="Create a Backup"
+        android:key="@string/create_backup"
+        android:summary="@string/create_backup_summary"/>
+
+    <Preference android:title="Restore Data from Backup"
+        android:key="@string/restore_data_from_backup_key"
+        android:summary="@string/restore_data_from_backup_summary"/>
+
+    <Preference android:title="Import Old Excel format"
+        android:key="@string/import_old_excel_format"
+        android:summary="@string/import_old_excel_format_summary"/>
+</PreferenceScreen>

@@ -5,8 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:weightSum="1"
-    tools:context=".layout_mode" >
+    android:weightSum="1">
 
     <!-- Content -->
 
@@ -63,8 +62,6 @@
                     android:layout_marginBottom="50dp"
                     layout="@layout/session_listitem"
                     />
-                >
-
             </LinearLayout>
 
 		    <com.gilvitzi.uavlogbookpro.view.QuickStartButton

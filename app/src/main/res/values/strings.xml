@@ -307,6 +307,15 @@
     <string name="analytics_event_settings_changed">settings_changed</string>
     <string name="privacy_policy_link"><a href="https://sites.google.com/site/uavoprlogbook/home/privacy-policy">Privacy Policy</a></string>
     <string name="progress_importing_from_csv">restoring DB from file</string>
+    <string name="pref_title_duration_format">Duration Hours Format</string>
+    <string name="pref_title_date_format">Date Format</string>
+    <string name="pref_header_backup_and_restore">Export, Backup &amp; Restore</string>
+    <string name="create_backup">create_backup</string>
+    <string name="restore_data_from_backup_key">restore</string>
+    <string name="import_old_excel_format">import_old_excel_format</string>
+    <string name="import_old_excel_format_summary">Import old Excel format</string>
+    <string name="create_backup_summary">Creates a backup file. this is important in case your phone dies, or you uninstall the app and want to keep the data.</string>
+    <string name="restore_data_from_backup_summary">Restore data from a backup</string>
 
     <!-- Version V2 -->
 

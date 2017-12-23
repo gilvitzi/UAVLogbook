@@ -1,0 +1,23 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="example_switch"
+        android:summary="@string/pref_description_social_recommendations"
+        android:title="@string/pref_title_social_recommendations" />
+    -->
+
+    <ListPreference
+        android:entries="@array/pref_duration_format"
+        android:entryValues="@array/pref_duration_format_list_values"
+        android:key="duration_format"
+        android:title="@string/pref_title_duration_format" />
+
+    <ListPreference
+        android:entries="@array/pref_date_format"
+        android:entryValues="@array/pref_date_format_list_values"
+        android:key="date_format"
+        android:title="@string/pref_title_date_format" />
+
+</PreferenceScreen>

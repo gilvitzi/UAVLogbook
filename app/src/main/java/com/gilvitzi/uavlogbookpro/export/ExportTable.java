@@ -134,7 +134,7 @@ public abstract class ExportTable extends AsyncTask<String, String, Boolean> {
     protected void onProgressUpdate(String... values) {
         super.onProgressUpdate(values);
 
-        String message = String.format("%s  %d / %d", dialogMessage, values[0], values[1]);
+        String message = String.format("%s  %d / %d", dialogMessage, Integer.parseInt(values[0]), Integer.parseInt(values[1]));
         this.dialog.setMessage(message);
 
         Log.i(LOG_TAG, message);
