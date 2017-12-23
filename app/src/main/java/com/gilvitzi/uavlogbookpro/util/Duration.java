@@ -3,6 +3,9 @@ package com.gilvitzi.uavlogbookpro.util;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
+import com.gilvitzi.uavlogbookpro.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,9 +17,10 @@ import java.util.TimeZone;
  */
 public class Duration {
 
+    public enum DurationFormat { HOURS_MINUTES, DECIMAL};
     public static final String ISO8601 = "yyyy-MM-dd HH:mm:ss";
 
-    private boolean minutesAsDecimal;
+    private DurationFormat mDurationFormat;
     private long millis = 0;
 
     private static final int DECIMAL = 0;
@@ -34,9 +38,16 @@ public class Duration {
     }
 
     private void getUserFormat(Context context) {
-        SharedPreferences settings = context.getSharedPreferences("UserInfo", 0);
-        minutesAsDecimal = settings.getBoolean("hours_fraction_format", false);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String durationFormatAsString = prefs.getString(context.getString(R.string.settings_key_duration_format), "");
+
+        try {
+            mDurationFormat = DurationFormat.valueOf(durationFormatAsString);
+        } catch (IllegalArgumentException ex) {
+            mDurationFormat = DurationFormat.DECIMAL;
+        }
     }
+
     public void setMillis(long millis){
         this.millis = millis;
     }
@@ -78,17 +89,18 @@ public class Duration {
             strHours = hours + "";
         }
 
-        if (minutesAsDecimal) {
-            strMinutes = String.format("%02d", Math.round(minutes / 60.0 * 100));
-            return strHours + "." + strMinutes;
-        } else {
-            if (minutes<10){
-                strMinutes = "0" + minutes;
-            }else{
-                strMinutes = minutes + "";
-            }
-
-            return strHours + ":" + strMinutes;
+        switch (mDurationFormat) {
+            case HOURS_MINUTES:
+                if (minutes<10){
+                    strMinutes = "0" + minutes;
+                }else{
+                    strMinutes = minutes + "";
+                }
+                return strHours + ":" + strMinutes;
+            case DECIMAL:
+            default:
+                strMinutes = String.format("%02d", Math.round(minutes / 60.0 * 100));
+                return strHours + "." + strMinutes;
         }
     }
 
@@ -109,11 +121,12 @@ public class Duration {
     public String getISO8601(){
         return DateTimeConverter.getDate(this.millis, DateTimeConverter.ISO8601);
     }
+
     public void setDecimal(double duration){
         this.millis = (long)(duration * 60 * 60 * 1000);
     }
+
     public double getDurationDecimal(){
         return this.millis / 1000 / 60 /60;
     }
-
 }

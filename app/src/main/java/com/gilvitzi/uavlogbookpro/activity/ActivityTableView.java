@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.text.Html;
 import android.util.Log;
@@ -63,7 +64,7 @@ public class ActivityTableView extends DatabaseActivity {
         context = this;
         thisActivity = this;
 
-        SharedPreferences settings = context.getSharedPreferences("UserInfo", 0);
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         showAds = settings.getBoolean("show_ads", true);
 
         if (showAds)

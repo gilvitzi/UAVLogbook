@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -220,8 +221,7 @@ public class QuickStartButton extends Button {
     {
         long millis = 0;
         try{
-
-            SharedPreferences settings = activity.getSharedPreferences("UserInfo", 0);
+            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(activity);
             millis = settings.getLong("quick_start_time", 0L);
 
         }catch(Exception e){
@@ -234,7 +234,7 @@ public class QuickStartButton extends Button {
     private void saveStartTimeInUserSettings()
     {
         try{
-            SharedPreferences settings = activity.getSharedPreferences("UserInfo", 0);
+            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(activity);
             SharedPreferences.Editor editor = settings.edit();
             editor.putLong("quick_start_time", timerStartTime);
 
@@ -248,7 +248,7 @@ public class QuickStartButton extends Button {
     private void resetStartTimeInUserSettings()
     {
         try{
-            SharedPreferences settings = activity.getSharedPreferences("UserInfo", 0);
+            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(activity);
             SharedPreferences.Editor editor = settings.edit();
             editor.putLong("quick_start_time", 0);
             editor.commit();

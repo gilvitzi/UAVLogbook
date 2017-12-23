@@ -2,6 +2,7 @@ package com.gilvitzi.uavlogbookpro.ads;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
 import com.gilvitzi.uavlogbookpro.R;
@@ -28,7 +29,7 @@ public class GoogleAdMobFullScreenAd {
     public GoogleAdMobFullScreenAd(Context context) {
         this.context = context;
 
-        SharedPreferences settings = context.getSharedPreferences("UserInfo", 0);
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         showAds = settings.getBoolean("show_ads", true);
 
         mOnAdClosedListenersList = new LinkedList<AdListener>();

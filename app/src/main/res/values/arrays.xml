@@ -33,12 +33,12 @@
         <item >@string/field_night</item>
     </string-array>
     <string-array name="pref_duration_format">
-    <item>Hours with Minutes (135:45)</item>
-    <item>Hours Decimal (135.75)</item>
+    <item>HH:mm (135:45)</item>
+    <item>Decimal (135.75)</item>
 </string-array>
     <string-array name="pref_duration_format_list_values">
-        <item>1</item>
-        <item>2</item>
+        <item>HOURS_MINUTES</item>
+        <item>DECIMAL</item>
     </string-array>
     <string-array name="pref_date_format">
         <item>Auto</item>

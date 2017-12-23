@@ -2,7 +2,9 @@ package com.gilvitzi.uavlogbookpro.activity;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.media.Ringtone;
@@ -20,12 +22,14 @@ import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
-import android.view.View;
-import android.widget.Toast;
 
+import com.gilvitzi.uavlogbookpro.AnalyticsApplication;
 import com.gilvitzi.uavlogbookpro.R;
 import com.gilvitzi.uavlogbookpro.export.BackupDB;
+import com.gilvitzi.uavlogbookpro.export.ImportDBExcelTask;
 import com.gilvitzi.uavlogbookpro.export.ImportDBFromCSV;
+import com.gilvitzi.uavlogbookpro.util.OnResult;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.List;
 
@@ -41,7 +45,8 @@ import java.util.List;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class ActivitySettings extends PreferenceActivity {
-
+    //Google Analytics
+    protected Tracker mTracker;
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
@@ -128,6 +133,9 @@ public class ActivitySettings extends PreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
+
+        //Get a Tracker (should auto-report)
+        mTracker = ((AnalyticsApplication) getApplication()).getDefaultTracker(this);
     }
 
     /**
@@ -191,8 +199,8 @@ public class ActivitySettings extends PreferenceActivity {
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
 
-            bindPreferenceSummaryToValue(findPreference("duration_format"));
-            bindPreferenceSummaryToValue(findPreference("date_format"));
+            bindPreferenceSummaryToValue(findPreference(getString(R.string.settings_key_duration_format)));
+            bindPreferenceSummaryToValue(findPreference(getString(R.string.settings_key_date_format)));
         }
 
         @Override
@@ -212,20 +220,20 @@ public class ActivitySettings extends PreferenceActivity {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class BackupAndRestorePreferenceFragment extends PreferenceFragment {
-        private static final int SELECT_FILE_TO_IMPORT = 123;
+        private static final int SELECT_FILE_FOR_DB_RESTORE = 1;
+        private static final int SELECT_FILE_TO_IMPORT = 2;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_backup_and_restore);
             setHasOptionsMenu(true);
-            final Activity activity = (Activity)this.getActivity();
+            final Activity activity = this.getActivity();
 
             Preference createBackupButton = findPreference(getString(R.string.create_backup));
             createBackupButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    Toast.makeText(activity, String.format("%s Clicked",preference.getTitle()), Toast.LENGTH_LONG);
                     BackupDB buTask = new BackupDB(activity);
                     buTask.start();
                     return true;
@@ -236,7 +244,6 @@ public class ActivitySettings extends PreferenceActivity {
             restoreFromBackupButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    Toast.makeText(activity, String.format("%s Clicked",preference.getTitle()), Toast.LENGTH_LONG);
                     restoreDB();
                     return true;
                 }
@@ -246,7 +253,7 @@ public class ActivitySettings extends PreferenceActivity {
             importOldExcelFormatButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    Toast.makeText(activity, String.format("%s Clicked",preference.getTitle()), Toast.LENGTH_LONG);
+                    showExcelImportWarningDialog();
                     return true;
                 }
             });
@@ -267,17 +274,62 @@ public class ActivitySettings extends PreferenceActivity {
                     .setType("*/*")
                     .setAction(Intent.ACTION_GET_CONTENT);
 
+            startActivityForResult(Intent.createChooser(intent, "Select a file"), SELECT_FILE_FOR_DB_RESTORE);
+        }
+
+        public void importOldExcelFile() {
+            Intent intent = new Intent()
+                    .setType("*/*")
+                    .setAction(Intent.ACTION_GET_CONTENT);
+
             startActivityForResult(Intent.createChooser(intent, "Select a file"), SELECT_FILE_TO_IMPORT);
         }
 
         @Override
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
             super.onActivityResult(requestCode, resultCode, data);
-            if(requestCode==SELECT_FILE_TO_IMPORT && resultCode==RESULT_OK) {
-                Uri selectedfile = data.getData(); //The uri with the location of the file
-                ImportDBFromCSV importTask =  new ImportDBFromCSV(getActivity(), selectedfile);
+            if(requestCode== SELECT_FILE_FOR_DB_RESTORE && resultCode==RESULT_OK) {
+                Uri selectedFile = data.getData(); //The uri with the location of the file
+                ImportDBFromCSV importTask =  new ImportDBFromCSV(getActivity(), selectedFile);
                 importTask.execute();
+            } else if(requestCode==SELECT_FILE_TO_IMPORT && resultCode==RESULT_OK) {
+                Uri selectedFile = data.getData(); //The uri with the location of the file
+                importExcelFromUri(selectedFile);
             }
+        }
+
+        private void showExcelImportWarningDialog() {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(getString(R.string.warning_import_from_old_excel_file))
+                    .setCancelable(false)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            importOldExcelFile();
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // Do Nothing
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+        private void importExcelFromUri(Uri selectedFile) {
+            ImportDBExcelTask importTask =  new ImportDBExcelTask((Activity)getActivity(), selectedFile);
+            importTask.onFinished = new OnResult() {
+                @Override
+                public void onResult(boolean success, String message) {
+
+                }
+            };
+
+            importTask.execute();
+
+//            mTracker.send(new HitBuilders.EventBuilder()
+//                    .setCategory("ImportExport")
+//                    .setAction("DB Import")
+//                    .build());
         }
     }
 }
