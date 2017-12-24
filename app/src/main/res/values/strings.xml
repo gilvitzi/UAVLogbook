@@ -316,7 +316,7 @@
     <string name="import_old_excel_format_summary">Import old Excel format</string>
     <string name="create_backup_summary">Creates a backup file. this is important in case your phone dies, or you uninstall the app and want to keep the data.</string>
     <string name="restore_data_from_backup_summary">Restore data from a backup</string>
-    <string name="warning_import_from_old_excel_file">WARNING! \nImporting from an Excel file might might not import all sessions due to formatting errors.\n\nPlease use only if you have no other method of accessing your old data.\n\nIn the future please use only DB Backup and Restore</string>
+    <string name="warning_import_from_old_excel_file">WARNING! \nImporting from an Excel file might not import all sessions due to formatting errors.\n\nPlease use only if you have no other method of accessing your old data.\n\nIn the future please use only DB Backup and Restore</string>
     <string name="settings_key_duration_format">duration_format</string>
     <string name="settings_key_date_format">date_format</string>
 
