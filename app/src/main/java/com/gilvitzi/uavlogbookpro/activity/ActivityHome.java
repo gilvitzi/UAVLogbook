@@ -29,8 +29,6 @@ import com.gilvitzi.uavlogbookpro.model.Session;
 import com.gilvitzi.uavlogbookpro.util.Duration;
 import com.gilvitzi.uavlogbookpro.util.NameValuePair;
 import com.gilvitzi.uavlogbookpro.util.OnResult;
-import com.gilvitzi.uavlogbookpro.view.FileDialog;
-import com.gilvitzi.uavlogbookpro.view.QuickStartButton;
 import com.google.android.gms.analytics.HitBuilders;
 
 import java.lang.reflect.Field;
@@ -45,10 +43,6 @@ public class ActivityHome extends DatabaseActivity {
     private static final int SELECT_FILE_TO_IMPORT = 100;
 
     public HomePageData homePageData;
-
-	private FileDialog fileDialog;
-
-	private QuickStartButton qsButton;
     private Session lastSession;
 
     @Override
@@ -65,9 +59,6 @@ public class ActivityHome extends DatabaseActivity {
 		    case R.id.action_export:
 		    	menu_exportToExcel();
 		    	return true;
-//		    case R.id.action_import:
-//		    	menu_importFromExcel();
-//		    	return true;
             case R.id.settings:
                 menu_GoToSettings();
                 return true;
@@ -99,8 +90,6 @@ public class ActivityHome extends DatabaseActivity {
 		homePageData = new HomePageData();
 		homePageData.execute();
 
-		qsButton = (QuickStartButton)findViewById(R.id.btn_quick_start);
-		
         showMessageIfExists();
 
         tryForcingActionBar();
@@ -292,7 +281,13 @@ public class ActivityHome extends DatabaseActivity {
 
         private void setSessionDataInViews() {
             ((TextView) findViewById(R.id.session_list_item_date)).setText(lastSession.getDateString(context));
-            ((TextView) findViewById(R.id.session_list_item_icao)).setText(lastSession.getICAO());
+
+            String location = lastSession.getAerodromeName();
+            String icao = lastSession.getICAO();
+            if (!icao.isEmpty())
+                location += " (" + icao + ")";
+
+            ((TextView) findViewById(R.id.session_list_item_icao)).setText(location);
             TextView bottomLeftTv = ((TextView) findViewById(R.id.session_list_item_platform_type_and_variation));
             String sim_or_nothing = (lastSession.getSimActual().equalsIgnoreCase("simulator"))?"(SIM)":"";
             bottomLeftTv.setText(lastSession.getPlatformType() + " " + lastSession.getPlatformVariation() + sim_or_nothing);

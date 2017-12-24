@@ -19,9 +19,9 @@
 			android:id="@+id/textView2"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@string/title_new_in_version_2_2"
+			android:text="@string/title_new_in_version_2_3"
 			android:textColor="#0FABFF"
-			android:textSize="22sp" />
+			android:textSize="26sp" />
 
 		<TextView
 			android:id="@+id/blt1"
@@ -29,7 +29,8 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginBottom="10dp"
-			android:text="@string/feature_decimal_hours_format" />
+			android:textSize="18sp"
+			android:text="@string/feature_new_settings_menu" />
 
 		<TextView
 			android:id="@+id/blt2"
@@ -37,22 +38,40 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginBottom="10dp"
-			android:text="@string/feature_some_bug_fixes" />
+			android:textSize="16sp"
+			android:text="@string/feature_backup_and_restore" />
 
+		<TextView
+			android:id="@+id/important"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="10dp"
+			android:textColor="@color/dark_red_style"
+			android:textSize="18sp"
+			android:text="@string/feature_important" />
+
+		<TextView
+			android:id="@+id/blt3"
+			style="@style/bullet"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="10dp"
+			android:textSize="16sp"
+			android:text="@string/feature_import_excel_moved" />
 
     </LinearLayout>
+
 	<Button
-	    android:id="@+id/whats_new_skip_button"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentBottom="true"
-        android:layout_marginBottom="18dp"
-	    android:background="@drawable/button_dark_red"
-        android:textColor="@color/white"
-	    android:text="@string/whats_new_skip_button"
-	    android:onClick="goToNext"
-        android:layout_marginLeft="18dp"
-        />
+		android:id="@+id/whats_new_skip_button"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentEnd="true"
+		android:layout_alignParentRight="true"
+		android:background="@drawable/button_dark_red"
+		android:onClick="goToNext"
+		android:text="@string/whats_new_skip_button"
+		android:textColor="@color/white" />
 </RelativeLayout>
 
 

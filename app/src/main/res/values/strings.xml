@@ -296,7 +296,7 @@
     <string name="settings">Settings</string>
     <string name="hours_fraction_format_summary">display hours fractions as decimal (165.50 Hours) instead of the default Hours:Minutes format (165:30)</string>
     <string name="hours_fraction_format">Hours Fractions as Decimal</string>
-    <string name="remove_ads">Show Ads</string>
+    <string name="remove_ads">Remove Ads</string>
     <string name="title_new_in_version_2_2">New in 2.2</string>
     <string name="feature_decimal_hours_format">Choose between Decimal hours format (12.56 Hours) and hours:minutes format (12:34)</string>
     <string name="feature_some_bug_fixes">Some bug fixes</string>
@@ -319,6 +319,12 @@
     <string name="warning_import_from_old_excel_file">WARNING! \nImporting from an Excel file might not import all sessions due to formatting errors.\n\nPlease use only if you have no other method of accessing your old data.\n\nIn the future please use only DB Backup and Restore</string>
     <string name="settings_key_duration_format">duration_format</string>
     <string name="settings_key_date_format">date_format</string>
+    <string name="title_activity_test_list_view">ActivityTestListView</string>
+    <string name="title_new_in_version_2_3">New in 2.3:</string>
+    <string name="feature_new_settings_menu">A brand new settings screen.</string>
+    <string name="feature_import_excel_moved"><![CDATA[Import from Excel file, is not recommended anymore. and the option moved to Settings/Backup & Restore]]></string>
+    <string name="feature_important">Important !</string>
+    <string name="feature_backup_and_restore">New Backup and Restore Feature. this will replace the excel export and import. and will solve many old formatting problems.\nPlease Backup your data using this feature. you can still export the data to Excel.</string>
 
     <!-- Version V2 -->
 

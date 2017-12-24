@@ -150,14 +150,6 @@
             android:exported="false" />
 
         <activity
-            android:name=".activity.ActivitySettingsOld"
-            android:label="@string/title_activity_settings"
-            android:parentActivityName=".activity.ActivityHome">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.gilvitzi.uavlogbookpro.activity.ActivityHome" />
-        </activity>
-        <activity
             android:name=".activity.ActivitySettings"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".activity.ActivityHome">

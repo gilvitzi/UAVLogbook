@@ -320,7 +320,16 @@ public class ActivitySettings extends PreferenceActivity {
             importTask.onFinished = new OnResult() {
                 @Override
                 public void onResult(boolean success, String message) {
-
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage(message)
+                            .setCancelable(false)
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    importOldExcelFile();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
                 }
             };
 
@@ -333,3 +342,55 @@ public class ActivitySettings extends PreferenceActivity {
         }
     }
 }
+
+
+// For Remove Ads
+//    private void disableAdsCouponLayout() {
+//        removeAdsCodeEditText.setEnabled(false);
+//        removeAdsBtn.setEnabled(false);
+//        removeAdsLayout.setEnabled(false);
+//    }
+//
+//    private void initValues() {
+//        Boolean hoursFractionFormat = settings.getBoolean("hours_fraction_format", false);
+//        hoursFractionFormatSwitch.setChecked(hoursFractionFormat);
+//        boolean adsAlreadyRemoved = !settings.getBoolean("show_ads", true);
+//
+//        if (adsAlreadyRemoved) {
+//            disableAdsCouponLayout();
+//        }
+//    }
+
+
+//
+//        removeAdsBtn.setOnClickListener(new View.OnClickListener() {
+//@Override
+//public void onClick(View view) {
+//        String code = removeAdsCodeEditText.getText().toString();
+//        String[] correctCodes = getResources().getStringArray(R.array.coupon_codes);
+//        boolean found = false;
+//
+//        for (String correctCode : correctCodes) {
+//        if (code.equals(correctCode)) {
+//        found = true;
+//        break;
+//        }
+//        }
+//
+//        if (found) {
+//        editor.putBoolean("show_ads", false);
+//        editor.commit();
+//        disableAdsCouponLayout();
+//
+//        String message = "Ads successfully removed!";
+//        Log.e(LOG_TAG, message);
+//        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+//
+//        sendSettingsAnalyticsEvent("ads_removed", code);
+//        } else {
+//        String message = "Wrong Coupon Code";
+//        Log.e(LOG_TAG, message);
+//        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+//        }
+//    }
+//});
