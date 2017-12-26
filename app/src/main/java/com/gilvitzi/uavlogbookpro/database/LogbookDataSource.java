@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
 import com.gilvitzi.uavlogbookpro.model.Session;
+import com.gilvitzi.uavlogbookpro.model.Duration;
 import com.gilvitzi.uavlogbookpro.util.NameValuePair;
 import com.gilvitzi.uavlogbookpro.util.StringValuePair;
 
@@ -17,6 +18,7 @@ import java.util.List;
 
 public class LogbookDataSource {
     private static final String LOG_TAG = "LogbookDataSource";
+    private final Context context;
     public SQLiteDatabase database;
     private LogbookSQLite dbHelper;
 
@@ -41,6 +43,7 @@ public class LogbookDataSource {
     };
 
     public LogbookDataSource(Context context) {
+        this.context = context;
         dbHelper = new LogbookSQLite(context);
     }
 
@@ -70,28 +73,7 @@ public class LogbookDataSource {
     }
 
     public long addSession(Session session) {
-
-        ContentValues values = new ContentValues();
-
-        values.put( LogbookSQLite.COLUMN_DATE, session.getDate());
-        values.put( LogbookSQLite.COLUMN_DURATION, session.getDuration());
-        values.put( LogbookSQLite.COLUMN_DAY_NIGHT, session.getDayNight());
-        values.put( LogbookSQLite.COLUMN_SIM_ACTUAL, session.getSimActual());
-        values.put( LogbookSQLite.COLUMN_PLATFORM_TYPE, session.getPlatformType());
-        values.put( LogbookSQLite.COLUMN_PLATFORM_VARIATION, session.getPlatformVariation());
-        values.put( LogbookSQLite.COLUMN_REGISTRATION, session.getRegistration());
-        values.put( LogbookSQLite.COLUMN_TAIL_NUMBER, session.getTailNumber());
-        values.put( LogbookSQLite.COLUMN_ICAO, session.getICAO());
-        values.put( LogbookSQLite.COLUMN_AERODROME_NAME, session.getAerodromeName());
-        values.put( LogbookSQLite.COLUMN_COMMAND, session.getCommand());
-        values.put( LogbookSQLite.COLUMN_SEAT, session.getSeat());
-        values.put( LogbookSQLite.COLUMN_FLIGHT_TYPE, session.getFlightType());
-        values.put( LogbookSQLite.COLUMN_TAGS, session.getTags());
-        values.put( LogbookSQLite.COLUMN_TAKEOFFS, session.getTakeoffs());
-        values.put( LogbookSQLite.COLUMN_LANDINGS, session.getLandings());
-        values.put( LogbookSQLite.COLUMN_GO_AROUNDS, session.getGoArounds());
-        values.put( LogbookSQLite.COLUMN_COMMENTS, session.getComments());
-
+        ContentValues values = session.getContentValues();
         long insertId = database.insert( LogbookSQLite.TABLE_LOGBOOK, null, values);
         Log.i(LOG_TAG,"Session " + insertId + " added");
         return insertId;
@@ -105,7 +87,7 @@ public class LogbookDataSource {
 
     public List<Session> getAllSessions() {
         List<Session> sessions = new ArrayList<Session>();
-        String selectQuery = "SELECT  * FROM " +  LogbookSQLite.TABLE_LOGBOOK;
+        String selectQuery = LogbookSQLite.SELECT_ALL_SESSIONS;
         Cursor cursor = database.rawQuery(selectQuery, null);
 
         try {
@@ -185,8 +167,9 @@ public class LogbookDataSource {
 
     public Session cursorToSession(Cursor cursor) {
         long id = cursor.getLong(cursor.getColumnIndex( LogbookSQLite.COLUMN_ID));
-        String date = cursor.getString(cursor.getColumnIndex( LogbookSQLite.COLUMN_DATE));
-        String duration = cursor.getString(cursor.getColumnIndex( LogbookSQLite.COLUMN_DURATION));
+        String date = cursor.getString(cursor.getColumnIndex( "Date^" + LogbookSQLite.COLUMN_DATE));
+        long durationSeconds = cursor.getLong(cursor.getColumnIndex( "Duration^" + LogbookSQLite.COLUMN_DURATION));
+        Duration duration = new Duration(context, durationSeconds * 1000);
         String platform_type = cursor.getString(cursor.getColumnIndex( LogbookSQLite.COLUMN_PLATFORM_TYPE));
         String platform_variation = cursor.getString(cursor.getColumnIndex( LogbookSQLite.COLUMN_PLATFORM_VARIATION));
         String registration = cursor.getString(cursor.getColumnIndex( LogbookSQLite.COLUMN_REGISTRATION));

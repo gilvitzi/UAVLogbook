@@ -15,7 +15,7 @@ import com.gilvitzi.uavlogbookpro.activity.ActivityHome;
 import com.gilvitzi.uavlogbookpro.database.LogbookDataSource;
 import com.gilvitzi.uavlogbookpro.model.Session;
 import com.gilvitzi.uavlogbookpro.util.DateTimeConverter;
-import com.gilvitzi.uavlogbookpro.util.Duration;
+import com.gilvitzi.uavlogbookpro.model.Duration;
 import com.gilvitzi.uavlogbookpro.util.OnResult;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -25,7 +25,6 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,7 +48,7 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
 	public ArrayList<ExcelParserException> errors;
 	//Google Analytics
     private Tracker mTracker;
-    public OnResult onFinished;
+    public OnResult<String> onFinished;
 
     private enum FieldName{
         DATE,
@@ -627,7 +626,7 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
             try{
                 Duration d = new Duration(context);
                 d.setString(cell.getStringCellValue());
-                session.setDuration(d.getISO8601());
+                session.setDuration(d);
             }catch(Exception e){
                 errors.add(new ExcelParserException(row.getRowNum(),
                         "Duration",
@@ -642,7 +641,7 @@ public class ImportDBExcelTask extends AsyncTask<String, Integer, Boolean> {
                 Log.v(LOG_TAG,"Duration Numeric Format Found, value: " + duration);
                 Duration d = new Duration(context);
                 d.setExcel(cell.getNumericCellValue());
-                session.setDuration(d.getISO8601());
+                session.setDuration(d);
             }catch(Exception e){
                 errors.add(new ExcelParserException(row.getRowNum(),
                         "Duration",

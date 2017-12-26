@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.gilvitzi.uavlogbookpro.R;
 import com.gilvitzi.uavlogbookpro.database.LogbookDataSource;
+import com.gilvitzi.uavlogbookpro.util.OnResult;
 import com.gilvitzi.uavlogbookpro.view.ShareFileDialog;
 
 import java.io.File;
@@ -45,15 +46,15 @@ public class ShareDBAsExcelFileTask {
     private void initExportTask(Activity activity, LogbookDataSource datasource, String query) {
         File dir = mContext.getCacheDir();
         final String filePath = dir.getPath() + "/" + mFileName;
-        mExportTask = new ExportDBExcelTask(activity, datasource, dir.getPath(), mFileName);
+        mExportTask = new ExportDBExcelTask(activity, mFileName, dir.getPath());
 
         //When Finished:
-        mExportTask.addListnener(new ExportDBExcelTask.Listener() {
+        mExportTask.onFinished = new OnResult<String>() {
             @Override
-            public void onTaskCompleted() {
+            public void onResult(boolean success, String returnValue) {
                 new ShareFileDialog(mContext, filePath).show();
             }
-        });
+        };
     }
 
     public void execute() {

@@ -3,6 +3,7 @@ package com.gilvitzi.uavlogbookpro.export;
 import android.app.Activity;
 import android.content.Context;
 
+import com.gilvitzi.uavlogbookpro.activity.DatabaseActivity;
 import com.gilvitzi.uavlogbookpro.database.LogbookDataSource;
 import com.gilvitzi.uavlogbookpro.database.LogbookReportQuery;
 
@@ -12,7 +13,7 @@ import com.gilvitzi.uavlogbookpro.database.LogbookReportQuery;
 
 public class ExportDBToCSV extends ExportTableToCSV{
     public ExportDBToCSV(Activity activity) {
-        super(activity, new LogbookDataSource(activity), LogbookReportQuery.getAllSessions());
+        super(activity, "SELECT * FROM logbook");
         dialogMessage = "Building Backup";
     }
 }

@@ -1,9 +1,7 @@
 package com.gilvitzi.uavlogbookpro.export;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -16,26 +14,16 @@ import com.gilvitzi.uavlogbookpro.R;
 import com.gilvitzi.uavlogbookpro.activity.ActivityHome;
 import com.gilvitzi.uavlogbookpro.database.LogbookDataSource;
 import com.gilvitzi.uavlogbookpro.model.Session;
-import com.gilvitzi.uavlogbookpro.util.DateTimeConverter;
-import com.gilvitzi.uavlogbookpro.util.Duration;
+import com.gilvitzi.uavlogbookpro.model.Duration;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.regex.Pattern;
 
 public class ImportDBFromCSV extends AsyncTask<String, Integer, Boolean> {
 
@@ -153,8 +141,8 @@ public class ImportDBFromCSV extends AsyncTask<String, Integer, Boolean> {
         String dt = cols[FieldName.DATE.ordinal()];
         session.setDate(dt);
 
-        session.setDuration(cols[FieldName.DURATION.ordinal()]);
-
+        String duraionISO = cols[FieldName.DURATION.ordinal()];
+        session.setDuration(Duration.parseISO8601(context, duraionISO));
         session.setPlatformType(cols[FieldName.PLATFORM_TYPE.ordinal()]);
         session.setPlatformVariation(cols[FieldName.PLATFORM_VARIATION.ordinal()]);
         session.setRegistration(cols[FieldName.REGISTRATION.ordinal()]);

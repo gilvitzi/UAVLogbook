@@ -7,18 +7,17 @@ import com.gilvitzi.uavlogbookpro.database.LogbookSQLite;
 import com.gilvitzi.uavlogbookpro.util.DateTimeConverter;
 import com.gilvitzi.uavlogbookpro.util.NameValuePair;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 
 public class Session {
 	private long id;
 	private String date;
-	private String duration;
+	private Duration duration;
 	private String day_night;
 	private String sim_actual;
 	private String platform_type;
@@ -36,7 +35,7 @@ public class Session {
 	private long go_arounds;
 	private String comments;
 	
-	public Session(long id,String date, String duration,
+	public Session(long id,String date, Duration duration,
 						 String day_night, String sim_actual,
 						 String platform_type, String platform_variation,
 						 String registration, String tail_number,
@@ -100,11 +99,15 @@ public class Session {
 	}
 	
 	//DURATION ( ONLY IN MILLISECONDS)
-	public String getDuration() {
+	public Duration getDuration() {
 	    return this.duration;
 	}
 
-	public void setDuration(String duration) {
+	public String getDurationString() {
+		return this.duration.getString();
+	}
+
+	public void setDuration(Duration duration) {
 		this.duration = duration;
 	}
 	
@@ -256,7 +259,7 @@ public class Session {
 		ContentValues contentValues = new ContentValues();
 		
 		contentValues.put(LogbookSQLite.COLUMN_DATE, String.valueOf(getDate()));
-		contentValues.put(LogbookSQLite.COLUMN_DURATION, getDuration());
+		contentValues.put(LogbookSQLite.COLUMN_DURATION, getDuration().getISO8601());
 		contentValues.put(LogbookSQLite.COLUMN_DAY_NIGHT, getDayNight());
 		contentValues.put(LogbookSQLite.COLUMN_SIM_ACTUAL, getSimActual());
 		contentValues.put(LogbookSQLite.COLUMN_PLATFORM_TYPE, getPlatformType());
@@ -314,6 +317,12 @@ public class Session {
 		    list.add(new NameValuePair(key,value));
 		}
 		return list;
+	}
+
+	public static Session parseFromList(List<String> row) {
+		Session s = new Session();
+
+		return s;
 	}
 }
 

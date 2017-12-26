@@ -29,7 +29,6 @@ import com.gilvitzi.uavlogbookpro.ads.GoogleAdMobBanner;
 import com.gilvitzi.uavlogbookpro.database.LogbookSQLite;
 import com.gilvitzi.uavlogbookpro.export.ShareTableAsExcelFileTask;
 import com.gilvitzi.uavlogbookpro.model.Session;
-import com.gilvitzi.uavlogbookpro.util.Duration;
 import com.gilvitzi.uavlogbookpro.util.NameValuePair;
 import com.google.android.gms.analytics.HitBuilders;
 
@@ -84,11 +83,7 @@ public class ActivitySessionsTable extends DatabaseActivity {
 
         getExtras();
 
-        //Please Wait... message
-        progressDialog = ProgressDialog.show(context, "", getResources().getString(R.string.please_wait_progress), true);
-
-        getSessionsTask = new GetAllSessionsTask();
-        getSessionsTask.execute();
+        new GetAllSessionsTask().execute();
     }
 
     private void initGoogleAdMob() {
@@ -144,24 +139,20 @@ public class ActivitySessionsTable extends DatabaseActivity {
         else
             shareQuery = query;
 
-        ShareTableAsExcelFileTask shareTask = new ShareTableAsExcelFileTask(this, datasource, shareQuery, title);
+        ShareTableAsExcelFileTask shareTask = new ShareTableAsExcelFileTask(this, shareQuery, title);
         shareTask.execute();
     }
 
     private String buildQueryFromSelectedRecords() {
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append("SELECT * FROM logbook WHERE ");
+        queryBuilder.append(LogbookSQLite.SELECT_ALL_SESSIONS);
+        queryBuilder.append(" WHERE ");
 
         for (Integer recordId : selectedRows)
             queryBuilder.append(String.format(" %1$s = %2$s OR", LogbookSQLite.COLUMN_ID, recordId));
 
         queryBuilder.delete(queryBuilder.length() - 2,queryBuilder.length()-0); // delete last "OR"
         return queryBuilder.toString();
-    }
-
-    private int getRecordIdFromRowNumber(Integer row) {
-
-        return 0;
     }
 
     private void editMenuItemClicked() {
@@ -239,13 +230,11 @@ public class ActivitySessionsTable extends DatabaseActivity {
         //Database
 		if (getSessionsTask!=null){
 		    if (getSessionsTask.getStatus()!=AsyncTask.Status.RUNNING){
-		    	progressDialog = ProgressDialog.show(context, "", getResources().getString(R.string.please_wait_progress), true);
                 tableLayout.removeAllViews();
 		    	getSessionsTask = new GetAllSessionsTask();
 		    	getSessionsTask.execute();
 		    }
 	    } else {
-	    	progressDialog = ProgressDialog.show(context, "", getResources().getString(R.string.please_wait_progress), true);
 	    	setContentView(R.layout.activity_sessions_table);
 	    	getSessionsTask = new GetAllSessionsTask();
 	    	getSessionsTask.execute();
@@ -279,50 +268,56 @@ public class ActivitySessionsTable extends DatabaseActivity {
         }
     }
 
-	private class GetAllSessionsTask extends AsyncTask<String, String, Boolean> {
+    private class GetAllSessionsTask extends AsyncTask<String, String, Boolean> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
 
-		@Override
-		protected Boolean doInBackground(String... params) {
+            if (progressDialog != null && progressDialog.isShowing())
+                progressDialog.dismiss();
+            progressDialog = ProgressDialog.show(context, "", getResources().getString(R.string.please_wait_progress), true);
+        }
 
-			try {
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            try {
                 datasource.open();
-				sessions = datasource.getSessionsByQuery(query);
-			} catch (Exception e) {
-				Log.e(LOG_TAG,"Retriving sessions from DB Failed: " + e);
-				return false;
-			} finally {
+                sessions = datasource.getSessionsByQuery(query);
+            } catch (Exception e) {
+                Log.e(LOG_TAG,"Retriving sessions from DB Failed: " + e);
+                return false;
+            } finally {
                 datasource.close();
             }
 
-			return true;
-		}
-		
-		protected void onPostExecute(final Boolean success) {
-			if (success){
-			    
-			    TableLayout tl = (TableLayout) findViewById(R.id.tbl_all_sessions);
+            return true;
+        }
+
+        protected void onPostExecute(final Boolean success) {
+            if (success) {
+
+                TableLayout tl = (TableLayout) findViewById(R.id.tbl_all_sessions);
                 addTableHeader(tl);
 
                 selectedRows.clear();
                 row_count = sessions.size();
 
                 TableRow tr;
-                for (int i = 0;i < sessions.size();i++){
-                    Session session  = sessions.get(i);
+                for (int i = 0; i < sessions.size(); i++) {
+                    Session session = sessions.get(i);
                     tr = createTableRow(tl, i, session.getId());
                     populateRowViews(tr, session);
                 }
+
                 if (showAds)
                     adBottomBanner.show();
-                progressDialog.dismiss();
-			}else{
-			    progressDialog.dismiss();
-			}
-	    }
+            }
+
+            progressDialog.dismiss();
+        }
 
         private void addTableHeader(TableLayout tl) {
-//            LayoutInflater inflater =
-//                      (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             TableRow tr = (TableRow) View.inflate(context, R.layout.table_row_header_session, null);
             tr.setTag("header");
             tl.addView(tr);
@@ -372,9 +367,7 @@ public class ActivitySessionsTable extends DatabaseActivity {
             tv_date.setText(session.getDateString(context));
 
             TextView tv_duration = (TextView) tr.findViewWithTag("duration");
-            Duration d = new Duration(context);
-            d.setISO8601(session.getDuration());
-            tv_duration.setText(d.getString());
+            tv_duration.setText(session.getDurationString());
 
             TextView tv_platform = (TextView) tr.findViewWithTag("platform");
             tv_platform.setText(session.getPlatformType() + " " + session.getPlatformVariation());

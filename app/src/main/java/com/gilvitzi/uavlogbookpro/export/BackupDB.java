@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
+import com.gilvitzi.uavlogbookpro.activity.DatabaseActivity;
+import com.gilvitzi.uavlogbookpro.util.OnResult;
 import com.gilvitzi.uavlogbookpro.view.ShareFileDialog;
 
 import java.io.BufferedWriter;
@@ -20,7 +22,7 @@ import java.util.Date;
 
 public class BackupDB {
     private static final String LOG_TAG = "BackupDB";
-    Activity mActivity;
+    Activity  mActivity;
     ExportDBToCSV mExportTask;
 
     public BackupDB(Activity activity) {
@@ -29,13 +31,13 @@ public class BackupDB {
 
     public void start() {
         mExportTask = new ExportDBToCSV(mActivity);
-        mExportTask.setOnDataReadyHandler(new ExportTable.OnDataReadyHandler() {
+        mExportTask.onFinished = new OnResult<String>() {
             @Override
-            public void onDataReady(String dataAsCSV) {
+            public void onResult(boolean success, String dataAsCSV) {
                 String filePath = saveToFile(dataAsCSV);
                 new ShareFileDialog(mActivity, filePath).show();
             }
-        });
+        };
 
         mExportTask.execute();
     }

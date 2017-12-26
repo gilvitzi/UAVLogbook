@@ -49,7 +49,7 @@ import com.gilvitzi.uavlogbookpro.model.Session;
 import com.gilvitzi.uavlogbookpro.view.AerodromeICAOListAdapter;
 import com.gilvitzi.uavlogbookpro.view.AerodromeNameListAdapter;
 import com.gilvitzi.uavlogbookpro.util.DateTimeConverter;
-import com.gilvitzi.uavlogbookpro.util.Duration;
+import com.gilvitzi.uavlogbookpro.model.Duration;
 import com.gilvitzi.uavlogbookpro.util.NameValuePair;
 import com.gilvitzi.uavlogbookpro.util.StringValuePair;
 import com.gilvitzi.uavlogbookpro.view.TagsContainer;
@@ -715,10 +715,7 @@ public class ActivityAddSession extends DatabaseActivity {
 						if (qs_duration != 0){
 							duration_et.setText(durationToHM(qs_duration));
 						}else{
-							Duration d = new Duration(thisActivity);
-							d.setISO8601(lastSession.getDuration());
-							String duration = d.getString();
-							duration_et.setText(duration);
+							duration_et.setText(lastSession.getDurationString());
 						}
 
 						//Platform
@@ -1436,13 +1433,11 @@ public class ActivityAddSession extends DatabaseActivity {
         }
 
         @NonNull
-        private String getDuration() {
+        private Duration getDuration() {
             String durationString = duration_et.getText().toString();
-
-            Duration d = new Duration(thisActivity);
-            d.setString(durationString);
-            return d.getISO8601();
-        }
+            Duration d =new Duration(thisActivity);
+			return d;
+		}
 
         private String getDate() {
             String date = "";

@@ -7,7 +7,11 @@ import android.net.Uri;
 import android.support.v4.content.FileProvider;
 
 import com.gilvitzi.uavlogbookpro.R;
+import com.gilvitzi.uavlogbookpro.activity.ActivityTableView;
+import com.gilvitzi.uavlogbookpro.activity.DatabaseActivity;
+import com.gilvitzi.uavlogbookpro.database.GetTableValues;
 import com.gilvitzi.uavlogbookpro.database.LogbookDataSource;
+import com.gilvitzi.uavlogbookpro.util.OnResult;
 import com.gilvitzi.uavlogbookpro.view.ShareFileDialog;
 
 import java.io.File;
@@ -28,31 +32,30 @@ public class ShareTableAsExcelFileTask {
     private Activity mActivity;
     private String mFileName;
     private String mTableTitle;
+    private LogbookDataSource datasource;
 
-    public ShareTableAsExcelFileTask(Activity activity, LogbookDataSource datasource, String query, String tableTitle) {
+    public ShareTableAsExcelFileTask(DatabaseActivity activity, String query, String tableTitle) {
         this.mActivity = activity;
         this.mContext = activity;
         this.mTableTitle = tableTitle;
         this.mFileName = FILE_NAME_PREFIX + tableTitle;
-        initExportTask(activity, datasource, query);
+        initExportTask(activity, query);
     }
 
-    private void initExportTask(Activity activity, LogbookDataSource datasource, String query) {
+    private void initExportTask(DatabaseActivity activity, String query) {
         File dir = mContext.getCacheDir();
         final String filePath = dir.getPath() + "/" + mFileName + FILE_EXTENTION_XLS;
-        mExportTask = new ExportTableToExcelTask(activity, datasource, mFileName, dir.getPath(), query);
 
-        //When Finished:
-        mExportTask.addListnener(new ExportTableToExcelTask.Listener() {
+        mExportTask = new ExportTableToExcelTask(activity, mFileName, dir.getPath(), query);
+        mExportTask.onFinished = new OnResult<String>() {
             @Override
-            public void onTaskCompleted() {
+            public void onResult(boolean success, String returnValue) {
                 new ShareFileDialog(mContext, filePath).show();
             }
-        });
+        };
     }
 
     public void execute() {
         mExportTask.execute();
     }
-
 }

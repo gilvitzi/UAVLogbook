@@ -47,13 +47,13 @@ public class LogbookSQLite extends SQLiteOpenHelper {
             " END " +
             ")";
     
-    public static final String DURATION_SUM_HOURS_DECIMAL = "ROUND((CAST(SUM(strftime('%s', duration)) AS REAL )/60/60),2)";
+//    public static final String DURATION_SUM_HOURS_DECIMAL = "ROUND((CAST(SUM(strftime('%s', duration)) AS REAL )/60/60),2)";
     public static final String DURATION_HOURS_DECIMAL = "ROUND((CAST((strftime('%s', duration)) AS REAL )/60/60),2)";
     
     public static final String SELECT_ALL_SESSIONS = "SELECT "
             + COLUMN_ID   + ", "
-            + COLUMN_DATE + ", "
-            + COLUMN_DURATION + ", "
+            + COLUMN_DATE + " As 'Date^date', "
+            + "strftime('%s', duration)" + " As 'Duration^duration', "
             + COLUMN_PLATFORM_TYPE + ", "
             + COLUMN_PLATFORM_VARIATION + ", "
             + COLUMN_REGISTRATION + ", "

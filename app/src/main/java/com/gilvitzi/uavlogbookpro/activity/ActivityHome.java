@@ -26,13 +26,12 @@ import com.gilvitzi.uavlogbookpro.database.LogbookReportQuery;
 import com.gilvitzi.uavlogbookpro.export.ImportDBExcelTask;
 import com.gilvitzi.uavlogbookpro.export.ShareDBAsExcelFileTask;
 import com.gilvitzi.uavlogbookpro.model.Session;
-import com.gilvitzi.uavlogbookpro.util.Duration;
+import com.gilvitzi.uavlogbookpro.model.Duration;
 import com.gilvitzi.uavlogbookpro.util.NameValuePair;
 import com.gilvitzi.uavlogbookpro.util.OnResult;
 import com.google.android.gms.analytics.HitBuilders;
 
 import java.lang.reflect.Field;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -206,7 +205,7 @@ public class ActivityHome extends DatabaseActivity {
 
     private void importExcelFromUri(Uri selectedFile) {
         ImportDBExcelTask importTask =  new ImportDBExcelTask((Activity)ActivityHome.this, selectedFile);
-        importTask.onFinished = new OnResult() {
+        importTask.onFinished = new OnResult<String>() {
             @Override
             public void onResult(boolean success, String message) {
                 refreshHomePageData();
@@ -291,9 +290,7 @@ public class ActivityHome extends DatabaseActivity {
             TextView bottomLeftTv = ((TextView) findViewById(R.id.session_list_item_platform_type_and_variation));
             String sim_or_nothing = (lastSession.getSimActual().equalsIgnoreCase("simulator"))?"(SIM)":"";
             bottomLeftTv.setText(lastSession.getPlatformType() + " " + lastSession.getPlatformVariation() + sim_or_nothing);
-            Duration duration = new Duration(context);
-            duration.setISO8601(lastSession.getDuration());
-            ((TextView) findViewById(R.id.session_list_item_Duration)).setText(duration.getString());
+            ((TextView) findViewById(R.id.session_list_item_Duration)).setText(lastSession.getDurationString());
         }
 
         private void setNoSessionFound() {
@@ -302,20 +299,6 @@ public class ActivityHome extends DatabaseActivity {
             ((TextView) findViewById(R.id.session_list_item_platform_type_and_variation)).setText("");
             ((TextView) findViewById(R.id.session_list_item_Duration)).setText("");
         }
-    }
-
-    private Date getQuickStartTime()
-    {
-    	long millis = 0;
-    	try{
-    		SharedPreferences settings = getSharedPreferences("UserInfo", 0);
-    		millis = settings.getLong("quick_start_time", 0L);
-
-    	}catch(Exception e){
-    		Log.e("ActivityHome","QuickStart get Failed: " + e);
-    	}
-
-    	return new Date(millis);
     }
 
     @SuppressLint("DefaultLocale")

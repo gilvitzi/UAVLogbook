@@ -29,26 +29,6 @@ public class DatabaseActivity extends AnalyticsActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         if (datasource != null) datasource.close();
@@ -59,10 +39,6 @@ public class DatabaseActivity extends AnalyticsActivity {
             Log.w(this.getClass().getName(),"Datasource null returned from getDataSource()");
         return datasource;
     }
-
-//    public void setDatasource(LogbookDataSource datasource) {
-//        this.datasource = datasource;
-//    }
 
     //Not Necessarily related to Database
     private void tryForcingActionBar() {

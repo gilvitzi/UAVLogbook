@@ -25,6 +25,7 @@ import android.support.v4.app.NavUtils;
 
 import com.gilvitzi.uavlogbookpro.AnalyticsApplication;
 import com.gilvitzi.uavlogbookpro.R;
+import com.gilvitzi.uavlogbookpro.database.LogbookDataSource;
 import com.gilvitzi.uavlogbookpro.export.BackupDB;
 import com.gilvitzi.uavlogbookpro.export.ImportDBExcelTask;
 import com.gilvitzi.uavlogbookpro.export.ImportDBFromCSV;
@@ -221,7 +222,7 @@ public class ActivitySettings extends PreferenceActivity {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class BackupAndRestorePreferenceFragment extends PreferenceFragment {
         private static final int SELECT_FILE_FOR_DB_RESTORE = 1;
-        private static final int SELECT_FILE_TO_IMPORT = 2;
+        private static final int SELECT_EXCEL_FILE_TO_IMPORT = 2;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -271,7 +272,7 @@ public class ActivitySettings extends PreferenceActivity {
 
         public void restoreDB() {
             Intent intent = new Intent()
-                    .setType("*/*")
+                    .setType("text/csv")
                     .setAction(Intent.ACTION_GET_CONTENT);
 
             startActivityForResult(Intent.createChooser(intent, "Select a file"), SELECT_FILE_FOR_DB_RESTORE);
@@ -279,10 +280,10 @@ public class ActivitySettings extends PreferenceActivity {
 
         public void importOldExcelFile() {
             Intent intent = new Intent()
-                    .setType("*/*")
+                    .setType("application/xls")
                     .setAction(Intent.ACTION_GET_CONTENT);
 
-            startActivityForResult(Intent.createChooser(intent, "Select a file"), SELECT_FILE_TO_IMPORT);
+            startActivityForResult(Intent.createChooser(intent, "Select a file"), SELECT_EXCEL_FILE_TO_IMPORT);
         }
 
         @Override
@@ -292,7 +293,7 @@ public class ActivitySettings extends PreferenceActivity {
                 Uri selectedFile = data.getData(); //The uri with the location of the file
                 ImportDBFromCSV importTask =  new ImportDBFromCSV(getActivity(), selectedFile);
                 importTask.execute();
-            } else if(requestCode==SELECT_FILE_TO_IMPORT && resultCode==RESULT_OK) {
+            } else if(requestCode== SELECT_EXCEL_FILE_TO_IMPORT && resultCode==RESULT_OK) {
                 Uri selectedFile = data.getData(); //The uri with the location of the file
                 importExcelFromUri(selectedFile);
             }
@@ -317,7 +318,7 @@ public class ActivitySettings extends PreferenceActivity {
         }
         private void importExcelFromUri(Uri selectedFile) {
             ImportDBExcelTask importTask =  new ImportDBExcelTask((Activity)getActivity(), selectedFile);
-            importTask.onFinished = new OnResult() {
+            importTask.onFinished = new OnResult<String>() {
                 @Override
                 public void onResult(boolean success, String message) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

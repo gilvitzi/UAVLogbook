@@ -1,4 +1,4 @@
-package com.gilvitzi.uavlogbookpro.util;
+package com.gilvitzi.uavlogbookpro.model;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.gilvitzi.uavlogbookpro.R;
+import com.gilvitzi.uavlogbookpro.util.DateTimeConverter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -105,17 +106,20 @@ public class Duration {
     }
 
     @SuppressLint("SimpleDateFormat")
-    public void setISO8601(String duration){
+    public static Duration parseISO8601(Context context, String duration){
+        Duration d = new Duration(context);
         //Parse String to Date
         try {
             SimpleDateFormat sdf = new SimpleDateFormat(ISO8601);
             sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
             //Check the type of format (for example test split of '.', and split of '/'
             Date dt = sdf.parse(duration);
-            this.millis =  dt.getTime();
+            d.millis =  dt.getTime();
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        return d;
     }
 
     public String getISO8601(){
