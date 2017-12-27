@@ -116,7 +116,7 @@ public class LogbookDataSource {
 
     public List<Session> getAllSessionsDesc() {
         List<Session> sessions = new ArrayList<Session>();
-        String selectQuery = "SELECT  * FROM " +  LogbookSQLite.TABLE_LOGBOOK + " ORDER BY " +  LogbookSQLite.COLUMN_DATE + " DESC";
+        String selectQuery = LogbookSQLite.SELECT_ALL_SESSIONS + " ORDER BY " +  LogbookSQLite.COLUMN_DATE + " DESC";
         Cursor cursor = database.rawQuery(selectQuery, null);
         try {
 
@@ -399,9 +399,8 @@ public class LogbookDataSource {
     public Session getLastSession(){
       Session session = null;
       String query =
-          "SELECT * " +
-          "FROM " +  LogbookSQLite.TABLE_LOGBOOK + " " +
-          "WHERE " +  LogbookSQLite.COLUMN_ID + "= (SELECT MAX(" +  LogbookSQLite.COLUMN_ID + ")  FROM " +  LogbookSQLite.TABLE_LOGBOOK + ")";
+          LogbookSQLite.SELECT_ALL_SESSIONS +
+          " WHERE " +  LogbookSQLite.COLUMN_ID + "= (SELECT MAX(" +  LogbookSQLite.COLUMN_ID + ")  FROM " +  LogbookSQLite.TABLE_LOGBOOK + ")";
       try{
           Cursor cursor = database.rawQuery(query,null);
           if (cursor.moveToFirst()) {
