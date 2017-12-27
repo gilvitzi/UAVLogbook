@@ -121,8 +121,7 @@ public class LogbookReportQuery {
         String platformVariation = platformTypeAndVariation.getSecond();
 
         StringBuilder query = new StringBuilder();
-        query.append("SELECT * ");
-        query.append(" FROM ").append(LogbookSQLite.TABLE_LOGBOOK);
+        query.append(LogbookSQLite.SELECT_ALL_SESSIONS);
         query.append(" WHERE " + LogbookSQLite.COLUMN_PLATFORM_TYPE + "= '" + platformType + "'");
         query.append(" AND ");
         query.append(LogbookSQLite.COLUMN_PLATFORM_VARIATION + "= '" + platformVariation + "'");

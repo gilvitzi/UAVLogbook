@@ -161,7 +161,7 @@
     <string name="report_hours_per_year">Hours Per Year</string>
     <string name="report_counted_activities">Counted Activities</string>
     <string name="report_caa_report">CAA Report</string>
-    <string name="report_yearly_caa_report">Yearly CAA Report</string>
+    <string name="report_yearly_caa_report">Annual CAA Report</string>
     <string name="report_search_by_tag">Search By TAG</string>
 
     <!-- Import  Export -->
