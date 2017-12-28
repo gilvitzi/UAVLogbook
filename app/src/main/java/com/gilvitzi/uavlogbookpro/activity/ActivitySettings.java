@@ -272,7 +272,7 @@ public class ActivitySettings extends PreferenceActivity {
 
         public void restoreDB() {
             Intent intent = new Intent()
-                    .setType("text/csv")
+                    .setType("*/*")
                     .setAction(Intent.ACTION_GET_CONTENT);
 
             startActivityForResult(Intent.createChooser(intent, "Select a file"), SELECT_FILE_FOR_DB_RESTORE);

@@ -30,7 +30,7 @@ public class ExportTableToCSV extends ExportTable {
     public void onResult(boolean success, GetTableValues.QueryResults queryResults) {
         QueryResultsToCSVBuilder builder = new QueryResultsToCSVBuilder(queryResults);
         StringBuilder csvOutput = builder.build();
-
+        onFinished.onResult(success, csvOutput.toString());
     }
 
     private class QueryResultsToCSVBuilder {
